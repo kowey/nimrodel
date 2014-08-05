@@ -1,21 +1,28 @@
 #!/bin/bash
 
-. ${0%/*}/configure
+# SCRIPT_DIR is the directory this very script lives in.
+ZERO_DIR=$(dirname "$0")
+# The pushd/popd dance seems to help find the "true" path
+# in case of symlinking
+pushd "$ZERO_DIR" > /dev/null
+SCRIPT_DIR=$PWD
+popd > /dev/null
 
-# not tested!
-if [[ ${!TCAPP^^-notdefined}==notdefined ]] 
-then
+. "$SCRIPT_DIR/configure"
 
-LOCALENV=${0%/*}/local
-if [ -e $LOCALENV ]
-then
-	. $LOCALENV
+LOCALENV="$SCRIPT_DIR/local"
+if [ -e "$LOCALENV" ]; then
+    . "$LOCALENV"
 fi
 
 export SWI_HOME_DIR=${SWI_HOME_DIR-/usr/lib/swi-prolog}
-export JVM_DIR=${JVM_DIR-/usr/lib/jvm/java-6-openjdk-amd64/jre/lib/amd64/server}
+export JVM_DIR=${JVM_DIR-$JAVA_HOME/jre/lib/server}
 
-export TCROOT=${TCROOT-~/$TCAPP/${TCAPP}-$TCVERSION}
+if [ -z "$TCROOT" ]; then
+    pushd "$SCRIPT_DIR"/.. > /dev/null
+    TCROOT=$PWD
+    popd > /dev/null
+fi
 export TC=${TC-$TCROOT}
 
 export ELFAPP=$TC/$TCAPP
@@ -24,8 +31,4 @@ export ELF=$ELFROOT/elf
 
 export PATH=$TC/bin:$SWI_HOME_DIR/bin:$PATH
 export LD_LIBRARY_PATH=${JVM_DIR}:$LD_LIBRARY_PATH
-export CLASSPATH=.:${ELFAPP}:$ELFROOT/opennlp/lib/jpl.jar:/$ELFROOT/opennlp/lib/opennlp-tools-1.5.3.jar:$ELFROOT/opennlp/lib/opennlp-maxent-3.0.3.jar
-
-export ${TCAPP^^}=$ELFAPP
-
-fi
+export CLASSPATH=$SCRIPT_DIR:${ELFAPP}:$ELFROOT/opennlp/lib/jpl.jar:$ELFROOT/opennlp/lib/opennlp-tools-1.5.3.jar:$ELFROOT/opennlp/lib/opennlp-maxent-3.0.3.jar
