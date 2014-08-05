@@ -1,0 +1,29 @@
+%   File:       tables.dtr
+%   Purpose:    support for table lookup
+%   Author:     Roger Evans
+%   Version:    ELF 0.1
+%   Date:       29/11/09
+%
+%   (c) Copyright 2009, University of Brighton
+
+%   -- TABLE LOOKUP MECHANISM --
+
+%   Infrastructure for tables. Tables are accessed via the query context
+%   (without rule application) but pass rule prefix through to allow
+%   table definition code to implement rules if desired
+
+%%  elf.TABLE       a root node for all table nodes
+
+#hide elf.TABLE.
+elf.TABLE:
+    <> == elf.TOP:<>
+.
+
+%%  elf.TABLE-LOOKUP given a table name, a key and a non-rule path,
+%%                  inherits via the table and key, applying rules given
+%%                  in the original query to the table entry
+
+#hide elf.TABLE-LOOKUP.
+elf.TABLE-LOOKUP:
+    <$table $key> == Local:<QueryNode elf.META table $table $key>
+.

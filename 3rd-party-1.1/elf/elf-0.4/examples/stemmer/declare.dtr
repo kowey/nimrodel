@@ -1,0 +1,49 @@
+%   File:       declare.dtr
+%   Purpose:    variable declarations
+%   Author:     Roger Evans
+%   Version:    1.0
+%   Date:       08/01/10
+%
+%   (c) Copyright 2010, University of Brighton
+
+%   The lexicon requires languages, rule names and relation names to
+%   be declared before they are used. This is achieved by adding their
+%   names to the following DATR variable declarations.
+%
+%   Note:   after you have changed this file it is advisable to reload
+%           the entire ELF system and lexicon.
+%   ROLES
+
+#vars $elf-prev:
+	-20 -19 -18 -17 -16 -15 -14 -13 -12 -11 -10 -9 -8 -7 -6 -5 -4 -3 -2 -1
+.
+
+#vars $elf-next:
+	1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+.
+
+#vars $elf-role: $elf-prev 0 $elf-next.
+
+#vars $elf-port: start end.
+
+%   LANGUAGES
+
+#vars $elf-language:
+    % no languages
+.
+
+%   LEXICAL RULES
+
+#vars $elf-rule:
+    % no rules
+.
+
+%	METAFEATURES
+
+#vars $elf-meta:
+	% no metafeatures
+.
+
+% declare <elf display> as the path to dump - <elf display> handles different
+% dump formats itself via elf.DISPLAY in display.dtr
+#show <elf display>.

@@ -1,0 +1,15 @@
+
+% default definition for nimrodel.PARAMS - usually overridden by a local definition
+
+nimrodel.PARAMS:
+    <> == nimrodel.DEFAULT-PARAMS
+.
+
+% try and load a configuration file from the current directory 
+% (for task-specific configuration, eg default model)
+
+
+#load 
+	'./nimrodel-params*.dtr' 	% wildcard allows possibility of no match
+.
+

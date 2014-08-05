@@ -1,0 +1,312 @@
+%   File:       elflib.stemmer.dtr
+%   Purpose:    simple stemmer
+%   Author:     Roger Evans
+%   Version:    1.0
+%   Date:       21/08/12
+%
+%   (c) Copyright 2012, University of Brighton
+
+% elflib.STEMMER:<stem word> = stem
+% elflib.STEMMER:<morph word> == stem feat1 feat2 ...
+
+% a crude (non-morphological) stemmer
+% we use this to bootstrap into the main lexicon - typically we look first for a node for the mform itself,
+% but if we don't find one, we try the stem (and otherwise use a generic default node)
+
+#uses LocalPath Implode Reverse Explode First.
+
+#hide elflib.STEMMER.
+elflib.STEMMER:
+    <> == elf.TOP
+	
+	<stem> == First:< <morph> .>
+	 
+	<morph> == <morph-pos>
+	<morph first> == <stem one> mform ord
+	<morph second> == <stem two> mform ord
+	<morph third> == <stem three> mform ord
+	<morph fifth> == <stem five> mform ord
+	<morph an> == <morph a>
+	<morph better> == <stem good> mform comp
+	<morph best> == <stem good> mform sup
+	<morph worse> == <stem bad> mform comp
+	<morph worst> == <stem bad> mform sup
+	
+	<morph am> == <stem be> mform fin mnum sing mper one mtense pres
+	<morph are> == <stem be> mform fin mtense pres
+	<morph is> == <stem be> mform fin mnum sing mper three mtense pres
+	<morph was> == <morph-past be> mform fin mnum sing
+	<morph were> == <morph-past be> mform fin
+	<morph been> == <morph-past be> mform part
+	<morph became> == <morph-past become>
+	<morph began> == <morph-past begin> mform fin
+	<morph begun> == <morph-past begin> mform part
+	<morph bent> == <morph-past bend>
+	<morph bound> == <morph-past bind>
+	<morph bled> == <morph-past bleed>
+	<morph blew> == <morph-past blow> mform fin
+	<morph blown> == <morph-past blow> mform part
+	<morph broke> == <morph-past break> mform fin
+	<morph broken> == <morph-past break> mform part
+	<morph bred> == <morph-past breed>
+	<morph brought> == <morph-past bring>
+	<morph built> == <morph-past build>
+	<morph burnt> == <morph-past burn>
+	<morph bought> == <morph-past buy>
+	<morph could> == <morph-past can> mform fin
+	<morph caught> == <morph-past catch>
+	<morph chose> == <morph-past choose> mform fin
+	<morph chosen> == <morph-past choose> mform part
+	<morph clung> == <morph-past cling>
+	<morph crept> == <morph-past creep>
+	<morph dealt> == <morph-past deal>
+	<morph does> == <stem do> mform fin mtense pres
+	<morph did> == <morph-past do> mform fin
+	<morph done> == <morph-past do> mform part
+	<morph dug> == <morph-past dig>
+	<morph drew> == <morph-past draw> mform fin
+	<morph drawn> == <morph-past draw> mform part
+	<morph dreamt> == <morph-past dream>
+	<morph drank> == <morph-past drink> mform fin
+	<morph drunk> == <morph-past drink> mform part
+	<morph drove> == <morph-past drive> mform fin
+	<morph driven> == <morph-past drive> mform part
+	<morph ate> == <morph-past eat> mform fin
+	<morph eaten> == <morph-past eat> mform part
+	<morph fell> == <morph-past fall> mform fin
+	<morph fallen> == <morph-past fall> mform part
+	<morph fed> == <morph-past feed>
+	<morph felt> == <morph-past feel>
+	<morph fought> == <morph-past fight>
+	<morph found> == <morph-past find>
+	<morph fled> == <morph-past flee>
+	<morph flew> == <morph-past fly> mform fin
+	<morph flown> == <morph-past fly> mform part
+	<morph froze> == <morph-past freeze> mform fin
+	<morph frozen> == <morph-past freeze> mform part
+	<morph got> == <morph-past get>
+	<morph gotten> == <morph-past get> mform part
+	<morph gave> == <morph-past give> mform fin
+	<morph given> == <morph-past give> mform part
+	<morph goes> == <stem go> mform fin mtense pres
+	<morph gone> == <morph-past go> mform part
+	<morph went> == <morph-past go> mform fin
+	<morph ground v> == <morph-past grind>
+	<morph grew> == <morph-past grow> mform fin
+	<morph grown> == <morph-past grow> mform part
+	<morph hung> == <morph-past hang>
+	<morph has> == <stem have> mform fin mtense pres
+	<morph had> == <morph-past have>
+	<morph heard> == <morph-past hear>
+	<morph hid> == <morph-past hide> mform fin
+	<morph hidden> == <morph-past hide> mform part
+	<morph held> == <morph-past hold>
+	<morph kept> == <morph-past keep>
+	<morph knelt> == <morph-past kneel>
+	<morph knew> == <morph-past know> mform fin
+	<morph known> == <morph-past know> mform part
+	<morph laid> == <morph-past lay>
+	<morph led> == <morph-past lead>
+	<morph leant> == <morph-past lean>
+	<morph leapt> == <morph-past leap>
+	<morph learnt> == <morph-past learn>
+	<morph left v> == <morph-past leave v>
+	<morph lent> == <morph-past lend>
+	<morph lit> == <morph-past light>
+	<morph made> == <morph-past make>
+	<morph might> == <morph-past may> mform fin
+	<morph meant> == <morph-past mean>
+	<morph met> == <morph-past meet>
+	<morph mistook> == <morph-past mistake> mform fin
+	<morph mistaken> == <morph-past mistake> mform part
+	<morph misunderstood> == <morph-past misunderstand>
+	<morph mown> == <morph-past mow> mform part
+	<morph paid> == <morph-past pay>
+	<morph rode> == <morph-past ride> mform fin
+	<morph ridden> == <morph-past ride> mform part
+	<morph rang> == <morph-past ring> mform fin
+	<morph rung v> == <morph-past ring> mform part
+	<morph rung *> == <morph-past ring> mform part
+	<morph rose v> == <morph-past rise> mform fin
+	<morph risen> == <morph-past rise> mform part
+	<morph ran> == <morph-past run>
+	<morph said> == <morph-past say>
+	<morph saw v> == <morph-past see> mform fin
+	<morph saw *> == <morph-past see> mform fin
+	<morph seen> == <morph-past see> mform part
+	<morph sought> == <morph-past seek>
+	<morph sold> == <morph-past sell>
+	<morph sent> == <morph-past send>
+	<morph shook> == <morph-past shake> mform fin
+	<morph shaken> == <morph-past shake> mform part
+	<morph should> == <morph-past shall> mform fin
+	<morph shone> == <morph-past shine>
+	<morph shot> == <morph-past shoot>
+	<morph shown> == <morph-past show> mform part
+	<morph shrank> == <morph-past shrink> mform fin
+	<morph shrunk> == <morph-past shrink> mform part
+	<morph shrunken> == <morph-past shrink> mform part
+	<morph sang> == <morph-past sing> mform fin
+	<morph sung> == <morph-past sing> mform part
+	<morph sank> == <morph-past sink> mform fin
+	<morph sunk> == <morph-past sink> mform part
+	<morph sunken> == <morph-past sink> mform part
+	<morph sat> == <morph-past sit>
+	<morph slept> == <morph-past sleep>
+	<morph slung> == <morph-past sling>
+	<morph slunk> == <morph-past slink>
+	<morph smelt> == <morph-past smell>
+	<morph spoke> == <morph-past speak> mform fin
+	<morph spoken> == <morph-past speak> mform part
+	<morph sped> == <morph-past speed>
+	<morph spelt> == <morph-past spell>
+	<morph spent> == <morph-past spend>
+	<morph spilt> == <morph-past spill>
+	<morph span> == <morph-past spin> mform fin
+	<morph spun> == <morph-past spin> mform part
+	<morph spat> == <morph-past spit>
+	<morph spoilt> == <morph-past spoil>
+	<morph sprang> == <morph-past spring> mform fin
+	<morph sprung> == <morph-past spring> mform part
+	<morph stood> == <morph-past stand>
+	<morph stole> == <morph-past steal> mform fin
+	<morph stolen> == <morph-past steal> mform part
+	<morph stuck> == <morph-past stick>
+	<morph stung> == <morph-past sting>
+	<morph stank> == <morph-past stink> mform fin
+	<morph stunk> == <morph-past stink> mform part
+	<morph struck> == <morph-past strike>
+	<morph strung> == <morph-past string>
+	<morph swept> == <morph-past sweep>
+	<morph swollen> == <morph-past swell> mform part
+	<morph swam> == <morph-past swim> mform fin
+	<morph swum> == <morph-past swim> mform part
+	<morph swang> == <morph-past swing> mform fin
+	<morph swung> == <morph-past swing> mform part
+	<morph took> == <morph-past take> mform fin
+	<morph taken> == <morph-past take> mform part
+	<morph taught> == <morph-past teach>
+	<morph tore> == <morph-past tear> mform fin
+	<morph torn> == <morph-past tear> mform part
+	<morph told> == <morph-past tell>
+	<morph thought v> == <morph-past think>
+	<morph thought *> == <morph-past think>
+	<morph threw> == <morph-past throw> mform fin
+	<morph thrown> == <morph-past throw> mform part
+	<morph trod> == <morph-past tread>
+	<morph trodden> == <morph-past tread> mform part	
+	<morph understood> == <morph-past understand>
+	<morph woke> == <morph-past wake> mform fin
+	<morph woken> == <morph-past wake>  mform part
+	<morph wore> == <morph-past wear> mform fin
+	<morph worn> == <morph-past wear> mform part
+	<morph would> == <morph-past will> mform fin
+	<morph won> == <morph-past win>
+	<morph wound v> == <morph-past wind v>
+	<morph withstood> == <morph-past withstand>
+	<morph wrote> == <morph-past write> mform fin
+	<morph written> == <morph-past write> mform part
+	
+	<morph-past> == <stem> mtense past
+	
+	<morph only> == only
+	<morph other> == other
+	<morph another> == another
+	<morph children> == <stem child> mnum plur mform count
+	<morph feet> == <stem foot> mnum plur mform count
+	
+	<morph-pos> == "elflib.stemmer.Simple:<morph>"
+	<morph-pos $word pro> == $word
+	<morph-pos $word num> == "elflib.stemmer.NUM:<morph $word>"
+	<morph-pos $word adj> == "elflib.stemmer.ADJ:<morph $word>"
+	<morph-pos $word n> == "elflib.stemmer.N:<morph $word>"
+	<morph-pos $word adv> == "elflib.stemmer.ADV:<morph $word>"
+	<morph-pos $word v> == "elflib.stemmer.V:<morph $word>"
+	<morph-pos $word det> == "elflib.stemmer.DET:<morph $word>"
+.
+
+
+
+% top node for stemmer nodes, return the word as a morph
+#hide elflib.stemmer.TOP.
+elflib.stemmer.TOP:
+	<> == elf.TOP
+	<morph $word> == "<map <unpack $word .> .>"
+	<rest> == LocalPath:<>
+	<map> == <pack-rest>
+	<unpack> == Reverse:<Explode:<>.>
+	<pack> == Implode:<Reverse:<>.>
+	<pack-rest> == <pack <rest> .>
+.
+	
+#hide elflib.stemmer.NUM.
+elflib.stemmer.NUM:
+	<> == elflib.stemmer.TOP
+	<map> == <pack-rest> mform card
+	<map h t> == <pack-rest> mform ord
+.
+
+#hide elflib.stemmer.ADJ.
+elflib.stemmer.ADJ:
+	<> == elflib.stemmer.TOP
+	<map r e> == <pack-rest> mform comp
+	<map r e $a $a> == <pack $a <rest> .> mform comp
+	<map t s e> == <pack-rest> mform sup
+	<map t s e $a $a > == <pack $a <rest> .> mform sup
+.
+	
+#hide elflib.stemmer.N.
+elflib.stemmer.N:
+	<> == elflib.stemmer.TOP
+	<map> == <pack-rest> mform count mnum sing
+	<map s> == <pack-rest> mform count mnum plur
+.
+
+#hide elflib.stemmer.ADV.
+elflib.stemmer.ADV:
+	<> == elflib.stemmer.TOP
+	<map y l> == <pack-rest>
+	<map r e i l> == <pack-rest> mform comp
+	<map t s e i l> == <pack-rest> mform sup
+.
+
+#hide elflib.stemmer.V.
+elflib.stemmer.V:
+	<> == elflib.stemmer.TOP
+	<map d e> == <pack-rest> mtense past
+	<map g n i> == <pack-rest> mtense pres mform part
+	<map g n i $a $a $any1 $any2> == <pack $a $any1 $any2 <rest> .> mtense pres mform part
+	<map n e> == <pack-rest> mtense past mform part
+	<map s e> == <pack-rest> mtense pres mform fin mper three mnum sing
+	<map s> == <pack-rest> mtense pres mform fin mper three mnum sing
+.
+
+#hide elflib.stemmer.DET.
+elflib.stemmer.DET:
+	<> == elflib.stemmer.TOP
+	<morph> == First:<>
+	<morph a> == a mnum sing
+	<morph every> == every mnum sing
+	<morph each> == each mnum sing
+	<morph some> == some mnum plur
+	<morph many> == many mnum plur
+	<morph all> == all mnum plur
+.
+
+% stemming when we don't know the POS reliably (eg single words)
+#hide elflib.stemmer.Simple.
+elflib.stemmer.Simple:
+	<> == elflib.stemmer.TOP
+	<map r e> == <pack-rest> 
+	<map r e $a $a> == <pack $a <rest> .>
+	<map t s e> == elflib.stemmer.ADJ
+	<map t s e $a $a > == elflib.stemmer.ADJ
+	<map s> == <pack-rest>
+	<map s e> == <pack-rest>
+	<map y l> == elflib.stemmer.ADV
+	<map r e i l> == elflib.stemmer.ADV
+	<map t s e i l> == elflib.stemmer.ADV
+	<map d e> == elflib.stemmer.V	
+	<map g n i> == elflib.stemmer.V
+	<map g n i $a $a $any1 $any2> == elflib.stemmer.V
+.

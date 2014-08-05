@@ -1,0 +1,24 @@
+%% nimrodel.VERSION
+
+#hide nimrodel.VERSION.
+nimrodel.VERSION:
+    <> == elf.VERSION
+	<display> == nimrodel.display.VERSION
+
+    <package> == 'nimrodel - TTT NLP module'
+	<appname> == nimrodel
+    <major> == 0
+    <minor> == 1
+	<revision> == '$Rev:$'
+    <date> == '$Date:$'
+.
+
+#hide nimrodel.display.VERSION.
+nimrodel.display.VERSION:
+    <> == elf.display.VERSION
+    <display> == "<package>" <space>
+                 version <space>
+                 "<major>" \. "<minor>" <space>
+				 ( "<revision>" ) <space>
+                 ( "<date>" )
+.

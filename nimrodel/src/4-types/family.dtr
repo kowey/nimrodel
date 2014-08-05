@@ -1,0 +1,189 @@
+% family and other interpersonal relationships
+
+
+nimrodel.family.MALE:
+	<> == nimrodel.phrase.PREDNOM
+	<token type> == 'Person'
+	<token gender> == male
+.
+
+
+nimrodel.family.FEMALE:
+	<> == nimrodel.phrase.PREDNOM
+	<token type> == 'Person'
+	<token gender> == female
+.
+
+
+nimrodel.family.NOGENDER:
+	<> == nimrodel.phrase.PREDNOM
+	<token type> == 'Person'
+.
+
+
+nimrodel.family.Nfather:
+	<> == nimrodel.family.MALE
+	<phrase-nom rel> == is_father_of
+.
+
+
+nimrodel.family.Nmother:
+	<> == nimrodel.family.FEMALE
+	<phrase-nom rel> == is_mother_of
+.
+
+
+nimrodel.family.Nparent:
+	<> == nimrodel.family.NOGENDER
+	<phrase-nom rel> == is_parent_of
+.
+
+
+nimrodel.family.Ngrandfather:
+	<> == nimrodel.family.MALE
+	<phrase-nom rel> == is_grandfather_of
+.
+
+
+nimrodel.family.Ngrandmother:
+	<> == nimrodel.family.FEMALE
+	<phrase-nom rel> == is_grandmother_of
+.
+
+
+nimrodel.family.Ngrandparent:
+	<> == nimrodel.family.NOGENDER
+	<phrase-nom rel> == is_parent_of
+.
+
+
+nimrodel.family.Nson:
+	<> == nimrodel.family.MALE
+	<phrase-nom rel> == is_son_of
+.
+
+
+nimrodel.family.Ndaughter:
+	<> == nimrodel.family.FEMALE
+	<phrase-nom rel> == is_daughter_of
+.
+
+
+nimrodel.family.Nchild:
+	<> == nimrodel.family.NOGENDER
+	<phrase-nom rel> == is_a_child_of
+.
+
+
+nimrodel.family.Nchildren:
+	<> == nimrodel.family.NOGENDER
+	<phrase-nom rel> == is_a_child_of
+.
+
+
+nimrodel.family.Ngrandson:
+	<> == nimrodel.family.MALE
+	<phrase-nom rel> == is_grandson_of
+.
+
+
+nimrodel.family.Ngranddaughter:
+	<> == nimrodel.family.FEMALE
+	<phrase-nom rel> == is_granddaughter_of
+.
+
+
+nimrodel.family.Ngrandchild:
+	<> == nimrodel.family.NOGENDER
+	<phrase-nom rel> == is_grandchild_of
+.
+
+
+nimrodel.family.Ngrandchildren:
+	<> == nimrodel.family.NOGENDER
+	<phrase-nom rel> == is_grandchild_of
+.
+
+
+nimrodel.family.Nhusband:
+	<> == nimrodel.family.MALE
+	<phrase-nom rel> == is_husband_of
+.
+
+
+nimrodel.family.Nwife:
+	<> == nimrodel.family.FEMALE
+	<phrase-nom rel> == is_wife_of
+.
+
+
+nimrodel.family.Nwives:
+	<> == nimrodel.family.FEMALE
+	<phrase-nom rel> == is_wife_of
+.
+
+
+nimrodel.family.Nspouse:
+	<> == nimrodel.family.NOGENDER
+	<phrase-nom rel> == is_spouse_of
+.
+
+
+nimrodel.family.Nbrother:
+	<> == nimrodel.family.MALE
+	<phrase-nom rel> == is_brother_of
+.
+
+
+nimrodel.family.Nsister:
+	<> == nimrodel.family.FEMALE
+	<phrase-nom rel> == is_sister_of
+.
+
+
+nimrodel.family.Nsibling:
+	<> == nimrodel.family.NOGENDER
+	<phrase-nom rel> == is_sibling_of
+.
+
+
+nimrodel.family.Nwidower:
+	<> == nimrodel.family.MALE
+	<phrase-nom rel> == is_widower_of
+.
+
+
+nimrodel.family.Nwidow:
+	<> == nimrodel.family.FEMALE
+	<phrase-nom rel> == is_widow_of
+.
+
+
+nimrodel.family.Nuncle:
+	<> == nimrodel.family.MALE
+	<phrase-nom rel> == is_familial_relation_to
+.
+
+
+nimrodel.family.Naunt:
+	<> == nimrodel.family.FEMALE
+	<phrase-nom rel> == is_familial_relation_to
+.
+
+
+nimrodel.family.Nnewphew:
+	<> == nimrodel.family.MALE
+	<phrase-nom rel> == is_familial_relation_to
+.
+
+
+nimrodel.family.Nniece:
+	<> == nimrodel.family.FEMALE
+	<phrase-nom rel> == is_familial_relation_to
+.
+
+
+nimrodel.family.Ncousin:
+	<> == nimrodel.family.NOGENDER
+	<phrase-nom rel> == is_familial_relation_to
+.

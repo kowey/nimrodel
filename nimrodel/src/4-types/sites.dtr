@@ -1,0 +1,33 @@
+
+
+nimrodel.site.SITE-LOOKUP:
+	<> == **fail**
+	<$nimrodel-sitestem> == 'nimrodel.site.SITEROOT'
+	<$nimrodel-namedsitestem> == 'nimrodel.site.NAMEDSITE'
+.
+
+nimrodel.site.SITEROOT:	
+	<> == nimrodel.LEXROOT:<>
+	
+	<token type> == 'Site'
+.
+
+nimrodel.site.PHRASEROOT:
+	<> == nimrodel.phraseutils.PHRASEROOT:< 'nimrodel.site.SITEROOT' >
+.
+
+nimrodel.site.NAMEDSITE:
+	<> == nimrodel.site.SITEROOT	
+	
+	<lex> == <try ofplace lex>
+	
+	<try ofplace> == <IFEQ:< <here token next token word .> of THEN try place ELSE case default .> >
+	<try place> == <IFEQ:< <here token next token next lex type .> 'Place' THEN case named ELSE try title .> >
+	<try title> == < IFEQ:< <here token next token next token type > title THEN try titled ELSE try propn .> >
+	<try titled> == < IFEQ:< <here token next token next lex type > 'Person' THEN case named ELSE case default .> >
+	<try propn> == <IFEQ:< <here token next token next token type .> propnoun THEN case named ELSE case default .> >				  
+	
+	<case named> == nimrodel.phraseutils.SKIP-TOKENS-LEX:<1 'nimrodel.site.SITEROOT'>
+	<case default> == nimrodel.site.SITEROOT:<>	
+.
+

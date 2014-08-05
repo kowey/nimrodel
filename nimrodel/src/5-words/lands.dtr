@@ -1,0 +1,19 @@
+% regular land words - these can just use the LANDROOT node directly 
+#vars $nimrodel-landstem:  
+	% common
+	field
+	garden
+	green
+	ing
+	land
+	marsh
+	meadow
+	mese
+	messuage
+	moor
+	orchard
+	pasture
+	tenement
+	wood
+	yard
+.

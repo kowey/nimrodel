@@ -1,0 +1,186 @@
+% outputting BRAT annotations
+
+#uses Gensym Length Implode Explode LocalPath Rest.
+
+app.BRAT:
+	<> == elf.TOP
+	<sp> == ' '
+	<tab> == '\t'
+	<nl> == '\n'
+	<brat reset> == 
+		Gensym:<reset 'T' 'R' 'E' 'A' 'N' '#'>	
+		
+	<brat title $title> == <brat title2 $title Gensym:<gensym 'T'> >
+	<brat title2 $title $id> ==
+		$id <tab .> 
+		'Document' <sp .> 
+		0 <sp .> 
+		Length:<Explode:<$title.>.> <tab .> 
+		$title <nl .>
+		<brat notes $id 
+			[ Implode:<app.MAIN:<version>.> ]
+			[ created System:<gettime.> ]
+		>
+		
+	<brat sentence $documentString [ > ==
+		<brat clause $documentString <next> ] .>
+		<brat sentence $documentString <skip> .>
+	<brat sentence> ==	
+	
+	<brat clause $documentString entity **endpoint** > ==
+	<brat clause $documentString> == <tail <brat clause2 $documentString > .>
+	
+	<brat clause2 $documentString entity> == <brat entity Gensym:<gensym 'T'.> $documentString>
+	<brat clause2 $documentString rel> == <brat rel Gensym:<gensym 'R' .> $documentString>
+	<brat clause2 $documentString rel $f equals> == <brat rel equals $documentString $f equals>
+	<brat clause2 $documentString attr> == <brat attr Gensym:<gensym 'A' .> $documentString>
+	<brat clause2 $documentString property> == <brat property $documentString>
+	<brat clause2> == <brat error clause-error>
+	
+	<brat entity $id $documentString> == <brat entity2 <brat check> $id $documentString>
+	<brat entity2 ok $id $documentString $type $start-char $end-char> ==	
+		$id
+		<brat render-entity $documentString $id $type $start-char $end-char .>
+		<brat annotation $id >
+	<brat entity2 skip $id> == $id
+	<brat entity2> == <brat error> 
+	
+	<brat check> == ok
+	<brat check **endpoint**> == skip
+	<brat check **fail**> == type-error
+	<brat check $any **fail**> == range-error
+	<brat check $any $any2 **fail**> == range-error
+
+	<brat error clause-error $documentString> == 
+		'T1' <brat note 'T1' error 'unknown clause: ' LocalPath:<>  .>
+	<brat error type-error $id $documentString $type $start-char $end-char> ==
+		<brat clause2 $documentString entity unknown $start-char $end-char error 'No type specified (type set to unknown)'  >
+	<brat error range-error $id $documentString $type $start-char $end-char> ==
+		<brat entity $id $documentString $type 0 0 error 'Range error: ' $start-char ' ' $end-char '(set to 0)'  >
+
+	<brat rel $id $documentString $focus $type [ > == 
+		<brat rel2 $id $documentString $focus $type <brat clause2 $documentString <next> ] .> ] <skip> .>
+	<brat rel2 $id $documentString $focus $type $arg1> ==
+		<brat focus $focus $arg1 			% target id for clause
+			<next>	]		% annotation for first operand
+			<brat rel3 $id $documentString $type $arg1 <skip> .>
+		.>
+	<brat rel3 equals> == <brat rel6 equals>
+	<brat rel3> == <brat rel4>
+	<brat rel4 $id $documentString $type $arg1 [ > ==
+		<brat rel5 $id $type $arg1 <brat clause2 $documentString> .>
+	<brat rel5 $id $type $arg1 $arg2> ==
+		$arg2
+		LocalPath:<> 	% annotation for second operand
+		<brat render-rel $id $type $arg1 $arg2>
+	% handle equals relations by rewriting second id arg as first
+	<brat rel6 equals $documentString $type $arg1 [ > ==
+		<brat rewrite-id $arg1 <brat clause2 $documentString> .>
+		
+	<brat focus 1 $arg1> == $arg1 <next> <brat focus3 <skip> .>
+	<brat focus 2 $arg1> == <brat focus2 <skip> .> <next> <brat focus3 <skip> .>
+	<brat focus2 $arg2 > == $arg2
+	<brat focus3 $arg2 > == LocalPath:<>
+		
+	<brat rewrite-id $$arg1 $$arg2> ==
+		$$arg1
+		Rest:< <brat rewrite-id2 $$arg1 $$arg2 '\n' > .>
+	<brat rewrite-id2 $$arg1 $$arg2 '\n' $$arg2> == <brat rewrite-id2 $$arg1 $$arg2 <skipline> .>
+	<brat rewrite-id2 $$arg1 $$arg2 $$arg2> == $$arg1 <brat rewrite-id3 $$arg1 $$arg2>
+	<brat rewrite-id2> == <brat rewrite-id3>
+	<brat rewrite-id3 $$arg1 $$arg2 $$any> == $$any <brat rewrite-id2 $$arg1 $$arg2>
+	<brat rewrite-id3> ==
+		
+	<brat attr $id $documentString $attr $val [ > ==
+		<brat attr2 $id $documentString $attr $val <brat clause2 $documentString> .>
+	<brat attr2 $id $documentString $attr $val $arg> ==
+		$arg
+		LocalPath:<>
+		<brat render-attr $id $arg $attr $val>
+		
+	<brat property $documentString $attr $val [ > ==
+		<brat property2 $documentString $attr $val <brat clause2 $documentString> .>
+	<brat property2 $documentString $attr $val $arg> ==
+		$arg
+		LocalPath:<>
+		<brat prop $arg $attr '=' $val .>	
+		
+	<brat render-entity $documentString $id $type $start-char $end-char> == 
+		$id <tab .> 
+		$type <sp .> 
+		$start-char <sp .> 
+		$end-char <tab .> 
+		openNLP.GetSpanStrings:<$documentString openNLP.NewSpan:<$type $start-char $end-char .> .> <nl .> 
+		<brat render-trans $type $id>
+	
+	<brat render-trans> ==
+	<brat render-trans 'Transaction' $id> ==
+		% add relation from document entity (T1) to any transactions found
+		<brat render-rel Gensym:<gensym 'R' .> refers_to 'T1' $id>
+	
+	<brat render-rel $id $type $arg1 $arg2> ==
+		$id <tab .>
+		$type <sp .>
+		'Arg1:' $arg1 <sp .>
+		'Arg2:' $arg2 <nl .>
+		
+	<brat render-attr $id $arg $attr $val> == 
+		$id <tab .>
+		$attr <sp .> 
+		$arg <sp .> 
+		$val <nl .>
+		
+		
+	<brat annotation $id ']'> ==
+	<brat annotation $id $f '=' $v> == <brat prop $id  $f '=' $v .> <brat annotation $id>
+	<brat annotation $id $f '==' $v> == <brat render-attr Gensym:<gensym 'A'> $id $f $v .> <brat annotation $id>
+	<brat annotation $id> == <brat note $id>
+	
+	<brat notes $id [ > == <brat notes2 $id>
+	<brat notes $id> == 
+	<brat notes2 $id> == <brat note $id> <brat notes $id <skip> .>
+	
+	<brat note> == <brat note1 'Note'>
+	<brat note $id error> == <brat errnote $id>
+	<brat errnote> == <brat note1 'ERROR'>
+	<brat prop> == <brat note1 'Property'>
+	
+	<brat note1 $label $id ] > ==
+	<brat note1> == <brat note2>
+	
+	<brat note2 $label $id $any> ==
+		Gensym:<gensym '#'> <tab>
+		$label <sp>
+		$id <tab>
+		<brat note3 $any>
+		<nl>
+	<brat note2> ==
+	<brat note3 ']'> ==
+	<brat note3> == <brat note4>
+	<brat note4 $any> == $any <sp> <brat note3>
+	<brat note4> ==
+
+	<skipb [> == <skip>	
+		
+	<skip ] > == LocalPath:<>
+	<skip [ > == <skip <skip> .>
+	<skip> == <skip2>
+	<skip2 $any> == <skip>
+	<skip2> ==
+	
+	<skipline '\n'> == '\n' LocalPath:<>
+	<skipline> == <skipline2>
+	<skipline2 $$any> == <skipline>
+	<skipline2> ==
+	
+	<nextb [ > == <next>
+	
+	<next ] > == 
+	<next [ > == [ <next> ] <next <skip> .>
+	<next> == <next2>
+	<next2 $any> == $any <next>
+	<next2> ==
+	
+	<tail $any> == LocalPath:<>
+	<tail> ==
+.

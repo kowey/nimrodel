@@ -1,0 +1,79 @@
+
+#uses Local Add.
+
+%nimrodel.phraseutils.SKIP:<number-to-skip target-node target-model
+#hide nimrodel.phraseutils.SKIP.
+nimrodel.phraseutils.SKIP:
+	<> == elf.TOP:<>
+	<$$n $$p $$m> == Local:<$$p>
+	<$$n $$p $$m $$m nextrole> == <skip $$n $$p $$m nimrodel.LEX-TOP:<$$m parent .> nextrole>
+	<$$n $$p $$m $$m end-char> == <skip $$n $$p $$m nimrodel.LEX-TOP:<$$m parent .> end-char>
+	
+	<skip $$n $$p $$m $$parent> == Local:<$$p here $$parent nextn $$n $$parent>
+.
+
+% skip a known number of tokens and a lex - use this when you need to interpret the lex
+#hide nimrodel.phraseutils.SKIP-TOKENS-LEX.
+nimrodel.phraseutils.SKIP-TOKENS-LEX:
+	<> == elf.TOP
+	<$$n> == Local:<>
+	
+	<$$n $$p lex nextrole> == Local:<$$p here token nextn $$n lex next lex nextrole>
+	<$$n $$p lex end-char> == Local:<$$p here token nextn $$n lex next lex end-char>
+.
+
+#hide nimrodel.phraseutils.SKIP-TOKENS-PHR.
+nimrodel.phraseutils.SKIP-TOKENS-PHR:
+	<> == elf.TOP
+	<$$n> == Local:<>
+	
+	<$$n $$p $$phrase nextrole> == Local:<$$p here token nextn $$n $$phrase next $$phrase nextrole>
+	<$$n $$p $$phrase end-char> == Local:<$$p here token nextn $$n $$phrase next $$phrase end-char>
+.
+
+
+#hide nimrodel.phraseutils.NEXT.
+nimrodel.phraseutils.NEXT:
+	<0> == 
+	<1 $$m> == <here $$m next>
+	<2 $$m> == <1 $$m> <here $$m next $$m next>
+	<3 $$m> == <2 $$m> <here $$m next $$m next $$m next>
+	<4 $$m> == <3 $$m> <here $$m next $$m next $$m next $$m next>
+	<5 $$m> == <4 $$m> <here $$m next $$m next $$m next $$m next $$m next>
+	<> == <dynamic>
+	<dynamic> == elf.TOP:<>
+	<dynamic $$n $$m> == <Add:<-1 $$n.> $$m> <here <repeat $$n $$m .> >
+	
+	<repeat 0> ==
+	<repeat> == <repeat1>
+	<repeat1 $$n $$m> == $$m next <repeat Add:<-1 $$n.> $$m>
+	
+	<here> == LocalPath:<>
+.
+	
+% root node for possible phrases
+nimrodel.phraseutils.PHRASEROOT:
+	<> == elf.TOP
+	<$$n> == Local
+	
+	<$$n case default> == <$$n>
+	<$$n case skip $$m> == nimrodel.phraseutils.SKIP:< $$m $$n>
+	
+	<$$n map> == case default
+.
+
+
+#hide nimrodel.phraseutils.LEXOFPLACE.
+nimrodel.phraseutils.LEXOFPLACE:
+	<> == elf.TOP
+	<$$n> == Local:<>
+	
+	<$$n $$p lex> == <try ofplace $$n $$p lex>
+	
+	<try ofplace $$n $$p> == <IFEQ:< Local:<$$p here token nextn Add:<$$n 1.> token word .> of THEN try place ELSE case default .>  $$n $$p>
+	<try place $$n $$p> == <IFEQ:< Local:<$$p here token nextn Add:<$$n 2.> lex type .> 'Place' THEN case place ELSE try propn .>  $$n $$p>
+	<try propn $$n $$p> == <IFEQ:< Local:<$$p here token nextn Add:<$$n 2.> token casetype .> capitalised THEN case place ELSE case default .>  $$n $$p>				  
+	
+	<case place $$n $$p> == nimrodel.phraseutils.SKIP-TOKENS-LEX:<Add:<$$n 1.> $$p>
+	<case default $$n $$p> == nimrodel.phraseutils.SKIP:<$$n $$p lex>	
+.

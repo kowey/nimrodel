@@ -1,0 +1,41 @@
+%   File:       context.dtr
+%   Purpose:    Accessing contextual information (from the query)
+%   Author:     Roger Evans
+%   Version:    ELF 0.1
+%   Date:       27/03/10
+%
+%   (c) Copyright 2010, University of Brighton
+
+% elf.GET-CONTEXT provides information about the application context.
+% It does this by querying the <elf> subpath of the current query node.
+% Applications can provide their own context specifications by specifying
+% values for <elf> path extensions.
+
+#uses Local QueryNode.
+
+% elf.CONTEXT provides default settings for context.
+% It can be used as a default for an application's own context node
+% It is also used by elf.TOP as the fallback specification of <elf>.
+
+#hide elf.CONTEXT.
+elf.CONTEXT:
+    <> == elf.TOP
+    <version> == "elf.VERSION:<>"
+    <params> == "elf.PARAMS:<>"
+	<lookup> == "elf.LOOKUP:<>"
+    <display> == "elf.DISPLAY:<>"
+.
+
+
+#hide elf.GET-CONTEXT.
+elf.GET-CONTEXT:
+    <> == Local:<QueryNode elf>
+.
+
+
+#hide elf.LOOKUP.
+elf.LOOKUP:
+	<> == elf.TOP
+	<id $any> == $any
+.
+

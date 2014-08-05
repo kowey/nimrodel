@@ -1,0 +1,10 @@
+app.MAIN:<elf display> = 
+ ELF Simple Stemmer Pipeline Example   version   1 . 0   ( 19 August 2012 ) 
+ 
+ Simple stemmer as lexical description. 
+ This version is configured to run in a pipeline. 
+ Sample sentences are on standard input, one per line. 
+ The corresponding stems appear on standard output, one per line. 
+ 
+ Alternatively, a single sentence can be provided on the command line. 
+.

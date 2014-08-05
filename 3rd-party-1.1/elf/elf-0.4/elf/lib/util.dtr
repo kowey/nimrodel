@@ -1,0 +1,72 @@
+
+% some standard utilities
+
+#uses LocalPath.
+
+#atom THEN ELSE.
+#hide IF. 
+IF: <> == util.Util:<if> .
+
+#hide IFEQ. 
+IFEQ: <> == util.Util:<ifeq> .
+
+#hide EQUAL.
+EQUAL: <> == util.Util:<equal> .
+
+#hide ONEOF.
+ONEOF: <> == util.Util:<oneof> .
+
+#hide AND.
+AND: <> == util.Util:<and> .
+
+#hide OR.
+OR: <> == util.Util:<or> .
+
+#hide NOT.
+NOT: <> == util.Util:<not> .
+
+% implementation of utility functions
+#hide util.Util.
+util.Util:
+	<> ==
+	
+	<if **fail**> == <else>
+	<if> == <then>
+	<then THEN> == <then3>
+	<then> == <then2>
+	<then2 $any> == <then>
+	<then2> ==
+	<then3 ELSE> ==
+	<then3> == <then4>
+	<then4 $any> == $any <then3>
+	<then4> ==
+	<else ELSE> == LocalPath:<>
+	<else> == <else2>
+	<else2 $any> == <else>
+	
+	<ifeq $any $any> == <then>
+	<ifeq> == <else>
+	
+	<equal $any $any> == $any
+	<equal> == **fail**
+	
+	<oneof $any $any> == $any
+	<oneof $any> == <oneof2 $any>
+	<oneof> == **fail**
+	<oneof2 $any $any2> == <oneof $any>
+	<oneof2> == **fail**
+	
+	<and **fail**> == **fail**
+	<and> == <and2>
+	<and2 $any> == <and>
+	<and2> == **true**
+	
+	<or **fail**> == <or>
+	<or> == **true**
+	
+	<not **fail**> == **true** <not>
+	<not> == <not2>
+	<not2 $any> == **fail** <not>
+	<not2> == 
+.
+

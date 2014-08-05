@@ -1,0 +1,19 @@
+%   File:       app.dtr
+%   Purpose:    DATR loader for elf application code
+%   Author:     Roger Evans
+%   Version:    1.0
+%   Date:       21/12/2013
+%
+%   (c) Copyright 2013, University of Brighton
+
+% reset DATR system
+#reset.
+
+% load DATR source files
+#load
+	'$ELFAPP/src/[0-9]*/*.dtr' 	% phased loading of source files 
+	'$ELFAPP/version.dtr'		% app version
+    '$ELFAPP/main.dtr'        	% application wrapper
+.
+
+

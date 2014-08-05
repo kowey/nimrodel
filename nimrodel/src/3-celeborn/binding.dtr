@@ -1,0 +1,45 @@
+
+% semantic binding support
+
+#uses LocalPath.
+
+
+#hide nimrodel.binding.BINDINGROOT.
+nimrodel.binding.BINDINGROOT:
+	<> == nimrodel.LEXROOT
+	
+	<sem output $type> == <case <here sem status.> $type <here phrase output $type> .>
+	
+	<case complete $type> == LocalPath:<>
+	
+	<case incomplete> == <try loop 1>
+	
+	<try loop $n> == <test $n <here sem nextn $n phrase type .> >
+	
+	<test $n **endpoint** $type> ==  LocalPath:<>  % finished
+	<test $n unbound> == <try bind $n <here sem nextn $n phrase rel .> >
+	<test> == <test2> % skip anything that is not unbound
+	<test2 $n $any> == <try loop Add:<$n 1.> >
+	
+	<try bind $n $rel> == <try bind2 <here sem binding $rel <here sem nextn $n lex next phrase type.> .> $n $rel>
+	<try bind2 unknown $n $rel> == <try loop Add:<$n 1.> >
+	<try bind2 rev> == <try bind3 relrev>
+	<try bind2> == <try bind3 rel>
+	<try bind3 $reltype $newrel $n $rel $type> == 
+		<try loop Add:<$n 1 .> % continue loop, but with extra semantics in the tail
+			$type
+			[   rel 1 equals 
+				LocalPath:<>   % output for this entity
+				<rewrite $reltype $newrel $type <here sem nextn $n phrase output .> .>    % rewrite unbound entity as bound
+			]
+		.>
+	
+	% now creates new type 'bound', so doesn't use $type arg
+	<rewrite rel $newrel $type [ rel $f $rel [ entity unbound > ==
+		[ rel 1 $newrel [ entity bound <brat next> ] [ <brat nextb <brat skip> .> ] LocalPath:< <brat skipb <brat skip > .> .>
+	<rewrite relrev $newrel $type [ rel $f $rel [ entity unbound > ==
+		[ rel 2 $newrel [ <brat nextb <brat skip> .> ] [ entity bound <brat next> ] LocalPath:< <brat skipb <brat skip > .> .>
+	
+	<brat> == app.BRAT:<>
+	
+.

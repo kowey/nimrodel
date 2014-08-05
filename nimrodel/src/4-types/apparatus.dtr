@@ -1,0 +1,56 @@
+
+% apparatus - phrases to be ignored completely
+
+#uses Add First.
+
+
+nimrodel.apparatus.TRY-APPARATUS:
+	<> == nimrodel.TOP
+	<$node> == Local
+	<$node token type> == <try apparatus $node token type>
+	<$node lex> == <try apparatus $node lex>
+	<try apparatus> == < IFEQ:< nimrodel.LEXROOT:<token casetype> uppercase 
+						        THEN case apparatus
+						        ELSE try sentence .> >
+	<try sentence> == < IF:< AND:< EQUAL:< nimrodel.LEXROOT:<token casetype> capitalised .> 
+								   EQUAL:< nimrodel.LEXROOT:<token next token word> '.' .> .>
+						     THEN case apparatus
+							 ELSE case default .> >
+	
+	<case default $node> == Local:<$node>
+	<case apparatus $node> == nimrodel.apparatus.APPARATUS:<>
+.
+
+nimrodel.apparatus.APPARATUS:
+	<> == nimrodel.LEXROOT
+	<token type> == 'Apparatus'
+	<lex app-closer> == end-sent
+	<lex> == nimrodel.phraseutils.SKIP:< <findend 0 <here lex app-closer.> token next lex type .> 'nimrodel.LEXROOT' lex lex>
+	
+	<findend $$n $$s> == < <try $$s <here> .> $$n $$s>
+	
+	<try $$s $$s> == case found
+	<try $$s> == <try2>
+	<try2 **endpoint**> == case end
+	<try2> == case next
+	
+	<case found $$n> == Add:<1 $$n .>
+	<case end $$n> == $$n
+	<case next $$n $$s> == <findend Add:<1 $$n .> $$s token next>
+.
+
+nimrodel.apparatus.Nnote:
+	<> == nimrodel.apparatus.TRY-APPARATUS:<'nimrodel.LEXROOT'>
+	<lex app-closer> == end-doc % not defined, so search falls off end of document (as required)
+.
+
+nimrodel.apparatus.N\(:
+	<> == nimrodel.apparatus.APPARATUS
+	<lex app-closer> == \)
+.
+
+nimrodel.apparatus.N\):
+	<> == nimrodel.LEXROOT
+	<token type> == \)
+.
+

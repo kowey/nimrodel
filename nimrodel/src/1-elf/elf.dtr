@@ -1,0 +1,22 @@
+%   File:       load.dtr
+%   Purpose:    DATR loader for core example code
+%   Author:     Roger Evans
+%   Version:    0.1
+%   Date:       15/03/10
+%
+%   (c) Copyright 2010, University of Brighton
+
+%   load the ELF system and associated libraries
+
+#load
+	'$ELF/load.dtr'           		% main elf library
+	
+	'$ELF/lib/util.dtr'				% ELF utility functions
+	'$ELF/lib/posmap.dtr'		   	% mapping penn tags to simple tags
+	'$ELF/lib/stemmer.dtr'		   	% simple stemmer
+	'$ELF/lib/soundex.dtr'			% soundex codes
+
+	'$ELFROOT/opennlp/opennlpdatr.pl'
+	'$ELFROOT/hunspell/hunspelldatr.pl'
+.
+

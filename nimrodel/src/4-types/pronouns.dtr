@@ -1,0 +1,6 @@
+
+
+nimrodel.pro.Nhis:<> == nimrodel.LEXROOT
+	% his - pronoun or determiner?
+	<lex cat> == IF:< ONEOF:< <here token next lex cat .> n adj .> THEN det ELSE pro .>
+.

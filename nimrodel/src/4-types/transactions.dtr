@@ -1,0 +1,82 @@
+
+
+
+nimrodel.transaction.TRANSACTION-LOOKUP:
+	<> == **fail**
+	<$nimrodel-transactionstem> == 'nimrodel.transaction.TRANSACTIONROOT'
+.
+
+
+nimrodel.transaction.TRANSACTIONROOT:	
+	<> == nimrodel.LEXROOT:<>
+	
+	<token type> == 'Transaction'
+	
+	<sem output> == nimrodel.binding.BINDINGROOT
+	<sem status> == incomplete
+	<sem binding by 'Person'> == rev is_grantor_in
+	<sem binding by 'Institution'> == rev is_grantor_in
+	<sem binding to 'Person'> == rev is_recipient_in
+	<sem binding to 'Institution'> == rev is_recipient_in
+	<sem binding of 'Site'> == rev is_parcel_in
+.
+
+nimrodel.transaction.PHRASEROOT:
+	<> == nimrodel.phraseutils.PHRASEROOT:< 'nimrodel.transaction.TRANSACTIONROOT' >
+	<lex> == < here < here map nimrodel.context.NEXT:<2 token context .> .> lex>
+.	
+	
+
+nimrodel.transaction.Narticle:
+	<> == nimrodel.transaction.PHRASEROOT	
+	<map of agreement> == case skip 2 lex
+.
+
+
+nimrodel.transaction.Nassignment:
+	<> == nimrodel.transaction.PHRASEROOT	
+	<map of lease> == case skip 2 lex
+.
+
+
+nimrodel.transaction.Nbargain:
+	<> == nimrodel.transaction.PHRASEROOT	
+	<map and sale> == case skip 2 lex
+.
+
+
+nimrodel.transaction.Ndeed:
+	<> == nimrodel.transaction.PHRASEROOT	
+	<lex> == < < map nimrodel.context.NEXT:<6 token context .> .> lex>
+	<map for the division of the exchange> == case skip 6 lex
+.
+
+
+nimrodel.transaction.Nexchange:
+	<> == nimrodel.transaction.PHRASEROOT	
+	<map of land> == case skip 2 lex
+.
+
+
+nimrodel.transaction.Ngrant:
+	<> == nimrodel.transaction.PHRASEROOT	
+	<map of annuity> == case skip 2 lex
+.
+
+
+nimrodel.transaction.Npartition:
+	<> == nimrodel.transaction.PHRASEROOT	
+	<lex> == < < map nimrodel.context.NEXT:<6 token context .> .> lex>
+	<map of estate by lease or release> == case skip 6 lex
+.
+
+
+nimrodel.transaction.Nquitclaim:
+	<> == nimrodel.transaction.PHRASEROOT	
+	<map and receipt> == case skip 2 lex
+.
+
+nimrodel.transaction.Nrelease:
+	<> == nimrodel.transaction.PHRASEROOT	
+	<map and quitclaim> == case skip 2 lex
+.

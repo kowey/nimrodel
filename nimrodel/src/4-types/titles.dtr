@@ -1,0 +1,55 @@
+
+
+
+nimrodel.title.TITLE-LOOKUP:
+	<> == **fail**
+	<$nimrodel-titleword> == 'nimrodel.title.TITLE'
+.
+
+
+nimrodel.title.TITLEROOT:	
+	<$n> == nimrodel.LEXROOT:<>
+	
+	<$n token type> == title
+	<$n token pos> == title
+	
+	<$n lex title> == <here token word .>
+	
+	<$n lex> == <$n try firstname lex>
+	
+	<$n try firstname> == < IFEQ:< <$n here token nextn Add:<$n 1 .> lex type .> 'Person' 
+					     THEN $n case firstname
+					     ELSE $n try propnoun .> >
+	<$n try propnoun> == < IFEQ:< <$n here token nextn Add:<$n 1 .> token type .> propnoun
+					     THEN $n case firstname
+					     ELSE case default .> >
+	
+	<$n case firstname lex nextrole> == <$n here token nextn Add:<$n 1 .> lex nextrole .>
+	<$n case firstname lex end-char> == <$n here token nextn Add:<$n 1 .> lex end-char .>
+	<$n case firstname lex type> == 'Person'
+	<$n case firstname lex gender> == <$n here token nextn Add:<$n 1 .> lex gender>
+	<$n case firstname lex output> == <$n render attr4 lex title <$n here lex title.> <$n render extend lex <$n here token nextn Add:<$n 1 .> lex output> .> .>
+	
+	<$n case firstname> == <case default>
+	<case default> == nimrodel.LEXROOT:<>
+.
+
+
+nimrodel.title.TITLE:
+	<> == nimrodel.title.TITLEROOT:<0>
+.
+	
+
+nimrodel.title.Nmagister:
+	<> == nimrodel.title.TITLEROOT
+	<$n lex title> == magister
+.
+
+
+
+nimrodel.title.Nsaint:
+	<> == nimrodel.title.TITLEROOT
+	<$n lex title> == saint
+.
+
+

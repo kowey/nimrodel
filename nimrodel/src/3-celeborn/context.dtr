@@ -1,0 +1,26 @@
+% utilities for managing context indexing
+
+nimrodel.context.SKIP:
+	<> == elf.TOP
+	<0 $$m> == 
+	<1 $$m> == $$m next
+	<2 $$m> == $$m next $$m next
+	<3 $$m> == $$m next $$m next $$m next
+	<4 $$m> == $$m next $$m next $$m next $$m next
+	<5 $$m> == $$m next $$m next $$m next $$m next $$m next
+	<6 $$m> == $$m next $$m next $$m next $$m next $$m next $$m next
+.
+
+nimrodel.context.NEXT:
+	<> == <dynamic>
+	<here> == nimrodel.LEX-TOP
+	<1 $$model $$i> == <here $$model next <here $$model $$i 1> >
+	<2 $$model $$i> == <1 $$model $$i> <here $$model next $$model next <here $$model $$i 2> >
+	<3 $$model $$i> == <2 $$model $$i> <here $$model next $$model next $$model next <here $$model $$i 3> >
+	<4 $$model $$i> == <3 $$model $$i> <here $$model next $$model next $$model next $$model next <here $$model $$i 4> >
+	<5 $$model $$i> == <4 $$model $$i> <here $$model next $$model next $$model next $$model next $$model next <here $$model $$i 5> >
+	<6 $$model $$i> == <5 $$model $$i> <here $$model next $$model next $$model next $$model next $$model next $$model next <here $$model $$i 6> >
+
+	<dynamic> == nimrodel.TOP:<>
+	% no dynamic cases for now
+.

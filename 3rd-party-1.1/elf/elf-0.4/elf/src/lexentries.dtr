@@ -1,0 +1,30 @@
+%   File:       lexentries.dtr
+%   Purpose:    support for lexical entries
+%   Author:     Roger Evans
+%   Version:    ELF 0.1
+%   Date:       29/11/09
+%
+%   (c) Copyright 2009, University of Brighton
+
+%%  -- LEXICAL ENTRY DEFAULTS --
+
+#hide elf.MONOLINGUAL-ENTRY.
+elf.MONOLINGUAL-ENTRY:
+    <> == elf.RULE-NULL-HANDLER
+.
+
+%%  elf.MONOLINGUAL-ENTRY   the language-neutral content of monolingual lexical entries
+
+#hide elf.MONOLINGUAL-COMPOUND-ENTRY.
+elf.MONOLINGUAL-COMPOUND-ENTRY:
+    <> == elf.SENSE-HANDLER:<>
+    <display> == elf.DISPLAY:<sense-list.>
+.
+
+%%  elf.MULTILINGUAL-ENTRY a root node for nodes which draw together actual
+%%                       lexical entries for the different languages
+#hide elf.MULTILINGUAL-ENTRY.
+elf.MULTILINGUAL-ENTRY:
+    <> == elf.TOP
+    <$language> == elf.UNDEF
+.

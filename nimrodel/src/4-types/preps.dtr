@@ -1,0 +1,41 @@
+
+% prepositions
+
+nimrodel.prep.Nin:<> == nimrodel.LEXROOT
+	% in - check for 'in length' and 'in breadth' and treat as lexical prepositions
+	<lex> == <try dimension <here token next token word .> lex >
+	<sem> == <try dimension <here token next token word .> sem >
+	<try dimension $dim> == < IF:< ONEOF:< $dim length breadth>
+							  THEN case dimension $dim
+							  ELSE case default .> >
+	<case default> == nimrodel.LEXROOT:<>
+	<case dimension $dim lex cat> == prepp
+	<case dimension $dim lex type> == dimension
+	<case dimension $dim lex rel> == $dim
+	<case dimension $dim> == nimrodel.phraseutils.SKIP:<1 'nimrodel.LEXROOT' lex>
+	<case dimension $dim sem output> == nimrodel.binding.BINDINGROOT:<sem output>
+	<case dimension $dim sem status> == incomplete
+	<case dimension length sem binding from> == is_length_marker_to
+	<case dimension length sem binding to> == is_length_marker_to
+	<case dimension breadth sem binding from> == is_breadth_marker_to
+	<case dimension breadth sem binding to> == is_breadth_marker_to
+.
+
+nimrodel.prep.Non:<> == nimrodel.LEXROOT
+	% on - check for 'on behalf of' and treat as a lexical preposition
+	<lex> == < IFEQ:< <here token next token word .> behalf
+			   THEN case behalf
+			   ELSE case default .> lex>
+	<case default> == nimrodel.LEXROOT:<>
+	<case behalf> == < IFEQ:< <here token next token next token word .> of 
+					   THEN case behalfof
+					   ELSE case default .> >
+	<case behalfof lex cat> == prep
+	<case behalfof lex id> == onbehalfof
+	<case behalfof> == nimrodel.phraseutils.SKIP:<2 'nimrodel.LEXROOT' lex>
+.
+
+nimrodel.prep.Nto:<> == nimrodel.LEXROOT
+	% adjust pos - treat as prep unless followed by verb or adv
+	<token pos> == IF:< ONEOF:< <here token next token pos .> v adv .> THEN to ELSE prep>
+.

@@ -1,0 +1,89 @@
+
+% regular transaction words - these can just use the TRANSACTIONROOT node directly 
+#vars $nimrodel-transactionstem: 
+	absolution
+	acknowledgment
+	admission
+	agreement
+	appeal
+	appointment
+	appropriation
+	arbitration
+	% article
+	% article of agreement
+	assessment
+	% assignment
+	% assignment of lease
+	% bargain
+	% bargain and sale
+	bond
+	commendation
+	%%%court record
+	confirmation
+	consent
+	covenant
+	custody
+	dedication
+	% deed
+	% deed for the division of the exchange
+	deposit
+	demise
+	division
+	election
+	% exchange
+	% exchange of lands
+	%%%extent of lands
+	feoffment	
+	%%%final concord
+	foundation
+	fraternity
+	frant
+	% grant
+	% grant of annuity	
+	indulgence
+	inquest
+	inspeximus
+	institution
+	lease
+	lease
+	%%%lease, for lives	
+	%%%letter of proxy
+	%%% ?letters 'Patent' from the crown	
+	license
+	presentation
+	protection
+	maintenance
+	mandate
+	manumission
+	memorandum
+	notification
+	oath
+	obligatio
+	ordinatio
+	% partition
+	% partition of estates by partition or lease
+	perambulation
+	petition
+	%%%pleas of the crown
+	pledge
+	presentation
+	promise
+	%%%quit charges
+	quitclaim
+	% quitclaim
+	% quitclaim and receipt
+	receipt
+	%release
+	%release and quitclaim
+	renunciation
+	restitution
+	ruling
+	sale
+	settlement
+	submission
+	taxation
+	testimony
+	verdict
+	% warranty
+	will
+.

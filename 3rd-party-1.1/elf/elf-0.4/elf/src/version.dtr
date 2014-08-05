@@ -1,0 +1,20 @@
+%   File:       version.dtr
+%   Purpose:    Specification of the ELF version information
+%   Author:     Roger Evans
+%   Version:    ELF 0.1
+%   Date:       26/09/2011
+%
+%   (c) Copyright 2011, University of Brighton
+
+% elf.VERSION - default version information for elf package
+
+#hide elf.VERSION.
+elf.VERSION:
+    <> == elf.TOP
+    <display> == elf.display.VERSION
+
+    <package> == elf
+    <major> == 0
+    <minor> == 1
+    <date> == '26 September 2011'
+.

@@ -1,0 +1,44 @@
+
+% regular placename words - these can just use the PLACENAMEROOT node directly 
+#vars $nimrodel-placenameword:  
+	% VC
+	york
+	ravenserodde
+	petergate
+	% WARD2
+	abberton
+	aldham
+	berechurch
+	boxsted
+	boxted
+	brantham
+	cambridgeshire
+	colchester
+	essex
+	faulkbourne
+	fingringhoe
+	fordham
+	gosbecks
+	%Great Fordham
+	%%%Great Stanway
+	hertfordshire
+	%%%Layer-de-la-Haye
+	lexden
+	leyham
+	london
+	%Mount Bures
+	myland
+	parish
+	potonbredge
+	salcott
+	stanway
+	%%%Stoke by Nayland
+	suffolk
+	%Wakes Colne
+	walden
+	%West Bergholt
+	westminster
+	wethermontford
+	wormingford
+	yoyesbredge
+.

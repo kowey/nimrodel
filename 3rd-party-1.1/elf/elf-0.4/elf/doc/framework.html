@@ -1,0 +1,1679 @@
+<html>
+<head>
+<title>
+    GREG Lexicon Framework
+</title>
+</head>
+<body bgcolor=white>
+
+<center>
+<h1> The GREG Lexicon Framework </h1>
+
+<h2> <a href=mailto:Roger.Evans@itri.bton.ac.uk>Roger Evans</a> </h2>
+
+<a href=http://www.itri.bton.ac.uk>Information Technology Research
+Institute</a><br>
+<a href=http://www.bton.ac.uk>University of Brighton</a><br><br>
+<i>Version DRAFT, 1 February 2000</i>
+</center>
+
+
+<a name="Overview"><hr></a><h2>Overview</h2>
+
+<a name="The GREG Lexicon"><h3>The GREG Lexicon</h3></a>
+
+<a name="The implementation framework"><h3>The implementation framework</h3></a>
+
+<a name="Document structure"><h3>Document structure</h3></a>
+
+<ul>
+<li><a href="#Overview"></a>Overview
+<ul>
+<li><a href="#The GREG Lexicon">The GREG Lexicon</a>
+<li><a href="#The implementation framework">The implementation framework</a>
+<li><a href="#Document structure">Document structure</a>
+<li><a href="#Caveat">Caveats</a>
+</ul>
+<li><a href="#The GREG lexicon"></a>The GREG lexicon
+<ul>
+<li><a href="#The structure of lexical entries">The structure of lexical entries</a>
+<li><a href="#Rules and rule application">Rules and rule application</a>
+<li><a href="#Representation of DAGS">Representation of DAGS</a>
+<li><a href="#Representation of re-entrancy">Representation of re-entrancy</a>
+<li><a href="#Details of entry structure">Details of entry structure</a>
+<li><a href="#Open issues">Open issues</a>
+<li><a href="#Names for table entries"><i>Names for table entries</i></a>
+<li><a href="#Syntax/semantics asymmetry"><i>Syntax/semantics asymmetry</i></a>
+<li><a href="#Detailed internal structure of syntactic/semantic features"><i>Detailed internal structure of syntactic/semantic features</i></a>
+</ul>
+<li><a href="#Tutorial on lexicon development"></a>Tutorial on lexicon development
+<ul>
+<li><a href="#Starting up">Starting up</a>
+<li><a href="#Exploring the examples provided">Exploring the examples provided</a>
+<li><a href="#The examples"><i>The examples</i></a>
+<li><a href="#Displaying lexical entries"><i>Displaying lexical entries</i></a>
+<li><a href="#Applying rules"><i>Applying rules</i></a>
+<li><a href="#Finding definitions"><i>Finding definitions</i></a>
+<li><a href="#Creating your own lexicon">Creating your own lexicon</a>
+<li><a href="#Adding new lexical entries"><i>Adding new lexical entries</i></a>
+<li><a href="#Sharing structure between languages"><i>Sharing structure between languages</i></a>
+<li><a href="#Components of a lexical entry definition"><i>Components of a lexical entry definition</i></a>
+<li><a href="#Adding a new complement type"><i>Adding a new complement type</i></a>
+<li><a href="#Adding a new subcat frame"><i>Adding a new subcat frame</i></a>
+<li><a href="#Adding a new semantic frame"><i>Adding a new semantic frame</i></a>
+<li><a href="#Adding a new valency mapping"><i>Adding a new valency mapping</i></a>
+</ul>
+<li><a href="#The GREG Lexicon Framework"></a> The GREG Lexicon Framework
+<ul>
+<li><a href="#Overview">Overview</a>
+<li><a href="#Organisation">Organisation</a>
+<li><a href="#Lexical entries">Lexical entries</a>
+<li><a href="#Tables">Tables</a>
+<li><a href="#VALENCY"><i>VALENCY</i></a>
+<li><a href="#SEMANTICS"><i>SEMANTICS</i></a>
+<li><a href="#SYNTAX"><i>SYNTAX</i></a>
+<li><a href="#COMPLEMENT"><i>COMPLEMENT</i></a>
+<li><a href="#Rules">Rules</a>
+<li><a href="#Debugging and displaying">Debugging and displaying</a>
+<li><a href="#Known bugs and further development">Known bugs and further development</a>
+<li><a href="#smarter output routines"><i>smarter output routines</i></a>
+<li><a href="#Support for non iso-latin-1"><i>Support for non iso-latin-1</i></a>
+</ul>
+<li><a href="#Advanced topics"></a>Advanced topics
+<ul>
+<li><a href="#Organising information into hierarchies">Organising information into hierarchies</a>
+<li><a href="#Adding a new language">Adding a new language</a>
+<li><a href="#Adding a new table">Adding a new table</a>
+<li><a href="#Rules">Rules</a>
+<li><a href="#Implementation issues">Implementation issues</a>
+</ul>
+<li><a href="#Appendix 1 - Reference Information"></a>Appendix 1 - Reference Information
+<ul>
+<li><a href="#File organisation">File organisation</a>
+<li><a href="#Runtime parameters">Runtime Parameters</a>
+<li><a href="#Node naming conventions">Node naming conventions</a>
+<li><a href="#Node definitions reference">Node definitions reference</a>
+</ul>
+<li><a href="#Appendix 2 - DATR Introduction"></a>Appendix 2 - DATR Introduction
+</ul>
+
+<a name="Caveat"><h3>Caveats</h3></a>
+
+<p>The linguistic content of the current distribution version of the
+system is purely illustrative. The detailed design of the feature
+system, names of thematic roles, rules to be applied etc. remains for
+futre work within the GREG project.
+
+<p>This document currently describes use of the framework running in
+DATR-2.8 under Poplog Prolog. The framework has not yet been tested
+under any other conditions: it is unlikely that it will run on other
+DATR implementations (because it uses built-in functions that have only
+recently become standard parts of DATR). It may well run under other
+prolog systems, but in our tutorial information we exploit Poplog
+Prolog's 'immediate mode' facility which allows us to work purely within
+DATR itself.
+
+<a name="The GREG lexicon"><hr></a><h2>The GREG lexicon</h2>
+
+<a name="The structure of lexical entries"><h3>The structure of lexical entries</h3></a>
+
+<a name="Rules and rule application"><h3>Rules and rule application</h3></a>
+
+<a name="Representation of DAGS"><h3>Representation of DAGS</h3></a>
+
+<a name="Representation of re-entrancy"><h3>Representation of re-entrancy</h3></a>
+
+<a name="Details of entry structure"><h3>Details of entry structure</h3></a>
+
+<a name="Open issues"><h3>Open issues</h3></a>
+
+<a name="Names for table entries"><h3><i>Names for table entries</i></h3></a>
+
+<a name="Syntax/semantics asymmetry"><h3><i>Syntax/semantics asymmetry</i></h3></a>
+
+<a name="Detailed internal structure of syntactic/semantic features"><h3><i>Detailed internal structure of syntactic/semantic features</i></h3></a>
+
+
+<a name="Tutorial on lexicon development"><hr></a><h2>Tutorial on
+lexicon development</h2>
+
+These tutorial notes introduce some of the basic structure of the
+framework and the example lexical entries provided. In the example
+scripts, what you type is in <b>bold</b>, system responses are ordinary
+text. In places where system responses are skipped or approximate, these
+are marked in <i>italic</i>.
+
+
+<a name="Starting up"><h3>Starting up</h3></a>
+
+There are three step to starting up the system: running prolog, loading
+DATR and loading the framework code. The following instructions assume
+that Poplog Prolog and DATR-2.8 are already installed on your system and
+accessible to you.
+
+<table width=100%>
+<tr><td colspan=2><hr></td></tr>
+<tr valign=top>
+<td width=70%>
+<pre>
+% <b>cd <i>greg directory</i></b>
+% <b>prolog %x</b>
+<em>startup messages</em>
+
+Setprolog
+?-
+</td>
+<td width=30%>
+<small>
+<b>on a Unix system</b> running Xwindows, cd to the greg directory and
+invoke prolog. The %x flag tells it to use separate windows for edit
+buffers. Omit it on a plain terminal (eg a telnet session).
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+C:> <b>cd Program Files/Poplog/pop/pop</b>
+C:> <b>winpop11 +startup +prolog</b>
+<em>startup messages</em>
+
+Setprolog
+?- <b>^G cd <i>greg directory</i></b>
+</pre>
+</td>
+<td width=30%>
+<small>
+<b>on a Windows PC</b>, run these commands in DOS prompt window.
+(Alternatively make a shortcut to the winpop11 executable with the
+command line args +startup +prolog.) This command starts up a new winodw
+with the prolog start-up messages. Once inside prolog, type ctrl G (^G)
+to go to the "command line" and give a 'cd' command there.
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+?- <b>library(datr).</b>
+<i>DATR (version 2.8)
+startup messages</i>
+
+yes
+?-
+</pre>
+</td>
+<td width=30%>
+<small>
+This command loads the DATR system. Note that we will not be using the
+DATR user interface support library mentioned in the startup
+message (only type 'datr_help' if you are curious.)
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=30%>
+<pre>
+?- <b>im output.dtr</b>
+
+DATR reset
+
+==
+</pre>
+</td>
+<td width=70%>
+<small>
+This command gives us a Poplog 'immediate mode' buffer - an editor
+window running a DATR top level command loop. This buffer will appear
+either as a separate window (X windows) or as a split screen window (PC
+Windows). <tt>==</tt> is the DATR top level prompt.
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+== <b>#load 'greg.dtr'.</b>
+greg.dtr
+declare.dtr
+infrastructure.dtr
+display.dtr
+features.dtr
+lexical-entry.dtr
+complements.dtr
+syntax.dtr
+semantics.dtr
+valency.dtr
+abstract.dtr
+georgian.dtr
+russian.dtr
+english.dtr
+german.dtr
+==
+</pre>
+</td>
+<td width=30%>
+<small>
+Load the GREG lexicon. DATR announces each file as it is loaded.
+Make sure you put the quotes in and finish with a period.
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+== <b>EAT/E:&lt;display>?</b>
+<small>
+EAT/E:&lt;display> =
+ citation eat
+ key eat-101
+ sign
+    syntax
+      category verb
+      subcat
+        first
+          syntax
+            category np
+            case nom
+          semantics = semantics thematic agent
+        rest
+          first
+            syntax
+              category np
+              case acc
+            semantics = semantics thematic patient
+    semantics
+      predicate eat
+      thematic
+        agent
+          predicate undefined
+        patient
+          predicate undefined
+.
+</small>
+==
+</pre>
+</td>
+<td width=30%>
+<small>
+Test the framework. Here we ask the node <tt>EAT/E</tt> (English 'eat')
+to display itself. The result is a feature structure represented as an
+indented list.
+<p>Each line starts with an attribute name. The value is either on the
+same line, or the entire structure indented two spaces starting on the
+line below. Re-entrancies are specified with '=' and the re-entrant
+path.
+
+<p> The first two are the citation form, and the key (reference to GREG
+master table). The rest of the entry is a <tt>sign</tt> with syntactic
+category <tt>verb</tt>, and two subcategorised noun-phrases -
+nominative, re-entrant with the semantic agent and accusative,
+re-rentrant with the semantic patient.
+<p>Semantically, the main predicate is <tt>eat</tt>, and there are two
+defined roles, but with undefined predicates.
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+== <b>EAT/D:&lt;display>?</b>
+== <b>EAT/E:&lt;passive display>?</b>
+== <b>DRINK/E:&lt;display>?</b>
+</pre>
+</td>
+<td width=30%>
+<small>
+A few other queries to try - German Eat, and English Eat in its passive
+form and English Drink. Notice that DATR queries end with a question
+mark, definitions and instructions with a period.
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+</table>
+
+
+
+<a name="Exploring the examples provided"><h3>Exploring the examples provided</h3></a>
+
+<a name="The examples"><h3><i>The examples</i></h3></a>
+
+The distribution system contains a tiny example lexicon, containing two
+words ('eat' and 'drink') in each of two languages (English and German),
+and two lexical rules (passive and implicit-object) that apply to them.
+However this is sufficient to demonstrate the key features of the
+framework.
+
+<p><em>Note: we include the lexical rules to show how they are invoked.
+We will not consider adding new lexical rules in thes tutorial
+section.</em>
+
+<a name="Displaying lexical entries"><h3><i>Displaying lexical entries</i></h3></a>
+
+<table>
+<tr><td colspan=2><hr></td></tr>
+<tr valign=top>
+<td width=70%>
+<pre>
+== <b>EAT/E:&lt;display indent>?</b>
+== <b>EAT/E:&lt;display bracket>?</b>
+== <b>EAT/E:&lt;display showall>?</b>
+== <b>EAT/E:&lt;display show>?</b>
+</pre>
+</td>
+<td width=30%>
+<small>
+There are essentially four different ways to view a whole lexical entry,
+as shown here for <tt>EAT/E</tt>.
+<p><b>indent</b> is the form we saw in the previous section
+<br><b>bracket</b> returns a value as a bracketed list
+<br><b>showall</b> gives a value as a set of equations (some of which
+have valie <tt>**fail**</tt>
+<br><b>show</b> gives just the non-failing equations
+<p> As we saw above, if you don't specify a form, the default is
+<b>indent</b>.
+<p>Try these four out. Notice that they all give essentially the same
+information in different formats.
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+<small>
+== <b>EAT/E:&lt;entry sign syntax category value>?</b>
+EAT/E:&lt;entry sign syntax category value> = verb.
+==
+</small>
+</pre>
+</td>
+<td width=30%>
+<small>
+
+The format that is closest to the way DATR describes the entry is
+<b>show</b> - DATR is an <em>equational</em> description logic. So
+you can ask DATR for values of individual attribute paths with queries
+like this one. (The final <tt>value</tt> attribute is a feature of the
+framework, not DATR itself.)
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+== <b>EAT/E:&lt;entry sign syntax>?</b>
+EAT/E:&lt;entry sign syntax> = **fail**.
+==
+</pre>
+</td>
+<td width=30%>
+<small>
+Notice that you can only sensibly give indivdual queries for the
+atomic-valued features - DATR has no internal notion of a complex
+feature struture as a single object, so if you try to get, say, the
+<tt>syntax</tt> feature, it fails.
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+</table>
+
+<a name="Applying rules"><h3><i>Applying rules</i></h3></a>
+
+<table>
+<tr><td colspan=2><hr></td></tr>
+<tr valign=top>
+<td width=70%>
+<pre>
+<small>
+== <b>EAT/E:&lt;passive display>?</b>
+ citation eat
+ key eat-101
+ sign
+    syntax
+      category verb
+      subcat
+        first
+          syntax
+            category np
+            case nom
+          semantics = semantics thematic patient
+        rest
+          first
+            syntax
+              category pp
+              form by
+            semantics = semantics thematic agent
+    semantics
+      predicate eat
+      thematic
+        agent
+          predicate undefined
+        patient
+          predicate undefined
+.
+</small>
+</pre>
+</td>
+<td width=30%>
+<small>
+In most of our examples so far, we have picked a node (corresponding to
+a lexical entry) and asked it to display itself. But in fact, each node
+does ot represent just one lexical entry but a whole set of
+entries, related by rules. We have been looking at the base form of the
+entry, but we can also look at other forms.
+<p>We do this by prefixing rule names to the query path. Here, for
+example, we prefix <tt>passive</tt> and recover a passive entry: notice
+the second complement is now a by-pp phrase, and the thematic role
+re-entrancy specifications have swapped round. Try the same for German.
+
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+<small>
+== <b>EAT/E:&lt;implicit-object display>?</b>
+EAT/E:<implicit-object display> =
+ citation eat
+ key eat-101
+ sign
+    syntax
+      category verb
+      subcat
+        first
+          syntax
+            category np
+            case nom
+          semantics = semantics thematic agent
+    semantics
+      predicate eat
+      thematic
+        agent
+          predicate undefined
+        patient
+          predicate undefined
+.
+==
+</small>
+</pre>
+</td>
+<td width=30%>
+<small>
+Here we apply our other rule <tt>implicit-object</tt>. This takes a
+transitive verb and makes the object implicit - not realised in the
+syntax but still present as a semantic role.
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+<small>
+== <b>EAT/E:&lt;implicit-object passive display>?</b>
+EAT/E:<implicit-object passive display> =
+ citation eat
+ key eat-101
+ sign
+    syntax
+      category verb
+      subcat
+        first
+          syntax
+            category np
+            case nom
+          semantics = semantics thematic patient
+    semantics
+      predicate eat
+      thematic
+        agent
+          predicate undefined
+        patient
+          predicate undefined
+.
+==
+</small>
+</pre>
+</td>
+<td width=30%>
+<small>
+Finally we chain the rules together, applying <tt>implicit-object</tt>
+to the output of <tt>passive</tt>. Because our passive rule inserted the
+by-pp into the subcat slot usually used by the direct object, our
+implicit-object rule just deletes this by-pp. The only noticeable
+difference from the previous case is thus the assignment of thematic
+role to syntactic subject.
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+</table>
+
+<a name="Finding definitions"><h3><i>Finding definitions</i></h3></a>
+
+In this section we look more closely at the DATR definitions that lie
+behind these examples, chasing through the framework definitions to the
+more abstract levels.
+
+<table>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+EAT/E:
+    &lt;> == LEXICAL-ENTRY/E:&lt;>
+    &lt;entry> == EAT:&lt;>
+    &lt;entry citation value> == eat
+.
+</pre>
+</td>
+<td width=30%>
+<small>
+<tt>EAT/E</tt> is defined in <tt>english.dtr</tt>. Notice how minimal
+the definition is. The first line identifies the node as a subclass of
+<em>English</em> lexical entries - from here it derives most of its
+language-specific information. The second line inherits the actual base
+entry information from <tt>EAT</tt>. This is the multilingual 'eat'
+node, found in <tt>abstract.dtr</tt>. The final line gives the one peice
+of information specific to this node - its citation form.
+<p>Compare this definition with <tt>DRINK/E</tt> in the same file and
+the German equivalents. Try writing a Georgian or
+Russian version - the files georgain.dtr and russian.dtr exist, but are
+currently empty.
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+EAT:
+    &lt;> == CONSUME-VERB:&lt;>
+    &lt;key value> == eat-101
+    &lt;sign semantics predicate value>
+        == eat
+.
+
+
+
+
+
+
+
+
+
+CONSUME-VERB:
+    &lt;> == ENTRY-F:&lt;>
+    &lt;sign> == VALENCY:&lt;aptrans>
+.
+</pre>
+</td>
+<td width=30%>
+<small>
+Let us pursue <tt>EAT</tt> first, defined in <tt>abstract.dtr</tt>. This
+file defines a tiny hierarchy of abstract verb types. The common
+information shared by abstract <tt>EAT</tt> and <tt>DRINK</tt> is
+defined in a node called <tt>CONSUME-VERB</tt>. Of course, a real
+hierarchy would be much more complicated.
+<p><tt>EAT</tt> itself defines just its key (this is its reference in
+the GREG verb table - but the value here is made up), and its sematic
+predicate. The rest is common to all 'consume' verbs.
+<p><tt>CONSUME-VERB</tt> specifies that the structure defined here is an
+instance of <tt>ENTRY-F</tt> - an <tt>entry</tt> feature structure
+(recall that <tt>EAT</tt> was invoked from the &lt;entry> path of
+<tt>EAT/E</tt>). It also specifies its <tt>sign</tt> as the valency
+mapping 'aptrans' ("agent/patient transitive"). This is our first
+example of <em>table lookup</em>.
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+EAT/E:
+    &lt;entry citation value> = eat
+    &lt;entry key value> = eat-101
+    &lt;entry sign semantics predicate value>
+        = eat
+    &lt;language> == english
+</pre>
+</td>
+<td width=30%>
+<small>
+Here are some of the facts we now know about <tt>EAT/E</tt>.
+The first line is defined in <tt>EAT/E</tt> itself. The second and third
+lines are inherited from <tt>EAT</tt>. The fourth is inherited from
+<tt>LEXICAL-ENTRY/E</tt>, though we have not discussed it.
+<p>Notice how the full definition of <tt>EAT/E</tt> is built up out of
+facts inherited from different places in the network. Notice also the
+use of single '=' in statements that represent facts <em>known</em>
+about a node, rather than facts <em>defined</em> at a node.
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+VALENCY-TABLE:
+    &lt;> == *TABLE*:&lt;>
+    &lt;aptrans> == "VALENCY-APTRANS:&lt;>"
+.
+
+
+VALENCY-TABLE/E:
+    &lt;> == VALENCY-TABLE:&lt;>
+.
+
+
+
+VALENCY-TABLE/D:
+    &lt;> == VALENCY-TABLE:&lt;>
+.
+</pre>
+</td>
+<td width=30%>
+<small>
+Where is the rest of <tt>EAT/E</tt> defined? Via that mysterious
+<tt>VALENCY:&lt;aptrans></tt> specification of course. <tt>VALENCY</tt>
+is our first encounter with some DATR that is slightly less
+straightforward. We will not go into details here, but the effect of
+<tt>VALENCY</tt> is to access valency information held in valency
+<em>tables</em>. Here we see the valency table definitions.
+<p>Notice that valency tables are <em>language-dependent</em> but here
+we define them to inherit from a common language-independent table, and
+in fact this is the only one with anything in it. The tables provide
+mappings from the names of valency mappings (here 'aptrans')
+to nodes that define them (here <tt>VALENCY-APTRANS</tt>).
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+<small>
+VALENCY-APTRANS:
+    &lt;> == VALENCY-AINTRANS:&lt;>
+    &lt;semantics> == SEMANTICS:&lt;agent-patient>
+    &lt;syntax> == SYNTAX:&lt;transitive>
+    &lt;equate syntax subcat rest first semantics>
+        == semantics thematic patient
+.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+VALENCY-AINTRANS:
+    &lt;> == SIGN-F:&lt;>
+    &lt;semantics> == SEMANTICS:&lt;agent>
+    &lt;syntax> == SYNTAX:&lt;intransitive>
+    &lt;equate syntax subcat first semantics>
+        == semantics thematic agent
+.
+</small>
+</pre>
+</td>
+<td width=30%>
+<small>
+Here we see the definition of <tt>VALENCY-APTRANS</tt>. Once again, it
+is not an isolated definition, but part of a heirarchy -
+<tt>VALENCY-APTRANS</tt> extends <tt>VALENCE-AINTRANS</tt>, the valency
+mapping for agent intransitives.
+<p>Valency mappings define <tt>sign</tt> feature structures. They do
+this by defining <tt>syntax</t> and <tt>semantics</tt> and then
+establishing the re-entrancies that link subcategorised complements
+in the syntax to thematic roles in the semantics.
+<p>Look at <tt>VALENCY-AINTRANS</tt> first. It defines itself as an
+instance of <tt>SIGN-F</tt> with semantics 'agent' and syntax
+'intransitive'. These are table look-ups, just like our original
+<tt>VALENCY:&lt;aptrans></tt> specification. It then establishes the
+re-entrancy via the <tt>equate</tt> statement.
+<p><tt>VALENCY-APTRANS</tt> extends this, overriding the syntax and
+semantics specifications with transitve versions, and adding another
+re-entrancy equation.
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+<small>
+SEMANTICS-AGENT-PATIENT:
+    &lt;> == SEMANTICS-AGENT:&lt;>
+    &lt;thematic patient> == SEMANTICS-F:&lt;>
+.
+
+
+
+
+
+
+SEMANTICS-AGENT:
+    &lt;> == SEMANTICS-F:&lt;>
+    &lt;thematic agent> == SEMANTICS-F:&lt;>
+.
+</small>
+</pre>
+</td>
+<td width=30%>
+<small>
+As with <tt>VALENCY</tt> the inheritance through
+<tt>SEMANTICS:&lt;agent-patient></tt> leads us to the node
+<tt>SEMATICS-AGENT-PATIENT</tt> shown here. All this does is declare the
+existence of the patient role, inheriting similar information about the
+agent role from <tt>SEMANTICS-AGENT</tt>. Although these roles have no
+interesting content, they are sufficiently specified to distinguish them
+from non-existent roles.
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+<small>
+SYNTAX-VERB-OBJECT:
+    &lt;> == SYNTAX-VERB:&lt;>
+    &lt;subcat rest> == SUBCAT-LIST-F:&lt;>
+    &lt;subcat rest first> == COMPLEMENT:&lt;object>
+    &lt;subcat rest rest> == SUBCAT-NULL-F:&lt;>
+.
+
+
+
+SYNTAX-VERB:
+    &lt;> == SYNTAX-F:&lt;>
+    &lt;category value> == verb
+    &lt;subcat> == SUBCAT-LIST-F:&lt;>
+    &lt;subcat first> == COMPLEMENT:&lt;subject>
+    &lt;subcat rest> == SUBCAT-NULL-F:&lt;>
+.
+</small>
+</pre>
+</td>
+<td width=30%>
+<small>
+The syntax table and definitions are organised in just the same we. Here
+we see the ditransitive <tt>SYNTAX-VERB_OBJECT</tt> defined in terms of
+the intransitive <tt>SYNTAX-VERB</tt>. The main task of the syntax nodes
+is to build up the subcat list (a <tt>first/rest</tt> feature structure
+list). This is achieved with a combination of feature type node
+specifications (<tt>SUBCAT-LIST-F</tt> to extend a list,
+<tt>SUBCAT-NULL-F</tt> to terminate it) and complement specifications,
+which are defined by yet another table, <tt>COMPLEMENT</tt>.
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+<small>
+COMPLEMENT-TABLE:
+    &lt;> == *TABLE*:&lt;>
+
+    &lt;np> == "NP-ACC:&lt;>"
+    &lt;subject> == "NP-NOM:&lt;>"
+    &lt;object> == "NP-ACC:&lt;>"
+    &lt;iobject> == "NP-DAT:&lt;>"
+.
+
+
+COMPLEMENT-TABLE/D:
+    &lt;> == COMPLEMENT-TABLE:&lt;>
+
+    &lt;passive-agent> == "PP-VON/D:&lt;>"
+.
+
+
+COMPLEMENT-TABLE/E:
+    &lt;> == COMPLEMENT-TABLE:&lt;>
+
+    &lt;iobject> == "PP-TO/E:&lt;>"
+    &lt;passive-agent> == "PP-BY/E:&lt;>"
+.
+</small>
+</pre>
+</td>
+<td width=30%>
+<small>
+Before looking at complement definitions, here are the the
+complement tables - the only tables with any interesting structure,
+currently. Here we see a language-independent default mapping from
+grammtical role names to cases. The German tabe extends this with a
+passiv agent phrase, while the English table does this but also
+overrides the assignment of dative for <tt>iobject</tt>, using a to-pp
+instead. In this way we achieve a model of 'generalised case' in our
+handling of complements.
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+<small>
+NP-COMPLEMENT:
+    &lt;> == SIGN-F:&lt;>
+    &lt;syntax category value> == np
+.
+
+
+
+NP-NOM:
+    &lt;> == NP-COMPLEMENT:&lt;>
+    &lt;syntax case value> == nom
+.
+
+
+NP-ACC:
+    &lt;> == NP-COMPLEMENT:&lt;>
+    &lt;syntax case value> == acc
+.
+
+
+PP-COMPLEMENT:
+    &lt;> == SIGN-F:&lt;>
+    &lt;syntax category value> == pp
+.
+
+
+PP-TO/E:
+    &lt;> == PP-COMPLEMENT:&lt;>
+    &lt;syntax form value> == to
+.
+</small>
+</pre>
+</td>
+<td width=30%>
+<small>
+The information stored about complements is quite minimal, so they have
+straightforward definitions. Notice that they are all instance of
+<tt>sign</tt> and so could have arbitrary syntax andsemantic of their
+own. However, they are currently modelled very simply: pp's have no
+internal structure, even when the preposition is semantically null.
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+
+<tr valign=top>
+<td width=70%>
+<pre>
+EAT/E
+EAT
+CONSUME-VERB
+VALENCY-APTRANS
+SEMANTICS-AGENT-PATIENT
+SYNTAX-VERB-OBJECT
+NP-NOM
+NP-ACC
+</pre>
+</td>
+<td width=30%>
+<small>
+We have now covered all the definitions that make up <tt>EAT/E</tt>.
+This list gives the rough dependency order, leaving out the table
+look-ups and feature structure details.
+</small>
+</td>
+</tr>
+<tr><td colspan=2><hr></td></tr>
+</table>
+
+<a name="Creating your own lexicon"><h3>Creating your own lexicon</h3></a>
+
+<a name="Adding new lexical entries"><h3><i>Adding new lexical entries</i></h3></a>
+
+<a name="Sharing structure between languages"><h3><i>Sharing structure between languages</i></h3></a>
+
+<a name="Components of a lexical entry definition"><h3><i>Components of a lexical entry definition</i></h3></a>
+
+<a name="Adding a new complement type"><h3><i>Adding a new complement type</i></h3></a>
+
+<a name="Adding a new subcat frame"><h3><i>Adding a new subcat frame</i></h3></a>
+
+<a name="Adding a new semantic frame"><h3><i>Adding a new semantic frame</i></h3></a>
+
+<a name="Adding a new valency mapping"><h3><i>Adding a new valency mapping</i></h3></a>
+
+
+<a name="The GREG Lexicon Framework"><hr></a> <h2>The GREG Lexicon
+Framework</h2>
+
+<a name="Overview"><h3>Overview</h3></a>
+
+<a name="Organisation"><h3>Organisation</h3></a>
+
+<a name="Lexical entries"><h3>Lexical entries</h3></a>
+
+<a name="Tables"><h3>Tables</h3></a>
+
+<a name="VALENCY"><h3><i>VALENCY</i></h3></a>
+
+<a name="SEMANTICS"><h3><i>SEMANTICS</i></h3></a>
+
+<a name="SYNTAX"><h3><i>SYNTAX</i></h3></a>
+
+<a name="COMPLEMENT"><h3><i>COMPLEMENT</i></h3></a>
+
+<a name="Rules"><h3>Rules</h3></a>
+
+<a name="Debugging and displaying"><h3>Debugging and displaying</h3></a>
+
+<a name="Known bugs and further development"><h3>Known bugs and further development</h3></a>
+
+<a name="smarter output routines"><h3><i>smarter output routines</i></h3></a>
+
+<a name="Support for non iso-latin-1"><h3><i>Support for non iso-latin-1</i></h3></a>
+
+
+<a name="Advanced topics"><hr></a><h2>Advanced topics</h2>
+
+<a name="Organising information into hierarchies"><h3>Organising information into hierarchies</h3></a>
+
+<a name="Adding a new language"><h3>Adding a new language</h3></a>
+
+<a name="Adding a new table"><h3>Adding a new table</h3></a>
+
+<a name="Rules"><h3>Rules</h3></a>
+
+<a name="Implementation issues"><h3>Implementation issues</h3></a>
+
+
+<a name="Appendix 1 - Reference Information"><hr></a><h2>Appendix 1 -
+Reference Information</h2>
+
+<a name="File organisation"><h3>File organisation</h3></a>
+
+The system is delivered as a suite of 15 DATR files in a single
+directory. These files can be considered to be grouped into four layers,
+moving from the surface lexicon down to the core infrastructure, as
+follows:
+
+<table width=100% cellspacing=10>
+<tr valign=top>
+<td>
+abstract.dtr<br>
+georgian.dtr<br>
+russian.dtr<br>
+english.dtr<br>
+german.dtr<br>
+</td>
+<td>
+<i>The surface lexicon</i><br>
+These files define the individual lexical entry nodes for the four
+languages, plus lexical entry information that is shared between
+languages. Only a small amount of DATR knowledge is required to
+extend or modify them, constructing new lexical entries by copying the
+structure of existing ones.
+</td>
+<tr valign=top>
+<td>
+complements.dtr<br>
+syntax.dtr<br>
+semantics.dtr<br>
+valency.dtr<br>
+</td>
+<td>
+<i>The lexicon tables</i><br>
+These files define the tables and table entries for the valency, syntax
+semantics and complement tables. They would need to be modified to add a
+new subcategorisation frame, valency relation etc, to be used in alxical
+entry. A moderate knowledge of DATR and understanding of the frameowrk
+architecture is requried to successfully modify them.
+</td>
+<tr valign=top>
+<td>
+declare.dtr<br>
+features.dtr<br>
+lexical-entry.dtr<br>
+</td>
+<td>
+<i>The lexicon core</i><br>
+These files define the core properties of the lexicon system: the
+feature structures, names of rules and thematic roles etc. Altering the
+features structures requires quite detailed understanding of DATR.
+However adding new rule or thematic role names is easily achieved in
+declare.dtr.
+<br><em>Note: currently, changes to the feature structures or thematic
+roles will not be reflected in the standard display functions, which
+assume a <b>fixed</b> feature structure.</em>
+</td>
+
+
+<tr valign=top>
+<td>
+greg.dtr
+infrastructure.dtr
+display.dtr
+</td>
+<td>
+<i>The framework infrastructure</i><br>
+These files define the core (non-linguistic) mechanisms of the framework
+- the rule application mechanism, table-lookup mechanism, display
+routines etc. The DATR code here is very technical and not suitable for
+modificationby the ordinary user. greg.dtr is an exception: this is the
+main system loader and include a definition of run-time paramenter
+settings which the user may want to alter.
+</td>
+</table>
+
+<p>This modularity is currently not reflected in file organisation or
+loading - for lexicon development we recommend is that you create a copy
+of the entire directory before modifying files.
+
+<p><b>Note:</b> the system runs on Sussex DATR version 2.8 or higher. It
+almost certainly does not run under any other DATR system at present.
+
+
+<a name="Runtime parameters"><h3>Runtime Parameters</h3></a>
+
+The systems supports a small number of parameters which affect
+its runtime operation. These can be set by defining the node
+<tt>*PARAMS*</tt> in the file greg.dtr. Default values for parameters
+are defined in <tt>*DEFAULT-PARAMETERS*</tt> in infrastructure.dtr,
+which you should not alter. The current parameters are:
+
+<table>
+<tr valign=top>
+<td><b>debugging</b>
+</td>
+<td>
+<i>off</i><br>
+<i><b>brief</b></i><br>
+<i>full</i><br>
+</td>
+<td>Determines what happens when a query fails. The default value
+<i>brief</i> returns the token <tt>**fail**</tt>. <i>full</i> returns a
+longer diagnostic message. <i>off</i> causes normal DATR failure.
+<br><em>Note: many of the display routines assume a setting of
+<b>brief</b> for this parameter.</em>
+</td>
+<tr valign=top>
+<td><b>displaymode</b>
+</td>
+<td>
+<i>showall</i><br>
+<i>show</i><br>
+<i>bracket</i><br>
+<i><b>indent</b></i><br>
+</td>
+<td>Determines the default method for doing a node dump. <i>showall</i>
+displays a set of paths, including failure reports. <i>show</i> displays
+only the paths that do not fail, <i>bracket</i> returns a feature
+structure as a bracketed list, and <i>indent</i> (the default), returns
+the feature structure displayed using indentation.
+<br><em>Note: all except <i>showall<i> assume
+assume a setting of
+<b>brief</b> for the <b>debugging</b> parameter. Also, the set of
+paths/feature structure displayed is currently fixed.
+</em>
+</td>
+</table>
+
+<a name="Node naming conventions"><h3>Node naming conventions</h3></a>
+
+The following conventions are used for naming of nodes in the system.
+There is no significance to these conventions for the operation of the
+system, but observing them makes the lexicon easier to manage and
+understand.
+
+<p>The general DATR convention is that node names start with an
+uppercase letter, attributes and values do not. Deviations from this
+scheme have to be declared explicitly (for example, all the nodes
+starting with <tt>*</tt> below).
+
+<ol>
+<li> <tt>NNN/E, NNN/D, NNN/G, NNN/R</tt> - these node names represent
+corresponding lexical entry nodes in English, German, Georgian and
+Russian respectively. Typically they will relate to a node NNN (which
+can be any ordinary node name) in abstract.dtr which defines the shared
+information across the forms. Where there is sharing between a subset of
+languages, forms such as <tt>NNN/EG</tt> may also be employed.
+<br><b>Examples:</b> <tt>EAT/E, DRINK/D</tt>
+
+<li> <tt>NNNN-F</tt> - nodes of this form represent feature structure
+defaults (and can be used somewhat like feature type specifications)
+<br><b>Examples:</b> <tt>SIGN-F, SEMANTICS-F</tt>
+
+<li> <tt>*NNNNN*</tt> - node names starting and finishing with
+asterisks are part of the framework infrastructure. Often their
+detailed DATR semantics is not straightforward. However most of the ones
+encountered in ordinary lexicon definitions do have a clear semantics
+in terms of the framework itself. In general, it should not be necessary
+create nodes of this form or modify existing ones.
+<br><b>Examples:</b> <tt>*TABLE*, *PARAMETERS*</tt>
+</ol>
+
+
+<a name="Node definitions reference"><h3>Node definitions reference</h3></a>
+
+<table width=100% cellspacing=10>
+<tr valign=top><td><b>*BRACKET*</b></td>
+<td>show node as bracketed list</td>
+<td>display.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*DISPLAY*</b></td>
+<td>handler for displaying lexical entries</td>
+<td>display.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*DISPLAY-UTILS*</b></td>
+<td>utility functions for displaying results</td>
+<td>display.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*FEATURE*</b></td>
+<td>the basic feature type</td>
+<td>infrastructure.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*INDENT*</b></td>
+<td>show node as indented feature structur</td>
+<td>display.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*INPUT*</b></td>
+<td>given a non-rule path, evaluate it in the context that is the input to the current rule application</td>
+<td>infrastructure.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*INPUT-RULES*</b></td>
+<td>returns the rule names for the INPUT rule to the current path (that is, all the rules except the first one)</td>
+<td>infrastructure.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*LIST-FEATURE*</b></td>
+<td>first/rest list feature type</td>
+<td>infrastructure.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*NON-RULES*</b></td>
+<td>returns the non-rule component of an input path</td>
+<td>infrastructure.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*NULL-FEATURE*</b></td>
+<td>(typed) null feature to terminate feature lists</td>
+<td>infrastructure.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*PARAMS*</b></td>
+<td>set runtime parameters</td>
+<td>greg.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*PathHead*</b></td>
+<td>utility to remove redundant information from paths (ie everything after the first '!' - added by *RULE-HANDLER* above)</td>
+<td>display.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*PathTail*</b></td>
+<td>utility to remove everything before the first !</td>
+<td>display.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*PRIMITIVE-FEATURE*</b></td>
+<td>primitive features (ie with no subfeatures)</td>
+<td>infrastructure.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*RULE-HANDLER*</b></td>
+<td>ultimate default in a rule module - apply first rule in rules part of input path</td>
+<td>infrastructure.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*RULE-NULL-HANDLER*</b></td>
+<td>dummy handler for modules that support rules but do not execute them (eg because they pass them down to a submodule). Strips of rule part and does a global inheritance of non-rule part</td>
+<td>infrastructure.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*RULES*</b></td>
+<td>returns the rule names prefix of an input path</td>
+<td>infrastructure.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*RULES-TOP*</b></td>
+<td>a top node for all rule application contexts - extends *TOP* by providing a path to report rules being applied.</td>
+<td>infrastructure.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*SELF*</b></td>
+<td>given a non-rule path, evaluates it in the same context as the path currently being evaluated (equivalent to global inheritance in ordinary DATR)</td>
+<td>infrastructure.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*SHOW*</b></td>
+<td>basic '#show' style dump node - only show paths that don't fail</td>
+<td>display.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*SHOWALL*</b></td>
+<td>basic '#show' style dump node - includes failure reports</td>
+<td>display.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*TABLE*</b></td>
+<td>a root node for all table nodes</td>
+<td>infrastructure.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*TABLE-LOOKUP*</b></td>
+<td>given an table name, a key and a non-rule path, inherits via the table and key, applying rules given in the original query to the table entry</td>
+<td>infrastructure.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*TOP*</b></td>
+<td>ultimate root node: *everything* inherits from here. Used for infrastructure defaults (not linguistic ones) Currently traps all failures and reports failing (global) query if debugging is enabled.</td>
+<td>infrastructure.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>*UNDEF*</b></td>
+<td>node for undefined paths to inherit from. Used to force a path to be undefined, rather than inheriting from the definition from a prefix</td>
+<td>infrastructure.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>CASE-F</b></td>
+<td>a primitive feature whose value is a case value</td>
+<td>features.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>CATEGORY-F</b></td>
+<td>a primitive feature whose value is a syntactic category</td>
+<td>features.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>CITATION-F</b></td>
+<td>a primitive feature whose value is the citation form for a lexical entry</td>
+<td>features.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>COMPLEMENT</b></td>
+<td>lookup a key and non-rule path in the complement table</td>
+<td>lexical-entry.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>COMPLEMENT-TABLE</b></td>
+<td>the language-independent complement table specification</td>
+<td>complements.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>COMPLEMENT-TABLE/D</b></td>
+<td>the German complement table</td>
+<td>complements.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>COMPLEMENT-TABLE/E</b></td>
+<td>the English complement table</td>
+<td>complements.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>CONSUME-VERB</b></td>
+<td>an abstract node for all consume-type verbs, specifying their valency as agent patient transitives (possibly incorrectly..)</td>
+<td>abstract.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>DRINK</b></td>
+<td>language independent definition of lexeme 'drink' The<key value>is intende to be the index into the GREG lexcion table (but is not yet correct)</td>
+<td>abstract.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>DRINK/D</b></td>
+<td>German 'drink'</td>
+<td>german.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>DRINK/E</b></td>
+<td>English 'drink'</td>
+<td>english.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>EAT</b></td>
+<td>language independent definition of lexeme 'eat' The<key value>is intende to be the index into the GREG lexcion table (but is not yet correct)</td>
+<td>abstract.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>EAT/D</b></td>
+<td>German 'eat'</td>
+<td>german.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>EAT/E</b></td>
+<td>English 'eat'</td>
+<td>english.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>ENTRY-F</b></td>
+<td>the fs delivered by associated with a lexical entry (possibly after rule application). Subfeature attributes citation (the language-dependent citation form for the entry), key (a language-neutral index into the GREG verb list) and sign (the actual linguistic information).</td>
+<td>features.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>FORM-F</b></td>
+<td>a primitive feature whose value is a surface form specification (eg a preposition)</td>
+<td>features.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>KEY-F</b></td>
+<td>a primitive feature whose value is an index into the GREG verb list</td>
+<td>features.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>LEXICAL-ENTRY</b></td>
+<td>the language-neutral content of lexical entries</td>
+<td>lexical-entry.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>LEXICAL-ENTRY/D</b></td>
+<td>basic lexical entry node for German entries - accesses the German versions of the tables</td>
+<td>lexical-entry.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>LEXICAL-ENTRY/E</b></td>
+<td>basic lexical entry node for English entries - accesses the English versions of the tables</td>
+<td>lexical-entry.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>NP-ACC</b></td>
+<td>an accusative noun phrase complement</td>
+<td>complements.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>NP-COMPLEMENT</b></td>
+<td>a basic noun phrase complement</td>
+<td>complements.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>NP-DAT</b></td>
+<td>a dative noun phrase complement</td>
+<td>complements.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>NP-NOM</b></td>
+<td>a nominative noun phrase complement</td>
+<td>complements.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>PP-BY/D</b></td>
+<td>German sematically null 'von' pp</td>
+<td>complements.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>PP-BY/E</b></td>
+<td>English sematically null 'by' pp</td>
+<td>complements.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>PP-COMPLEMENT</b></td>
+<td>a prepositional phrase complement. Note that we currently have no theory of internal syntactic structure for complements so this is just a fully saturated pp, with no semantic relationship between the pp and its component np expressed</td>
+<td>complements.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>PP-TO/E</b></td>
+<td>English semantically null 'to' pp</td>
+<td>complements.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>PREDICATE-F</b></td>
+<td>a primitive feature with a single value which is a semantic predicate</td>
+<td>features.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>SEMANTICS</b></td>
+<td>lookup a key and non-rule path in the semantics table</td>
+<td>lexical-entry.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>SEMANTICS-AGENT</b></td>
+<td>a predicate with a thematic agent</td>
+<td>semantics.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>SEMANTICS-AGENT-PATIENT</b></td>
+<td>a predicate with thematic agent and patient</td>
+<td>semantics.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>SEMANTICS-F</b></td>
+<td>semantics of a sign, consisting of predicate and attributes for thematic roles, which defaults to being null</td>
+<td>features.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>SEMANTICS-NULL-F</b></td>
+<td>a null semantic specification, for unassigned thematic roles</td>
+<td>features.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>SEMANTICS-TABLE</b></td>
+<td>the language-independent semantics table specification</td>
+<td>semantics.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>SEMANTICS-TABLE/D</b></td>
+<td>the German semantics table</td>
+<td>semantics.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>SEMANTICS-TABLE/E</b></td>
+<td>the English semantics table</td>
+<td>semantics.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>SIGN-F</b></td>
+<td>a linguistic sign, with subfeature syntax and semantics</td>
+<td>features.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>SUBCAT-LIST-F</b></td>
+<td>a non-empty subcat list with subfeatures first (a sign) and rest (a subcat list). This default provides for a subcat list of unbounded length - at some depth the<rest>definition is overridden by SUBCAT-NULL-F to terminate the list</td>
+<td>features.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>SUBCAT-NULL-F</b></td>
+<td>an empty subcat list (identified by its type)</td>
+<td>features.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>SYNTAX</b></td>
+<td>lookup a key and non-rule path in the syntax table</td>
+<td>lexical-entry.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>SYNTAX-F</b></td>
+<td>syntactic information, consisting of a category, a case specification, a form specification and a subcat list (which defaults here to being empty)</td>
+<td>features.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>SYNTAX-TABLE</b></td>
+<td>the language-independent syntax table specification</td>
+<td>syntax.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>SYNTAX-TABLE/D</b></td>
+<td>the German syntax table</td>
+<td>syntax.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>SYNTAX-TABLE/E</b></td>
+<td>the English syntax table</td>
+<td>syntax.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>SYNTAX-VERB</b></td>
+<td>syntax of a basic verb. We include the first complement (subject) as a reasonable default, so this definition corresponds to a complete intransitive verb category</td>
+<td>syntax.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>SYNTAX-VERB-OBJECT</b></td>
+<td>syntax for a verb with a direct object. Here we define the syntactic component of the passive rule, which rewrites the direct object slot as a passive agent complement. (Note: the corresponding swapping of thematic roles is carried out in the valency table)</td>
+<td>syntax.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>VALENCY</b></td>
+<td>lookup a key and non-rule path in the valency table</td>
+<td>lexical-entry.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>VALENCY-AINTRANS</b></td>
+<td>valency class for an intransitive verb with an agent role</td>
+<td>valency.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>VALENCY-APTRANS</b></td>
+<td>valency class for a transitive verb with agent and patient roles. Two rules are implemented: implicit-object makes the direct object implicit (ie removes it from the subcat list), passive turns an active into a passive (note that ony the valency mappings are altered here - the rest is done by applying passive in the syntax table definition</td>
+<td>valency.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>VALENCY-TABLE</b></td>
+<td>the language-independent valency table specification</td>
+<td>valency.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>VALENCY-TABLE/D</b></td>
+<td>the German valency table</td>
+<td>valency.dtr</td>
+</tr>
+
+
+<tr valign=top><td><b>VALENCY-TABLE/E</b></td>
+<td>the English valency table</td>
+<td>valency.dtr</td>
+</tr>
+</table>
+
+
+<a name="Appendix 2 - DATR Introduction"><hr></a><h2>Appendix 2 - DATR
+Introduction</h2>
+
+
+
+
+
+<br><br>
+<hr>
+<small>
+&copy; Copyright Roger Evans 2000
+<small>
+</body>
+</html>

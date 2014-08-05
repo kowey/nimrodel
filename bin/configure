@@ -1,0 +1,6 @@
+#!/bin/bash
+
+% application-specific configuration (loaded from env)
+
+export TCAPP=nimrodel
+export TCVERSION=0.8

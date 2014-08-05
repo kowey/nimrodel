@@ -1,0 +1,102 @@
+
+#uses System Length Explode Add.
+
+#hide nimrodel.NIMRODEL.
+nimrodel.NIMRODEL:
+	<> == nimrodel.QUERY-TOP:<>
+	
+	<init> == app.BRAT:<brat reset>
+	
+	<process $$model $$language $documentString $$title $document> == 
+		<process-title $$model $$language $$title .>
+		<process-sentenceSpans 
+			$$model
+			$$language
+			$documentString
+			nimrodel.preprocess.Span:<newspan document Add:<1 Length:<Explode:<$$title.>.>.> 100000 .> % offset of document start - don't care about upper limit
+			%openNLP.OpenNLP:<sentenceDetector sentPosDetect $document .> 
+			nimrodel.preprocess.Span:<newspan sentence 0 Length:<Explode:<$document.>.> .>
+		.>
+	<process-title $model $$language $title> ==
+		app.BRAT:<brat title $title [ model $model ] [ language $$language ] .>
+		
+	<process-sentenceSpans $model $$language $documentString $offsetSpan $sentenceSpan> ==
+		% set up nodes for next sentence
+		<process-offset-sentence $$language $documentString nimrodel.preprocess.Span:<absspan $sentenceSpan $offsetSpan.> .>
+		% query first word of sentence (node 0) with <$$language process $model>, and render as BRAT
+		app.BRAT:<brat sentence $documentString System:<query System:<nodename <default-node> .> 0 $$language process $model .> .>
+		% process remaining sentences
+		<process-sentenceSpans $model $$language $documentString $offsetSpan>
+	<process-sentenceSpans> ==
+	
+	<process-offset-sentence $$language $documentString $sentenceSpan> ==
+		<process-sentence $$language $sentenceSpan nimrodel.preprocess.Span:<spanstrings $documentString $sentenceSpan>>
+		
+	<process-sentence $$language $sentenceSpan $sentence> == 
+		<process-tokenSpans $$language $sentenceSpan $sentence 
+			nimrodel.preprocess.Tokenizer:< $$language $sentence .> 
+		.>
+	
+	<process-tokenSpans $$language $sentenceSpan $sentence> ==
+		<process-tokens $$language nimrodel.preprocess.Span:<spanstrings $sentence> .>
+		<process-addTokenSpans>
+		<process-addAbsTokenSpans <process-absTokenSpans $sentenceSpan> .>
+	
+	<process-tokens $$language> ==
+		% create sentence node
+		nimrodel.COMPILE-STRING:<compile 
+			<code reset <default-node> .> 
+			<code start <default-node> .> 
+			<code top <default-parent> .> 
+			<code body>
+			<code end .> 
+		.>
+		% add parameter data to parameter nodes
+		<code attr form> 
+		<code attr word System:<lowercase> .>
+		<code attr casetype System:<casetype> .>
+		<code attr pre-pos nimrodel.preprocess.PosTagger:<$$language> .>
+		<addattrloop $$language pos 0> 
+		<addattrloop $$language stem 0>
+		% <code attr pre-chunk nimrodel.preprocess.Chunker:<$$language> .> 
+		<code attr soundex nimrodel.preprocess.Soundex:<$$language> .>
+		% create role nodes
+		<code attr **role**>
+		
+		
+	<process-absTokenSpans $sentenceSpan $tokenSpan> ==
+		nimrodel.preprocess.Span:<absspan $tokenSpan $sentenceSpan>
+		<process-absTokenSpans $sentenceSpan>
+	<process-absTokenSpans $sentenceSpan> ==
+		
+	<process-addTokenSpans> == 
+		<code attr pre-start nimrodel.preprocess.Span:<start> .>
+		<code attr pre-end nimrodel.preprocess.Span:<end> .>
+		
+	<process-addAbsTokenSpans> == 
+		<code attr pre-absStart nimrodel.preprocess.Span:<start> .>
+		<code attr pre-absEnd nimrodel.preprocess.Span:<end> .>
+		
+	<code> == nimrodel.COMPILE-STRING
+	<default-node> == System:<atom nimrodel> '.' System:<node 'STRING-QUERY'>
+	<default-parent> == System:<atom nimrodel> '.' System:<node 'STRING'>	
+	
+	<addattrloop> ==
+	<addattrloop $$language $attr $role $val> ==
+		<addattr $$language $attr $role $val .>
+		<addattrloop $$language $attr Add:<1 $role .> >
+		
+	<addattr $$language pos $role> ==
+		<code add-param pos $role nimrodel.preprocess.POSMap:<$$language nimrodel.STRING-QUERY:<$role param pre-pos .> .> .>
+	<addattr $$language stem $role> ==
+		<addmorph $role nimrodel.preprocess.Stemmer:<$$language nimrodel.STRING-QUERY:<$role param word .> nimrodel.STRING-QUERY:<$role param pos .> .> .>
+		
+	% add the stem feature, and any morphological features returned by the stemmer
+	<addmorph $role $stem> ==
+		<code add-param stem $role $stem>
+		<addmorph2 $role>
+	<addmorph2 $role $feat $val> ==
+		<code add-param $feat $role $val>
+		<addmorph2 $role>
+	<addmorph2> ==
+.

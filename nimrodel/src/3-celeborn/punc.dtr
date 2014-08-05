@@ -1,0 +1,46 @@
+
+% punctuation-related functionality
+
+#uses Local.
+
+% end sentence detection 
+nimrodel.punc.N\.:
+	<> == nimrodel.LEXROOT
+	<$model type> == <try end-sent $model type>
+	
+	<try end-sent> == < IF:< ONEOF:< <here token next token casetype .> capitalised uppercase .> 
+						THEN case end-sent
+						ELSE try end-doc .> >
+	<try end-doc> == < IFEQ:< <here token next token word .> **END**
+					   THEN case end-sent
+					   ELSE case default .> >
+	
+	<case default> == nimrodel.LEXROOT:<>
+	<case end-sent lex type> == end-sent
+	<case end-sent $phrase type> == unknown
+	<case end-sent> == nimrodel.LEXROOT:<>
+.
+	
+% abbreviation handling	
+nimrodel.punc.ABBREVIATION:
+	<$node> == Local:<$node 0>
+	<$node lex> == <try period $node lex>
+
+	<try period $node> == < IFEQ:< Local:<$node here token next token word .> '.'
+					  THEN case abbrev 
+					  ELSE case default .> $node>
+	<case abbrev $node> == Local:<$node 1>
+	
+	<case default $node> == Local:<$node 0>
+.
+
+% commas - may be coordinator or 'ordinary' punctuation
+nimrodel.punc.N\,:
+	<> == nimrodel.LEXROOT
+
+	<$typedphrase> == <IF:< <here lex next $typedphrase cat .> THEN case conj ELSE case default .> $typedphrase>
+	
+	<case conj> == nimrodel.phrase.CONJ:<>
+	<case default> == nimrodel.LEXROOT:<>
+.
+

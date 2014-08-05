@@ -1,0 +1,19 @@
+
+% surname support - see also lists of surnames in words/surnames.dtr
+
+#hide nimrodel.surname.SURNAME-LOOKUP.
+nimrodel.surname.SURNAME-LOOKUP:
+	<> == **fail**
+	<$nimrodel-surnameword> == 'nimrodel.surname.SURNAMEROOT'
+.
+
+#hide nimrodel.surname.SURNAMEROOT.
+nimrodel.surname.SURNAMEROOT:	
+	<> == nimrodel.LEXROOT:<>
+	
+	<token type> == 'surname'
+	
+	% surnames only get picked up lexically if there's no first name, title etc 
+	% in front of them, so we just treat them as people
+	<lex type> == 'Person'
+.

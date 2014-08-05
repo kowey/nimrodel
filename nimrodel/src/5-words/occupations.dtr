@@ -1,0 +1,322 @@
+% regular occupation words - these can just use the OCCUPATIONROOT node directly 
+#vars $nimrodel-occupationstem: 
+	%abbess
+	%abbot
+	acreman
+	almoner
+	apothecary
+	apprentice
+	%archbishop
+	%archdeacon
+	archer
+	armourer
+	%bag maker
+	baker
+	barber
+	%barrel maker
+	%basket maker
+	%%%bell founder
+	%bell ringer
+	bellows
+	beltmaker
+	bishop
+	%%%bishop elect
+	blader
+	bleacher
+	boatman
+	%book binder
+	bordar
+	%bow maker
+	bowerman
+	brassworker
+	brayer
+	brewer
+	%bridle cutter
+	brocher
+	brother
+	%brush maker
+	buckler
+	buckskin
+	bullock
+	burgess
+	burrel
+	burrmaker
+	burser
+	%bushel maker
+	butcher
+	butler
+	butler
+	%candle maker
+	%canon
+	cantor
+	capper
+	carder
+	carpenter
+	carter
+	carver
+	cellarer
+	chaloner
+	chamberlain
+	champion
+	chaplain
+	%charnel keeper
+	cheesemonger
+	cheval
+	churl
+	%%citizen - occupation??
+	%clerk
+	client
+	clockmaker
+	clubber
+	coalman
+	coffrer
+	cogger
+	coifer
+	colt
+	%comb maker
+	communar
+	cook
+	cooper
+	%copper smith
+	copyist
+	cordelier
+	corder
+	cordwainer
+	cornloader
+	cornmonger
+	coster
+	cotter
+	coulterwedge
+	%crossbow maker
+	crossbowman
+	currier
+	curtler
+	%%%customary tenants
+	cutler
+	dancer
+	dauber
+	deacon
+	%dealer in nuts
+	dean
+	diker
+	%door keeper
+	%dove keeper
+	draper
+	drover
+	dubber
+	dyer
+	engineer
+	%ewer bearer
+	farmer
+	farrier
+	felter
+	fiddler
+	fisherman
+	fishmonger
+	fletcher
+	freeholder
+	freeman
+	friar
+	fruiterer
+	fuller
+	furrier
+	gardener
+	%general procurator
+	gentleman
+	glazier
+	glovemaker
+	goblet
+	goldsmith
+	granger
+	grocer
+	grutcher
+	handyman
+	harper
+	herdsman
+	herringmonger
+	hoodmaker
+	horner
+	hornplayer
+	hosier
+	hospitaller
+	housekeeper
+	husband
+	%incense measurer
+	ironworker
+	junior
+	lamb
+	latiner
+	laundress
+	leadworker
+	legate
+	lepers
+	limeburner
+	linendraper
+	locksmith
+	lorimer
+	%maker of boxes
+	%maker of hooks
+	%maker of nails
+	%%%maker of sack cloth
+	%maker of slays
+	%maker of butter
+	mantle
+	%marble worker
+	mason
+	master
+	%%%master of the cellar
+	%%%master of the hospital
+	%%%master of the infirmary
+	%%%master of the templars
+	%measures official
+	mercer
+	merchant
+	messenger
+	miller
+	minter
+	monger
+	monk
+	monk
+	%mustard seller
+	naperer
+	%needle maker
+	notary
+	nun
+	obedientiary
+	ordinary
+	ostiary
+	%packhorse driver
+	painter
+	palmer
+	pantry
+	parmenter
+	parson
+	patcher
+	patron
+	paviour
+	%pea seller
+	pearler
+	pelter
+	pepperer
+	physician
+	pickaxe
+	pilgrim
+	pinder
+	piper
+	pitman
+	ploughman
+	plumber
+	plumer
+	pope
+	potsherd
+	potter
+	%pouch maker
+	poulterer
+	%precentor
+	%preceptor
+	priest
+	%prior
+	%prioress
+	procurator
+	prudhomme
+	quilter
+	racker
+	%rector
+	refectorer
+	roofer
+	roper
+	roter
+	sacristan
+	saddler
+	%saffron grower
+	sailor
+	salter
+	sawyer
+	scarlet
+	scribe
+	seamstress
+	seigneur
+	%%%seller of butter
+	senior
+	serf
+	servant
+	sharpener
+	%%%shearer of woolen cloth
+	%sheath maker
+	shepherd
+	shipwright
+	%shoe seller
+	sister
+	skinner
+	smith
+	soapmaker
+	speaker
+	spicer
+	spinner
+	spooner
+	spurrier
+	stabler
+	steer
+	stitcher
+	stockfishmonger
+	student
+	subprior
+	sumpter
+	%%%supreme master
+	sutor
+	swain
+	swineherd
+	swordsmith
+	tailor
+	tanner
+	taverner
+	tawyer
+	teasler
+	templar
+	tenant
+	thatcher
+	theologian
+	turcopolier
+	turner
+	vache
+	%velvet maker
+	%vicar
+	villein
+	vineyard
+	vintner
+	%viol player
+	ward
+	wardrobe
+	wattler
+	weaver
+	wheelwright
+	woodcutter
+	woolmonger
+	wright
+.
+
+% occupations which can occur in 'X of PLACE' constructions (Eg vicar of Dibley)
+#vars $nimrodel-occofplace:
+	abbess
+	abbot
+	archbishop
+	archdeacon
+	bishop
+	canon
+	chancellor
+	clerk
+	deacon
+	%dean
+	parson
+	precentor
+	preceptor
+	prior
+	prioress
+	rector
+	subdeacon
+	subdean
+	subprior
+	succentor
+	vicar
+	warden
+.

@@ -1,0 +1,21 @@
+%   File:       load.dtr
+%   Purpose:    DATR loader for ELF lexical framework
+%   Author:     Roger Evans
+%   Version:    0.1
+%   Date:       09/01/10
+%
+%   (c) Copyright 2010, University of Brighton
+
+%   load the DATR files of the lexicon
+#load
+    '$ELF/src/version.dtr'
+    '$ELF/src/params.dtr'
+    '$ELF/src/context.dtr'
+    '$ELF/src/infrastructure.dtr'
+%    '$ELF/src/rules.dtr'
+%    '$ELF/src/tables.dtr'
+    '$ELF/src/features.dtr'
+	'$ELF/src/strings.dtr'
+%    '$ELF/src/lexentries.dtr'
+    '$ELF/src/display.dtr'
+.

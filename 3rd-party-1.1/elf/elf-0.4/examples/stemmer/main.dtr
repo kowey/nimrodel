@@ -1,0 +1,50 @@
+%   File:       main.dtr
+%   Purstemmere:    A 'main' application stub for the STEMMER pipeline
+%   Author:     Roger Evans
+%   Version:    1.0
+%   Date:       18/08/12
+%
+%   (c) Copyright 2012, University of Brighton
+
+app.MAIN:
+	<> == stemmer.MAIN
+.
+
+
+% stemmer.MAIN is an application stub for the stemmer example lexicon.
+
+#uses Rest System.
+
+
+#hide stemmer.MAIN.
+stemmer.MAIN:
+    <> == stemmer.QUERY-TOP
+
+    <version> == elf.GET-CONTEXT:<version display>
+    <params> == elf.GET-CONTEXT:<params display>
+
+    <nl> == '
+'
+    <help> == <nl>
+              'Simple stemmer as lexical description.' <nl>
+              'This version is configured to run in a pipeline.' <nl>
+			  'Sample sentences are on standard input, one per line.' <nl>
+			  'The corresponding stems appear on standard output, one per line.' <nl>
+              <nl>
+			  'Alternatively, a single sentence can be provided on the command line.' <nl>
+    <header> == <nl> <version> <nl>
+	
+	<elf display> == <header> <help>
+
+	<arglist> == <processargs>
+	<arglist -help> == System:<writeline <help> .>
+	<arglist -version> == System:<writeline <version> .>
+	
+	<processargs $any> == System:<writeline <process $any> .>
+	<processargs> == <nextarg System:<readline> >
+	
+	<nextarg **endoffile**> == 
+	<nextarg> == System:<writeline <process Rest:<> .> .> <processargs .>
+	
+	<process> == System:<query 'stemmer.PATH-STRING' stems |> 
+.

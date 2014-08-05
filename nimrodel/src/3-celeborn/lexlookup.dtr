@@ -1,0 +1,76 @@
+%   File:       lex.dtr
+%   Purpose:    lexical entries for nimrodel
+%   Author:     Roger Evans
+%   Version:    1.0
+%   Date:       21/08/12
+%
+%   (c) Copyright 2012, University of Brighton
+
+#uses System Local Implode.
+
+% nimrodel.LEX-LOOKUP:<$word $role>
+
+#hide nimrodel.LEX-LOOKUP.
+nimrodel.LEX-LOOKUP:
+	<> == elf.TOP
+	
+	<id> == <try forms>
+	<id **START**> == 'nimrodel.LEX-START'
+	<id **END**> == 'nimrodel.LEX-END' 
+	
+	% tests which depend on actual word form 
+	<try forms> == <try formnode>
+	<try formnode> == <trynode System:<exists <lexnode form> .> words>
+	
+	% tests which depend on the word (lowercase version of form)
+	<try words $form $role> == <try wordnode nimrodel.STRING-QUERY:<$role param word .> $role>
+	<try wordnode> == <trynode System:<exists <lexnode word> .> placename>
+	<try placename> == < trynode nimrodel.placename.PLACENAME-LOOKUP:<> firstname>
+	<try firstname> == < trynode nimrodel.firstname.FIRSTNAME-LOOKUP:<> surname >
+	<try surname> == < trynode nimrodel.surname.SURNAME-LOOKUP:<> title >
+	<try title> == < trynode nimrodel.title.TITLE-LOOKUP:<> stems >
+	
+	% tests which depend on word stem
+	<try stems $word $role> == <try stemnode nimrodel.STRING-QUERY:<$role param stem .> $role>
+	<try stemnode> == <trynode System:<exists <lexnode stem> .> site >
+	<try site> == < trynode nimrodel.site.SITE-LOOKUP:<> institution >
+	<try institution> == < trynode nimrodel.institution.INSTITUTION-LOOKUP:<> occupation >
+	<try occupation> == < trynode nimrodel.occupation.OCCUPATION-LOOKUP:<> transaction >
+	<try transaction> == < trynode nimrodel.transaction.TRANSACTION-LOOKUP:<> land >
+	<try land> == < trynode	nimrodel.land.LAND-LOOKUP:<> propnoun>
+	
+	<try propnoun> == <trynode nimrodel.propnoun.PROPNOUN-LOOKUP:<> default>
+	
+	% give up compile-time classification
+	<try default> == 'nimrodel.LEX-UNKNOWN'
+	
+	<trynode $node $next> == <IF:<$node THEN return $node ELSE try $next .> >
+
+	<return $node> == $node
+	
+	<lexnode $type $word> == System:<atom nimrodel> '.' System:<atom $type> '.' System:<node Implode:<'N' $word .> .>
+.
+
+#hide nimrodel.LEX-START.
+nimrodel.LEX-START:
+    <> == nimrodel.ENDROOT
+	<token stem> == **START**
+	<token word> == **START**
+	<token pos> == start
+.
+
+#hide nimrodel.LEX-END.
+nimrodel.LEX-END:
+    <> == nimrodel.ENDROOT
+	<token stem> == **END**
+	<token word> == **END**
+	<token pos> == end
+.
+
+% unknown words - just use default settings
+#hide nimrodel.LEX-UNKNOWN.
+nimrodel.LEX-UNKNOWN:
+	<> == nimrodel.LEXROOT
+.
+
+

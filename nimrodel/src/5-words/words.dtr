@@ -1,0 +1,111 @@
+nimrodel.form.N\.:<> == nimrodel.punc.N\..
+nimrodel.form.N\,:<> == nimrodel.punc.N\,.
+nimrodel.form.N\(:<> == nimrodel.apparatus.N\(.
+nimrodel.form.N\):<> == nimrodel.apparatus.N\).
+nimrodel.word.Nall:<> == nimrodel.LEXROOT <$phrase> == nimrodel.phrase.QUANT <phrase-np rel> == all.	
+nimrodel.stem.Narticle:<> == nimrodel.transaction.Narticle.
+nimrodel.stem.Nassignment:<> == nimrodel.transaction.Nassignment.
+nimrodel.stem.Naunt:<> == nimrodel.family.Naunt.
+nimrodel.word.Nbag:<> == nimrodel.occupation.Nbag.
+nimrodel.stem.Nbargain:<> == nimrodel.transaction.Nbargain.
+nimrodel.word.Nbarrel:<> == nimrodel.occupation.Nbarrel.
+nimrodel.word.Nbasket:<> == nimrodel.occupation.Nbasket.
+nimrodel.word.Nbell:<> == nimrodel.occupation.Nbell.
+nimrodel.word.Nbook:<> == nimrodel.occupation.Nbook.
+nimrodel.word.Nbow:<> == nimrodel.occupation.Nbow.
+nimrodel.word.Nbridle:<> == nimrodel.occupation.Nbridle.
+nimrodel.word.Nbridge:<> == nimrodel.occupation.Nbridge.
+nimrodel.stem.Nbrother:<> == nimrodel.family.Nbrother.
+nimrodel.word.Nbrush:<> == nimrodel.occupation.Nbrush.
+nimrodel.word.Nbushel:<> == nimrodel.occupation.Nbushel.
+nimrodel.word.Ncandle:<> == nimrodel.occupation.Ncandle.
+nimrodel.word.Ncharnel:<> == nimrodel.occupation.Ncharnel.
+nimrodel.word.Nchild:<> == nimrodel.family.Nchild.
+nimrodel.word.Nchildren:<> == nimrodel.family.Nchildren.
+nimrodel.stem.Ncitizen:<> == nimrodel.phrase.PREDNOM <token type> == 'Person' <phrase-nom rel> == is_of.
+nimrodel.word.Ncomb:<> == nimrodel.occupation.Ncomb.
+nimrodel.word.Ncommon:<> == nimrodel.land.Ncommon.
+nimrodel.word.Ncopper:<> == nimrodel.occupation.Ncopper.
+nimrodel.stem.Ncousin:<> == nimrodel.family.Ncousin.
+nimrodel.word.Ncrossbow:<> == nimrodel.occupation.Ncrossbow.
+nimrodel.word.Ndate:<> == nimrodel.apparatus.TRY-APPARATUS:<'nimrodel.LEXROOT'>.
+nimrodel.stem.Ndaughter:<> == nimrodel.family.Ndaughter.
+nimrodel.stem.Ndeed:<> == nimrodel.transaction.Ndeed.
+nimrodel.word.Ndoor:<> == nimrodel.occupation.Ndoor.
+nimrodel.word.Ndove:<> == nimrodel.occupation.Ndove.
+nimrodel.word.Newer:<> == nimrodel.occupation.Newer.
+nimrodel.stem.Nexchange:<> == nimrodel.transaction.Nexchange.
+nimrodel.stem.Nfather:<> == nimrodel.family.Nfather.
+nimrodel.word.Ngeneral:<> == nimrodel.occupation.Ngeneral.
+nimrodel.word.Ngrandchild:<> == nimrodel.family.Ngrandchild.
+nimrodel.word.Ngrandchildren:<> == nimrodel.family.Ngrandchildren.
+nimrodel.stem.Ngranddaughter:<> == nimrodel.family.Ngranddaughter.
+nimrodel.stem.Ngrandfather:<> == nimrodel.family.Ngrandfather.
+nimrodel.stem.Ngrandmother:<> == nimrodel.family.Ngrandmother.
+nimrodel.stem.Ngrandparent:<> == nimrodel.family.Ngrandparent.
+nimrodel.stem.Ngrandson:<> == nimrodel.family.Ngrandson.
+nimrodel.stem.Ngrant:<> == nimrodel.transaction.Ngrant.
+nimrodel.word.Ngreat:<> == nimrodel.placename.Ngreat.
+nimrodel.word.Nhalf:<> == nimrodel.LEXROOT <$phrase> == nimrodel.phrase.QUANT.
+nimrodel.word.Nhis:<> == nimrodel.pro.Nhis.
+nimrodel.stem.Nhusband:<> == nimrodel.family.Nhusband.
+nimrodel.word.Nif:<> == nimrodel.LEXROOT <token pos> == comp.
+nimrodel.word.Nin:<> == nimrodel.prep.Nin.
+nimrodel.word.Nincense:<> == nimrodel.occupation.Nincense.
+nimrodel.word.Nland:<> == nimrodel.land.Nland.
+nimrodel.word.Nmag:<> == nimrodel.punc.ABBREVIATION:<'nimrodel.title.Nmagister'>.
+nimrodel.word.Nmagister:<> == nimrodel.title.Nmagister:<0>.
+nimrodel.word.Nmarble:<> == nimrodel.occupation.Nmarble.
+nimrodel.word.Nmeasures:<> == nimrodel.occupation.Nmeasures.
+nimrodel.stem.Nmother:<> == nimrodel.family.Nmother.
+nimrodel.word.Nmount:<> == nimrodel.placename.Nmount.
+nimrodel.word.Nmustard:<> == nimrodel.occupation.Nmustard.
+nimrodel.word.Nneedle:<> == nimrodel.occupation.Nneedle.
+nimrodel.stem.Nnephew:<> == nimrodel.family.Nnephew.
+nimrodel.word.Nnote:<> == nimrodel.apparatus.Nnote.
+nimrodel.word.Non:<> == nimrodel.prep.Non.
+nimrodel.stem.Nniece:<> == nimrodel.family.Nniece.
+nimrodel.word.Npackhorse:<> == nimrodel.occupation.Npackhorse.
+nimrodel.stem.Nparent:<> == nimrodel.family.Nparent.
+nimrodel.stem.Npartition:<> == nimrodel.transaction.Npartition.
+nimrodel.word.Npea:<> == nimrodel.occupation.Npea.
+nimrodel.word.Npouch:<> == nimrodel.occupation.Npouch.
+nimrodel.word.Nprinted:<> == nimrodel.apparatus.APPARATUS:<'nimrodel.LEXROOT'>.
+nimrodel.stem.Nquitclaim:<> == nimrodel.transaction.Nquitclaim.
+nimrodel.stem.Nrelease:<> == nimrodel.transaction.Nrelease.
+nimrodel.word.Nst:<> == nimrodel.punc.ABBREVIATION:<'nimrodel.title.Nsaint'>.
+nimrodel.word.Nsaffron:<> == nimrodel.occupation.Nsaffron.
+nimrodel.word.Nsaint:<> == nimrodel.title.Nsaint:<0>.
+nimrodel.word.Nseal:<> == nimrodel.apparatus.TRY-APPARATUS:<'nimrodel.LEXROOT'>.
+nimrodel.word.Nsheath:<> == nimrodel.occupation.Nsheath.
+nimrodel.word.Nshoe:<> == nimrodel.occupation.Nshoe.
+nimrodel.stem.Nsibling:<> == nimrodel.family.Nsibling.
+nimrodel.stem.Nsister:<> == nimrodel.family.Nsister.
+nimrodel.stem.Nson:<> == nimrodel.family.Nson.
+nimrodel.word.Nsource:<> == nimrodel.apparatus.TRY-APPARATUS:<'nimrodel.LEXROOT'>.
+nimrodel.stem.Nspouse:<> == nimrodel.family.Nspouse.
+% their and theirs - openNLP POS tagger seems to have these backwards?
+nimrodel.word.Ntheir:<> == nimrodel.LEXROOT <token pos> == det.
+nimrodel.word.Ntheirs:<> == nimrodel.LEXROOT <token pos> == pro.
+nimrodel.word.Nto:<> == nimrodel.prep.Nto.
+nimrodel.stem.Nuncle:<> == nimrodel.family.Nuncle.
+nimrodel.word.Nvelvet:<> == nimrodel.occupation.Nvelvet.
+nimrodel.word.Nviol:<> == nimrodel.occupation.Nviol.
+nimrodel.word.Nwakes:<> == nimrodel.placename.Nwakes.
+nimrodel.word.Nwarranty:<> == nimrodel.apparatus.TRY-APPARATUS:<'nimrodel.transaction.TRANSACTIONROOT'>.
+nimrodel.word.Nwest:<> == nimrodel.placename.Nwest.
+nimrodel.stem.Nwidow:<> == nimrodel.family.Nwidow.
+nimrodel.stem.Nwidower:<> == nimrodel.family.Nwidower.
+nimrodel.word.Nwife:<> == nimrodel.family.Nwife.
+nimrodel.stem.Nwitnesse:<> == nimrodel.apparatus.TRY-APPARATUS:<'nimrodel.LEXROOT'>. % weird stem
+nimrodel.word.Nwives:<> == nimrodel.family.Nwives. % ???
+nimrodel.word.Nwhich:<> == nimrodel.LEXROOT
+	% adjust pos - treat as det unless followed by det or title
+	<token pos> == IF:< ONEOF:< <here token next token pos .> det title .> THEN whcomp ELSE det>.
+nimrodel.stem.Nyoung:<> == nimrodel.LEXROOT	<token type> == age <token age> == young.
+
+
+
+
+
+

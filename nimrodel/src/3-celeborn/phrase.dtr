@@ -1,0 +1,272 @@
+
+% phrase grammar
+
+#vars $typedphrase: phrase-n phrase-nom phrase-nom2 phrase-np phrase-adjp phrase-detp phrase-prepp phrase-pp.
+#vars $phrase: phrase $typedphrase.
+
+#hide nimrodel.phrase.PHRASEROOT.
+nimrodel.phrase.PHRASEROOT:
+	% using nimrodel.LEXROOT here would cause looping
+	<> == nimrodel.LEX-TOP
+.
+
+
+#hide nimrodel.phrase.DETP.
+nimrodel.phrase.DETP:
+	<> == nimrodel.phrase.PHRASEROOT
+	<phrase-detp cat> == detp
+	
+	<phrase> == <phrase-detp>
+.
+
+#hide nimrodel.phrase.DETNOM.
+nimrodel.phrase.DETNOM:
+	<> == nimrodel.phrase.DETP
+	<phrase-np cat> == np
+	<phrase-np nextrole> == <here lex next phrase-nom nextrole>
+	<phrase-np end-char> == <here lex next phrase-nom end-char>
+	<phrase-np output> == <here lex next phrase-nom output.>
+	<phrase-np type> == <here lex next phrase-nom type>
+
+	
+	<phrase> == <phrase-np>
+.
+
+#hide nimrodel.phrase.DETADJPNOM.
+nimrodel.phrase.DETADJPNOM:
+	<> == nimrodel.phrase.DETP
+	<phrase-np cat> == np
+	<phrase-np nextrole> == <here lex next phrase-adjp next phrase-nom nextrole>
+	<phrase-np end-char> == <here lex next phrase-adjp next phrase-nom end-char>
+	<phrase-np type> == <here lex next phrase-adjp next phrase-nom type>
+	
+	<phrase-np output> == 
+			<here lex next render attr phrase-np <here lex next phrase-adjp type .> 
+				<here lex next phrase-adjp next phrase-np output .> .>
+				
+	<phrase> == <phrase-np>
+.
+
+
+
+#hide nimrodel.phrase.DET.
+nimrodel.phrase.DET:
+	<> == nimrodel.phrase.PHRASEROOT
+	<$phrase> == <try nom $phrase>
+	
+	<try nom> == < IF:< <here lex next phrase-nom cat> THEN case np ELSE try adjp .> >
+	<try adjp> == < IF:< <here lex next phrase-adjp cat> THEN try adjpnom ELSE case default .> >
+	<try adjpnom> == < IF:< <here lex next phrase-adjp next phrase-nom cat> THEN case adjpnom ELSE case default .> >
+	
+	<case np> == nimrodel.phrase.DETNOM:<>
+	<case adjpnom> == nimrodel.phrase.DETADJPNOM:<>
+	<case default> == nimrodel.phrase.DETP:<>
+.
+
+
+#hide nimrodel.phrase.QUANTNP.
+nimrodel.phrase.QUANTNP:
+	<$n> == nimrodel.phrase.PHRASEROOT:<>
+	<$n phrase-np cat> == np
+	<$n phrase-np nextrole> == <$n here token nextn Add:<$n 1> phrase-np nextrole>
+	<$n phrase-np end-char> == <$n here token nextn Add:<$n 1> phrase-np end-char>
+	<$n phrase-np output> == <$n render rel phrase-np <$n here token nextn Add:<$n 1> phrase-np output.> .>
+	<$n phrase-np rel> == is_part_of
+	<$n phrase-np type> == <$n here token nextn Add:<$n 1> phrase-np type.>
+	
+	<$n phrase> == <$n phrase-np>
+	<$n sem> == <$n here token nextn Add:<$n 1> phrase-np>
+.
+
+#hide nimrodel.phrase.QUANT.
+nimrodel.phrase.QUANT:
+	<> == nimrodel.phrase.DET
+	
+	<$phrase> == <try of $phrase>
+	<sem> == <try of sem>
+	
+	<try of> == < IFEQ:< <here token next token form .> of THEN case of ELSE try np .> >
+	<try np> == < IF:< <here lex next phrase-np cat .> THEN case np ELSE case default .> >
+	
+	<case default> == nimrodel.phrase.DET:<>
+	<case np> == nimrodel.phrase.QUANTNP:<0>
+	<case pp> == nimrodel.phrase.QUANTNP:<1>
+.
+
+
+
+#hide nimrodel.phrase.PREPP.
+nimrodel.phrase.PREPP:
+	<> == nimrodel.phrase.PHRASEROOT
+	<phrase-prepp cat> == prepp
+	
+	<phrase> == <phrase-prepp>
+.
+
+
+#hide nimrodel.phrase.PREPNP.
+nimrodel.phrase.PREPNP:
+	<> == nimrodel.phrase.PREPP
+	<phrase-pp cat> == pp
+	<phrase-pp nextrole> == <here lex next phrase-np nextrole>
+	<phrase-pp end-char> == <here lex next phrase-np end-char>
+	<phrase-pp output> == <render rel phrase-pp <here lex next phrase-np output.> .>
+	<phrase-pp type> == unbound
+	<phrase-pp rel> == <here lex word>
+	
+	<phrase> == <phrase-pp>
+.
+
+#hide nimrodel.phrase.PREPPP.
+nimrodel.phrase.PREPPP:
+	<> == nimrodel.phrase.PREPP
+	<phrase-pp cat> == pp
+	<phrase-pp nextrole> == <here lex next phrase-pp nextrole>
+	<phrase-pp end-char> == <here lex next phrase-pp end-char>
+	<phrase-pp output> == <render rel phrase-pp <here lex next phrase-pp output.> .>
+	<phrase-pp type> == unbound
+	<phrase-pp rel> == <here lex id>
+	
+	<phrase> == <phrase-pp>
+.
+
+
+#hide nimrodel.phrase.PREP.
+nimrodel.phrase.PREP:
+	<> == nimrodel.phrase.PHRASEROOT
+	<$phrase> == <try np $phrase>
+	
+	<try np> == < IF:< <here lex next phrase-np cat .> THEN case pp ELSE try pp .> >
+	<try pp> == < IF:< <here lex next phrase-pp cat .> THEN case ppp ELSE case default .> >
+	
+	<case pp> == nimrodel.phrase.PREPNP:<>
+	<case ppp> == nimrodel.phrase.PREPPP:<>
+	<case default> == nimrodel.phrase.PREPP:<>	
+.
+
+% abstract node for lexical NPs (such as pronouns and proper nouns)
+#hide nimrodel.phrase.LEXNP.
+nimrodel.phrase.LEXNP:
+	<> == nimrodel.phrase.PHRASEROOT
+	<phrase-np cat> == np	
+	<phrase-np> == nimrodel.phrase.TRYCONJUNCT:<'nimrodel.phrase.PHRASEROOT' phrase-np>
+	
+	<phrase> == <phrase-np>
+.
+
+#hide nimrodel.phrase.PRO.
+nimrodel.phrase.PRO:
+	<> == nimrodel.phrase.LEXNP
+.
+
+
+#hide nimrodel.phrase.PROPNNOMP.
+nimrodel.phrase.PROPNNOMP:
+	<> == nimrodel.phrase.PHRASEROOT:<>
+	<phrase-np cat> == np
+	<phrase-np> == <conj>	
+	<phrase-np rel> == equals
+	<phrase-np conjrel> == equals
+	<phrase-np end-char> == <here lex end-char.>
+	<phrase-np output> == <render rel phrase-np <conj output .> .>
+	
+	<conj> == nimrodel.phrase.TRYCONJUNCT2:<phrase-np 'nimrodel.phrase.PHRASEROOT' phrase-nom>
+.
+
+
+
+#hide nimrodel.phrase.PROPN.
+nimrodel.phrase.PROPN:
+	<> == nimrodel.phrase.LEXNP
+	<phrase-np> == <try nom phrase-np>
+	
+	<try nom> == < IF:< <here lex next phrase-nom cat.> THEN try conj ELSE default.> >
+	<try conj> == < IF:< <here lex next phrase-nom conj.> THEN default ELSE case nom.> >
+	<case nom> == nimrodel.phrase.PROPNNOMP:<>
+	<default> == nimrodel.phrase.LEXNP:<>
+	
+	<phrase> == <phrase-np>
+.
+
+#hide nimrodel.phrase.N.
+nimrodel.phrase.N:
+	<> == nimrodel.phrase.PHRASEROOT
+
+	<phrase-n cat> == n
+	<phrase-n> == nimrodel.phrase.TRYCONJUNCT:<'nimrodel.phrase.PHRASEROOT' phrase-n>
+	
+	<phrase-nom cat> == nom
+	<phrase-nom> == nimrodel.phrase.TRYCONJUNCT:<'nimrodel.phrase.PHRASEROOT' phrase-nom>
+	
+	<phrase-np> == <try propn phrase-np>
+	
+	<try propn> == <IFEQ:< <here lex casetype> capitalised THEN case propn ELSE try plur .> >
+	<try plur> == <IF:< ONEOF:< <here lex mor num .> plur mass .> THEN case plur ELSE case default .> >
+	
+	<case plur phrase-np cat> == np
+	<case plur phrase-np> == nimrodel.phrase.TRYCONJUNCT:<'nimrodel.phrase.PHRASEROOT' phrase-np>
+	<case propn> == nimrodel.phrase.PROPN:<>
+	<case default> == nimrodel.phrase.PHRASEROOT:<>
+	
+	<phrase> == <phrase-n>
+.
+
+#hide nimrodel.phrase.ADJP.
+nimrodel.phrase.ADJP:
+	<> == nimrodel.phrase.PHRASEROOT:<>
+	<phrase-adjp cat> == adjp
+	<phrase-adjp output> == 
+		<render attr phrase-adjp <here lex type .> <render extend phrase-adjp <here lex next phrase-np output.> .> .>
+	
+	<phrase> == <phrase-adjp>
+.
+
+#hide nimrodel.phrase.ADJPNOM.
+nimrodel.phrase.ADJPNOM:
+	<> == nimrodel.phrase.PHRASEROOT:<>
+	<phrase-np cat> == np
+	<phrase-np nextrole> == <here lex next phrase-np nextrole>
+	<phrase-np end-char> == <here lex next phrase-np end-char>
+	<phrase-np type> == <here lex next phrase-np type>
+	<phrase-np output> == 
+		<render attr phrase-np <here lex type> <render extend phrase-np <here lex next phrase-np output.> .> .>
+	
+	<phrase> == <phrase-np>
+.
+
+
+#hide nimrodel.phrase.ADJ.
+nimrodel.phrase.ADJ:
+	<> == nimrodel.phrase.PHRASEROOT
+	
+	<$phrase> == <try nom $phrase>
+	
+	<try nom> == < IF:< <here lex next phrase-nom cat> THEN try np ELSE case default .> >
+	<try np> == < IF:< <here lex next phrase-np cat> THEN case adjpnom ELSE case default .> >
+	
+	<case adjpnom> == nimrodel.phrase.ADJPNOM:<>
+	<case default> == nimrodel.phrase.ADJP:<>
+.
+
+#hide nimrodel.phrase.PREDNOMP.
+nimrodel.phrase.PREDNOMP:
+	<> == nimrodel.phrase.N
+	<$phrase nextrole> == <here lex next lex next phrase-np nextrole>
+	<$phrase end-char> == <here lex next lex next phrase-np end-char>
+	<$phrase output> == <render rel $phrase <here lex next lex next phrase-np output.> .>
+	
+	<phrase> == <phrase-n>
+.
+	
+	
+#hide nimrodel.phrase.PREDNOM.
+nimrodel.phrase.PREDNOM:
+	<> == nimrodel.LEXROOT
+	<$phrase> == < IFEQ:< <here lex next token word .> of 
+				  THEN case prednom
+				  ELSE case default .> $phrase>
+	
+	<case prednom> == nimrodel.phrase.PREDNOMP:<>
+	<case default> == nimrodel.phrase.N:<>
+.
+	

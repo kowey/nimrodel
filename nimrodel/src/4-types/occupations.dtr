@@ -1,0 +1,138 @@
+
+#uses Implode.
+
+
+#hide nimrodel.occupation.OCCUPATION-LOOKUP.
+nimrodel.occupation.OCCUPATION-LOOKUP:
+	<> == **fail**
+	<$nimrodel-occupationstem> == 'nimrodel.occupation.OCCUPATIONROOT'
+	<$nimrodel-occofplace> == 'nimrodel.occupation.OCCOFPLACE'
+.
+
+#hide nimrodel.occupation.OCCUPATIONROOT.
+nimrodel.occupation.OCCUPATIONROOT:	
+	<> == nimrodel.LEXROOT:<>
+	
+	<token type> == 'Occupation'
+	<token occupation> == <here token stem>
+	<$phrase output> == <render rel $phrase 'Person' occupation_is nimrodel.LEXROOT:<$phrase output .> .>
+.
+
+nimrodel.occupation.PHRASEROOT:
+	<> == nimrodel.phraseutils.PHRASEROOT:< 'nimrodel.occupation.OCCUPATIONROOT' >
+	<lex> == < here < here map nimrodel.context.NEXT:<2 token context .> .> lex>
+.	
+
+
+#hide nimrodel.occupation.WORDSTEMOCC.
+nimrodel.occupation.WORDSTEMOCC:
+	<$stem2> == nimrodel.occupation.OCCUPATIONROOT:<>
+	
+	<$stem2 lex> == <try match $stem2 lex>
+	
+	<try match $stem2> == 
+		< IFEQ:< <here token next token stem .> $stem2 
+		  THEN case match 
+		  ELSE case default .> $stem2>
+	
+	<case default $stem2> == nimrodel.LEX-UNKNOWN:<>
+	<case match $stem2> == nimrodel.phraseutils.SKIP:<1 'nimrodel.occupation.OCCUPATIONROOT' lex>
+	<case match $stem2 lex occupation> == Implode:< <here token word.> - $stem2 .>
+.
+
+nimrodel.occupation.Nbag:<> == nimrodel.occupation.WORDSTEMOCC:<maker>.
+nimrodel.occupation.Nbarrel:<> == nimrodel.occupation.WORDSTEMOCC:<maker>.
+nimrodel.occupation.Nbasket:<> == nimrodel.occupation.WORDSTEMOCC:<maker>.
+nimrodel.occupation.Nbell:<> == nimrodel.occupation.WORDSTEMOCC:<ringer>.
+nimrodel.occupation.Nbook:<> == nimrodel.occupation.WORDSTEMOCC:<binder>.
+nimrodel.occupation.Nbow:<> == nimrodel.occupation.WORDSTEMOCC:<maker>.
+nimrodel.occupation.Nbridle:<> == nimrodel.occupation.WORDSTEMOCC:<cutter>.
+nimrodel.occupation.Nbridge:<> == nimrodel.occupation.WORDSTEMOCC:<keeper>.
+nimrodel.occupation.Nbrush:<> == nimrodel.occupation.WORDSTEMOCC:<maker>.
+nimrodel.occupation.Nbushel:<> == nimrodel.occupation.WORDSTEMOCC:<maker>.
+nimrodel.occupation.Ncandle:<> == nimrodel.occupation.WORDSTEMOCC:<maker>.
+nimrodel.occupation.Ncharnel:<> == nimrodel.occupation.WORDSTEMOCC:<keeper>.
+nimrodel.occupation.Ncomb:<> == nimrodel.occupation.WORDSTEMOCC:<maker>.
+nimrodel.occupation.Ncopper:<> == nimrodel.occupation.WORDSTEMOCC:<smith>.
+nimrodel.occupation.Ncrossbow:<> == nimrodel.occupation.WORDSTEMOCC:<maker>.
+nimrodel.occupation.Ndoor:<> == nimrodel.occupation.WORDSTEMOCC:<keeper>.
+nimrodel.occupation.Ndove:<> == nimrodel.occupation.WORDSTEMOCC:<keeper>.
+nimrodel.occupation.Newer:<> == nimrodel.occupation.WORDSTEMOCC:<bearer>.
+nimrodel.occupation.Ngeneral:<> == nimrodel.occupation.WORDSTEMOCC:<procurator>.
+nimrodel.occupation.Nincense:<> == nimrodel.occupation.WORDSTEMOCC:<measurer>.
+nimrodel.occupation.Nmarble:<> == nimrodel.occupation.WORDSTEMOCC:<worker>.
+nimrodel.occupation.Nmeasures:<> == nimrodel.occupation.WORDSTEMOCC:<official>.
+nimrodel.occupation.Nmustard:<> == nimrodel.occupation.WORDSTEMOCC:<seller>.
+nimrodel.occupation.Nneedle:<> == nimrodel.occupation.WORDSTEMOCC:<maker>.
+nimrodel.occupation.Npackhorse:<> == nimrodel.occupation.WORDSTEMOCC:<driver>.
+nimrodel.occupation.Npea:<> == nimrodel.occupation.WORDSTEMOCC:<seller>.
+nimrodel.occupation.Npouch:<> == nimrodel.occupation.WORDSTEMOCC:<maker>.
+nimrodel.occupation.Nsaffron:<> == nimrodel.occupation.WORDSTEMOCC:<grower>.
+nimrodel.occupation.Nsheath:<> == nimrodel.occupation.WORDSTEMOCC:<maker>.
+nimrodel.occupation.Nshoe:<> == nimrodel.occupation.WORDSTEMOCC:<seller>.
+nimrodel.occupation.Nvelvet:<> == nimrodel.occupation.WORDSTEMOCC:<maker>.
+nimrodel.occupation.Nviol:<> == nimrodel.occupation.WORDSTEMOCC:<player>.
+
+
+
+#hide nimrodel.stem.Ndealer.
+nimrodel.stem.Ndealer:
+	<> == nimrodel.occupation.OCCUPATIONROOT
+	
+	<lex> == <try dealer-in lex>
+	
+	<try dealer-in> == 
+		< IFEQ:< <here token next token form .> in 
+		  THEN case dealer-in 
+		  ELSE case default .> >
+	
+	<case default> == nimrodel.occupation.OCCUPATIONROOT:<>
+	<case dealer-in> == nimrodel.phraseutils.SKIP:<2 'nimrodel.occupation.OCCUPATIONROOT' lex>
+	<case dealer-in lex occupation> == Implode:< dealer-in- <here token next token next token word .> .>
+.
+
+#hide nimrodel.stem.Nmaker.
+nimrodel.stem.Nmaker:
+	<> == nimrodel.occupation.OCCUPATIONROOT
+	
+	<lex> == <try maker-of lex>
+	
+	<try maker-of> == 
+		< IFEQ:< <here token next token form .> of 
+		  THEN case maker-of 
+		  ELSE case default .> >
+	
+	<case default> == nimrodel.occupation.OCCUPATIONROOT:<>
+	<case maker-of> == nimrodel.phraseutils.SKIP:<2 'nimrodel.occupation.OCCUPATIONROOT' lex>
+	<case maker-of lex occupation> == Implode:< maker-of- <here token next token next token word .> .>
+.
+
+#hide nimrodel.occupation.OCCOFPLACE.
+nimrodel.occupation.OCCOFPLACE:
+	<> == nimrodel.occupation.OCCUPATIONROOT
+	
+	<lex> == nimrodel.phraseutils.LEXOFPLACE:< 0 'nimrodel.occupation.OCCUPATIONROOT' lex >
+.
+
+
+
+#hide nimrodel.stem.Ndean. 
+nimrodel.stem.Ndean:
+	<> == nimrodel.occupation.OCCOFPLACE
+	
+	<lex> == <try and lex>
+	
+	<try and> ==
+		< IFEQ:< <here token next token form .> and
+		  THEN try chapter
+		  ELSE case default .> >
+	<try chapter> ==
+		< IFEQ:< <here token next token next token form .> chapter
+		  THEN case dean-and-chapter
+		  ELSE case default .> >
+	
+	<case dean-and-chapter> == nimrodel.institution.INSTOFPLACE:<2>
+	<case dean-and-chapter lex type> == 'Institution'
+	<case default> == nimrodel.occupation.OCCOFPLACE:<>
+.
+

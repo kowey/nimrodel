@@ -1,0 +1,134 @@
+%   File:       strings.dtr
+%   Purpose:    support for basic string topology
+%   Author:     Roger Evans
+%   Version:    ELF 0.1
+%   Date:       04/10/11
+%
+%   (c) Copyright 2011, University of Brighton
+
+
+%   -- STRING TOPOLOGY --
+%
+%   This file contains the DATR code for the string topology
+
+
+%   load in standard DATR libraries
+#uses
+    Qpath
+    Add 
+	Subtract
+	QueryPath
+	System
+	LocalPath
+.
+
+%%  elf.STRING-TOP	top node for ELF lexical entries using string topology
+%%					this node handles <prev> and <next> by mapping them
+%%					into numerical roles accessed via the Query context
+%%					It also assumes ports 'start' and 'end' for role connectors
+
+#hide elf.STRING-TOP.
+elf.STRING-TOP:
+    <> == elf.LEX-TOP
+	<prevrole $n> == Subtract:<elf.SELF $n.> 
+	<nextrole $n> == Add:<elf.SELF $n.>
+	<prevrole> == <prevrole 1>
+	<nextrole> == <nextrole 1>
+    <prev> == Local:<QueryNode <prevrole.>  end elf.LANG:<GlobalPath.>>
+    <next> == Local:<QueryNode <nextrole.> start elf.LANG:<GlobalPath.>>
+.
+
+
+%%  elf.STRING      convenience node for simple sentence queries. 
+
+#hide elf.STRING.
+elf.STRING:
+    <> == elf.QUERY-TOP
+    <$elf-role> == elf.LEX-LOOKUP:< Qpath:<$elf-role id .> $elf-role>
+    <$elf-prev id> == 'START'
+    <$elf-next id> == 'END'
+.
+
+%%  elf.PATH-STRING  convenience node for very simple sentence queries. Queries
+%%                   to this node consist of a <query role | id0 id1 id2 ..>, where query
+%%                   is a (unit length) query, role is the role to address the query to
+%%                   (optional, defaults to 0) and id0, id1, ... are the ids of the words
+%%                   corresponding to role 0, 1 ... 
+
+#hide elf.PATH-STRING.
+elf.PATH-STRING:
+    <> == elf.QUERY-TOP
+    <$elf-any | > == <0 $elf-any .>
+    <$elf-role $elf-any | > == <$elf-role $elf-any .>
+    <$elf-role> == elf.LEX-LOOKUP:< Qpath:<$elf-role id .> $elf-role>
+	<$elf-role id> == <index $elf-role QueryPath .>
+
+    <index $elf-role $elf-any | > == <index2 $elf-role>
+    <index $elf-role $elf-any> == <index $elf-role>
+
+    <index2 $elf-role $elf-any> == <index3 $elf-role $elf-any>
+    <index2> == 'END'
+
+    <index3 -1> == 'START'
+    <index3 0 $elf-any> == $elf-any
+    <index3> == <index4>
+
+    <index4 $elf-role $elf-any> == <index2 Add:<-1 $elf-role .> >
+.
+
+#hide elf.COMPILE-STRING.
+elf.COMPILE-STRING:
+	<> == elf.QUERY-TOP
+	<compile> == System:<consult>
+	
+	<default-node> == <atom elf> <dot> <node 'STRING-QUERY'>
+	<default-parent> == <atom elf> <dot> <node 'STRING'>
+
+	<code init $name> == <code reset $name> $name
+	<code init> == <code init <default-node> >
+	<code reset $name> ==	System:<retract $name > 
+	<code reset> == <code reset <default-node> > 
+	<code start $name> ==  LocalPath:<$name> <colon> 
+	<code start> == <code start <default-node> >
+	<code top $parent> == <bra> <ket> <eq> LocalPath:<$parent>
+	<code top> == <code top <default-parent> >
+	<code body> == <code attr **query**>
+	<code end> == dot
+
+	<code attr $attr> == <code loop $attr 0> 
+	
+	<code loop $attr $role $word> ==
+		<code loopbody $attr $role $word .>
+		<code loop $attr Add:<1 $role .>>
+	<code loop> == 
+		
+	<code loopbody> == <code add-param>
+	<code loopbody **query** $role> == 
+		<bra> <atom $role> <ket> <eq> <node 'Global'> <colon> <bra> <atom <code init <querynodename role $role> .> .> <atom $role> <ket>
+		<bra> <atom $role> <atom param> <ket> <eq> <node 'Global'> <colon> <bra> <atom <code init <querynodename params $role> .> .> <ket>
+		<compile <querynodespec params $role> <colon> <bra> <ket> <eq> <atom **fail**> dot .>
+	<code loopbody **role** $role $word> ==
+		% compile out call to elf.LEX-LOOKUP (for efficiency) - it can use role params to access additional context
+		% <> == Local:<elf.GET-CONTEXT:<lookup id $role>>
+		<compile <querynodespec role $role> <colon> <bra> <ket> <eq> <node elf.GET-CONTEXT:<lookup id $word $role .> > dot .>
+	
+	<code add-param $attr $role $val> == 
+		<compile <querynodespec params $role> <colon> <bra> <atom $attr> <ket> <eq> <atom $val> dot .>
+	
+	<querynodespec $type $role> == <atom elf> <dot> <atom $type> <dot> <node $role>
+	<querynodename> == System:<nodename <querynodespec> .>			
+				
+	<bra> == '<'
+	<ket> == '>'
+	<eq> == '=='
+	<colon> == ':'
+	<dot> == '.'
+	<nl> == '\n'
+	<atom> == System
+	<node> == System
+	<dvar> == System
+.
+
+		
+		
+		

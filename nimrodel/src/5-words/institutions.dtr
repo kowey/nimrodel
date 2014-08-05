@@ -1,0 +1,26 @@
+
+% regular institution words - these can just use the INSTITUTIONROOT node directly 
+#vars $nimrodel-institutionstem:  
+
+.
+
+% institution words that can be followed by 'of place'
+#vars $nimrodel-instofplacestem:
+	abbey
+	%alien
+	archdeaconry
+	bishopric
+	%cathedral
+	church
+	%college
+	%collegiate
+	convent
+	deanery
+	friary
+	hospital
+	manor
+	prebend
+	prebendary
+	preceptory
+%priory
+.

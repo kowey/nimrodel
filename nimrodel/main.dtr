@@ -1,0 +1,97 @@
+%   File:       main.dtr
+%   Purpose:    A 'main' application stub for the nimrodel pipeline
+%   Author:     Roger Evans
+%   Version:    1.0
+%   Date:       18/08/12
+%
+%   (c) Copyright 2012, University of Brighton
+
+app.MAIN:
+	<> == nimrodel.MAIN
+.
+
+
+%% nimrodel.MAIN is an application stub for the nimrodel example lexicon.
+
+#uses System Implode Idem.
+
+
+#hide nimrodel.MAIN.
+nimrodel.MAIN:
+    <> == nimrodel.QUERY-TOP
+	
+    <version> == elf.GET-CONTEXT:<version display>
+    <params> == elf.GET-CONTEXT:<params display>
+	<appname> == elf.GET-CONTEXT:<version appname>
+
+    <nl> == '\n'
+	
+    <help> == <nl>
+              'Usage:' <nl>
+			  '    ' <appname> ' [-model <model>] [-language <lang>] [-title <title>] [<doc>]' <nl>
+			  '        Process document from standard input or string argument <doc>.' <nl>
+			  '        <model> is processing model, <lang> is the document language,'  <nl>
+			  '        <title> is document title string (if omitted, use document first line)' <nl>
+			  '        Default model and language can be set in ./' <appname> '-params.dtr file.'<nl>
+			  '    ' <appname> ' -version         print system version' <nl>
+			  '    ' <appname> ' -help            print this message' <nl>
+			  
+    <header> == <nl> <version> <nl>
+	
+	<elf display> == <header> <help>
+
+	% check for special args first
+	<arglist> == System:<writecompact <arglist1> .>
+	<arglist -help> == System:<writecompact <help> .>
+	<arglist -version> == System:<writecompact <version> <nl>.>
+	
+	% check for presence and validity of -model arg
+	<arglist1> == <arglist1 -model elf.GET-CONTEXT:<params default model .> >
+	<arglist1 -model $$model> == <arglist2 <modelcheck $$model .> $$model>
+	
+	% check for presence and validity of -lang arg
+	<arglist2 no $$model> == 'Unknown model: ' $$model <nl>
+	<arglist2 yes $$model> == <arglist2 yes $$model -language elf.GET-CONTEXT:<params default language .> >
+	<arglist2 yes $$model -language $$language> == <arglist3 <langcheck $$language .> $$model $$language>
+	
+	% check for presence of -title arg
+	<arglist3 no $$model $$language> == 'Unknown language: ' $$language <nl>
+	<arglist3 yes $$model $$language> == <arglist3 yes $$model $$language -title no >
+	<arglist3 yes $$model $$language -title $$title> == <arglist4 $$model $$language $$title>
+
+	% extract the document, and process it with all the args
+	<arglist4 $$model $$language $$title> == <process $$model $$language <docstring $$title> .>
+	
+	% check model is a known model (ie matches $model, rather than just $$model)
+	<modelcheck> == no
+	<modelcheck $model> == yes
+	
+	% check language is a known language (ie matches $elf-language)
+	<langcheck> == no
+	<langcheck $elf-language> == yes
+	
+	% get document as a string - from last argument if supplied, otherwise from standard input
+	% returns combined doc string, title, doc
+	<docstring> == <docstring2>
+	<docstring no> == <docstring4>
+	
+	% title supplied in arglist - get doc and glue together
+	<docstring2 $$title> == <docstring3 $$title System:<readinput .> .>
+	<docstring2 $$title $$any> == <docstring3 $$title $$any .>
+	
+	% glue together title and doc for combined string
+	<docstring3 $$title $$doc> == Implode:<$$title <nl> $$doc> $$title $$doc
+	
+	% no title supplied - get from first line of std input or use default
+	<docstring4> == <docstring5 System:<readinput .> .>
+	<docstring4 $$any> == <docstring3 elf.GET-CONTEXT:<params default title .> $$any .>
+	
+	% split document read from input into first line (title) and rest (document)
+	<docstring5 $$doc> == $$doc System:<firstline $$doc .> System:<skipfirstline $$doc .>
+	
+	% process - intialise nimrodel then pass it the args to process
+	<process> == <nimrodel init .> <nimrodel process>
+	
+	<nimrodel> == nimrodel.NIMRODEL:<> 
+.
+

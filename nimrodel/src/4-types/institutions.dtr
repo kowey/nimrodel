@@ -1,0 +1,96 @@
+
+
+#hide nimrodel.institution.INSTITUTION-LOOKUP.
+nimrodel.institution.INSTITUTION-LOOKUP:
+	<> == **fail**
+	<$nimrodel-institutionstem> == 'nimrodel.institution.INSTITUTIONROOT'
+	<$nimrodel-instofplacestem> == 'nimrodel.institution.INSTOFPLACE0'
+.
+
+#hide nimrodel.institution.INSTITUTIONROOT.
+nimrodel.institution.INSTITUTIONROOT:	
+	<> == nimrodel.LEXROOT:<>
+	
+	<token type> == 'Institution'
+.
+
+#hide nimrodel.institution.INSTOFPLACE.
+nimrodel.institution.INSTOFPLACE:
+	<> == elf.TOP
+	<$n> == nimrodel.institution.INSTITUTIONROOT:<>	
+	<$n lex> == <try ofplace $n lex>
+	<$n $phrase> == <try ofplace $n $phrase>
+	
+	<try ofplace $n> == <IFEQ:< <$n here token nextn Add:<$n 1 .> token word .> of THEN try place ELSE case default .> $n>
+	<try place $n> == <IFEQ:< <$n here token nextn Add:<$n 1 .> token next lex type .> 'Place' THEN case place ELSE try title .> $n>
+	<try title $n> == < IFEQ:< <$n here token nextn Add:<$n 1 .> token next token type .> title  THEN case place ELSE try propn .> $n>
+	<try propn $n> == <IFEQ:< <$n here token nextn Add:<$n 1 .> token next token type .> propnoun THEN case place ELSE case default .> $n >				  
+	
+	<case place $n> == nimrodel.phraseutils.SKIP-TOKENS-LEX:<Add:<$n 1 .> 'nimrodel.institution.INSTITUTIONROOT'>
+	<case default $n> == nimrodel.institution.INSTITUTIONROOT:<>	
+.
+
+nimrodel.institution.INSTOFPLACE0:
+	<> == nimrodel.institution.INSTOFPLACE:<0>
+.	
+
+% institution types
+
+
+#hide nimrodel.word.Nalien.
+nimrodel.word.Nalien:
+	<> == nimrodel.LEXROOT
+	
+	<lex> == < IF:<ONEOF:<<here token next token stem.> cell grange .> THEN case 1 ELSE try priory .> lex>
+	
+	<try priory> == < IFEQ:< <here token next token stem .> priory THEN try cell ELSE default .> >
+	<try cell> == < IFEQ:< <here token next token next token stem .> cell THEN case 2 ELSE case 1 .> >
+	
+	<case $n> == nimrodel.institution.INSTOFPLACE:<$n>
+	<case $n lex type> == nimrodel.institution.INSTITUTIONROOT:<token type>
+	<default> == nimrodel.LEXROOT:<>
+.
+
+
+
+#hide nimrodel.word.Ncathedral.
+nimrodel.word.Ncathedral:
+	<> == nimrodel.institution.INSTITUTIONROOT
+	
+	<lex> == < IF:<ONEOF:<<here token next token stem.> church priory .> THEN case 1 ELSE case 0 .> lex>
+	
+	<case $n> == nimrodel.institution.INSTOFPLACE:<$n>
+.
+
+
+
+#hide nimrodel.word.Ncollege.
+nimrodel.word.Ncollege:
+	<> == nimrodel.institution.INSTITUTIONROOT
+	
+	<lex> == < IF:<ONEOF:<<here token next token stem.> chapel church .> THEN case 1 ELSE case 0 .> lex>
+	
+	<case $n> == nimrodel.institution.INSTOFPLACE:<$n>
+.
+
+#hide nimrodel.word.Ncollegiate.
+nimrodel.word.Ncollegiate:
+	<> == nimrodel.LEXROOT
+	
+	<lex> == < IFEQ:<<here token next token stem.> church THEN case 1 ELSE default .> lex>
+
+	<case $n> == nimrodel.institution.INSTOFPLACE:<$n>
+	<case $n lex type> == nimrodel.institution.INSTITUTIONROOT:<token type>
+	<default> == nimrodel.LEXROOT:<>
+.
+
+
+
+#hide nimrodel.word.Npriory.
+nimrodel.word.Npriory:
+	<> == nimrodel.institution.INSTITUTIONROOT
+	
+	<lex> == < IF:<ONEOF:<<here token next token stem.> cell convent .> THEN case 1 ELSE case 0 .> lex>
+	
+	<case $n> == nimrodel.institution.INSTOFPLACE:<$n>
+.

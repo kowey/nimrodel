@@ -1,0 +1,40 @@
+
+
+#hide nimrodel.land.LAND-LOOKUP.
+nimrodel.land.LAND-LOOKUP:
+	<> == **fail**
+	<$nimrodel-landstem> == 'nimrodel.land.LANDROOT'
+.
+
+#hide nimrodel.land.LANDROOT.
+nimrodel.land.LANDROOT:	
+	<> == nimrodel.LEXROOT:<>
+	
+	<token type> == 'Land'
+	<lex type> == 'Site'
+.
+
+
+nimrodel.land.Ncommon:
+	<> == nimrodel.land.LANDROOT
+
+	<lex> == <try common-land lex>
+	
+	<try common-land> == < IF:< ONEOF:< <here token next token stem .> land .> 
+						   THEN case common-land 
+						   ELSE case default .> >
+	
+	<case default> == nimrodel.land.LANDROOT:<>
+	<case common-land> == nimrodel.phraseutils.SKIP:<1 'nimrodel.land.LANDROOT' lex>
+.
+
+nimrodel.land.Nland:
+	<> == nimrodel.site.SITEROOT
+	<token pos> == n
+	<token mor num> == mass
+	
+	<sem output> == nimrodel.binding.BINDINGROOT
+	<sem status> == incomplete
+	<sem binding breadth> == is_breadth_for
+	<sem binding length> == is_length_for
+.

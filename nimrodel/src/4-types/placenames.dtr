@@ -1,0 +1,27 @@
+
+
+#hide nimrodel.placename.PLACENAME-LOOKUP.
+nimrodel.placename.PLACENAME-LOOKUP:
+	<> == **fail**
+	<$nimrodel-placenameword> == 'nimrodel.placename.PLACENAMEROOT'
+.
+
+#hide nimrodel.placename.PLACENAMEROOT.
+nimrodel.placename.PLACENAMEROOT:	
+	<> == nimrodel.LEXROOT:<>
+	
+	<token type> == 'placename'
+	<token norm> == <here token form>
+	<lex type> == 'Place'
+.
+
+
+nimrodel.placename.PHRASEROOT:
+	<> == nimrodel.phraseutils.PHRASEROOT:< 'nimrodel.LEXROOT' >
+	<lex> == < here < here map nimrodel.context.NEXT:<1 token context .> .> lex>
+.
+
+nimrodel.placename.Nwest: <> == nimrodel.placename.PHRASEROOT <map bergholt> == case skip 1 lex.
+nimrodel.placename.Ngreat:<> == nimrodel.placename.PHRASEROOT <map fordham> == case skip 1 lex.
+nimrodel.placename.Nmount:<> == nimrodel.placename.PHRASEROOT <map bures> == case skip 1 lex.
+nimrodel.placename.Nwakes:<> == nimrodel.placename.PHRASEROOT <map colne> == case skip 1 lex.

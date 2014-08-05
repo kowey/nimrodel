@@ -1,0 +1,31 @@
+#!/bin/bash
+
+. ${0%/*}/configure
+
+# not tested!
+if [[ ${!TCAPP^^-notdefined}==notdefined ]] 
+then
+
+LOCALENV=${0%/*}/local
+if [ -e $LOCALENV ]
+then
+	. $LOCALENV
+fi
+
+export SWI_HOME_DIR=${SWI_HOME_DIR-/usr/lib/swi-prolog}
+export JVM_DIR=${JVM_DIR-/usr/lib/jvm/java-6-openjdk-amd64/jre/lib/amd64/server}
+
+export TCROOT=${TCROOT-~/$TCAPP/${TCAPP}-$TCVERSION}
+export TC=${TC-$TCROOT}
+
+export ELFAPP=$TC/$TCAPP
+export ELFROOT=$TCROOT/3rd-party-1.1/elf/elf-0.4
+export ELF=$ELFROOT/elf
+
+export PATH=$TC/bin:$SWI_HOME_DIR/bin:$PATH
+export LD_LIBRARY_PATH=${JVM_DIR}:$LD_LIBRARY_PATH
+export CLASSPATH=.:${ELFAPP}:$ELFROOT/opennlp/lib/jpl.jar:/$ELFROOT/opennlp/lib/opennlp-tools-1.5.3.jar:$ELFROOT/opennlp/lib/opennlp-maxent-3.0.3.jar
+
+export ${TCAPP^^}=$ELFAPP
+
+fi

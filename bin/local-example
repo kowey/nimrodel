@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# local customisations for toolchain environment
+# uncomment and edit lines below for local customisation of configuration
+# save this file as bin\local
+
+# note that these definitions still allow override by specifying the env vars externally
+
+
+#set this if you don't install app in your home directory
+# export TCROOT=N:\documents\work\%TCAPP%\%TCAPP%-%TCVERSION%
+
+# location of SWIprolog system
+# export SWI_HOME_DIR=${SWI_HOME_DIR-/usr/lib/swi-prolog}
+
+# location of java
+#export JVM_DIR=${JVM_DIR-/usr/lib/jvm/java-6-openjdk-amd64/jre/lib/amd64/server}
+
+# location of the application root directory
+#export TCROOT=${TCROOT-~/$TCAPP/${TCAPP}-$TCVERSION}
+
+# location of application directory
+#export TC=${TC-$TCROOT}

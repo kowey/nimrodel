@@ -1,0 +1,18 @@
+
+% regular title words - these can just use the TITLEROOT node directly 
+% (titles that can be abbreviated need special handling in types/titles.dtr)
+#vars $nimrodel-titleword: 
+	king
+	prince
+	queen
+	princess
+	mr
+	lord
+	lady
+	sir
+	dame
+	baron
+	baronet
+	%magister
+	%saint
+.

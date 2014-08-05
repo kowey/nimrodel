@@ -1,0 +1,134 @@
+%   File:       rules.dtr
+%   Purpose:    support for lexical rule application
+%   Author:     Roger Evans
+%   Version:    ELF 0.1
+%   Date:       28/11/09
+%
+%   (c) Copyright 2009, University of Brighton
+
+%   -- RULE APPLICATION MECHANISM --
+%
+%   Backward chaining rule application mechanism using global context.
+%   Independent rule modules can be created using global quoting.
+%   Ordinary global context functionality is provided for by the elf.SELF node.
+%   For full details, see associated documentation.
+%
+%   Note: these nodes depend on the variable $rule being defined to cover
+%   all the lexical rules(see declare.dtr)
+
+
+%   Path manipulation nodes
+
+%%  elf.RULES       returns the rule names prefix of an input path
+
+#hide elf.RULES.
+elf.RULES:
+    <> ==
+    <$rule> == $rule <>
+.
+
+
+%%  elf.INPUT-RULES returns the rule names for the INPUT rule to the
+%%                  current path (that is, all the rules except the
+%%                  first one)
+
+#hide elf.INPUT-RULES.
+elf.INPUT-RULES:
+    <$rule> == elf.RULES:<>
+.
+
+
+%%  elf.NON-RULES   returns the non-rule component of an input path
+
+#hide elf.NON-RULES.
+elf.NON-RULES:
+    <> == LocalPath:<>
+    <$rule> == <>
+.
+
+
+%   Inheriting non-rule path values from the current and input contexts
+
+%%  elf.SELF        given a non-rule path, evaluates it in the same context
+%%                  as the path currently being evaluated (equivalent to
+%%                  global inheritance in ordinary DATR)
+
+#hide elf.SELF.
+elf.SELF:
+    <> == Global:<GlobalNode elf.RULES:<GlobalPath:<.>.>>
+.
+
+
+%%  elf.INPUT       given a non-rule path, evaluate it in the context that
+%%                  is the input to the current rule application
+
+#hide elf.INPUT.
+elf.INPUT:
+    <> == Global:<GlobalNode elf.INPUT-RULES:<GlobalPath:<.>.>>
+.
+
+
+%   Invoking rule application functionality
+
+%%  elf.RULES-TOP   a top node for all rule application contexts - extends
+%%                  elf.TOP by providing a path to report rules being applied.
+
+#hide elf.RULES-TOP.
+elf.RULES-TOP:
+    <> == elf.TOP:<>
+    <display> == elf.DISPLAY:<>
+    <rules> == elf.RULES:<GlobalPath:<.>.>
+.
+
+
+%%  elf.RULE-HANDLER ultimate default in a rule module - apply first rule
+%%                  in rules part of input path. Rule default is to do
+%%                  nothing
+
+#hide elf.RULE-HANDLER.
+elf.RULE-HANDLER:
+    <> == elf.RULES-TOP:<>
+    <$rule> == Local:<GlobalNode rule $rule elf.NON-RULES:<> .>
+    <rule $rule> == elf.INPUT:<>
+.
+
+
+%%  elf.RULE-FAIL-HANDLER ultimate default in a rule module - apply first rule
+%%                  in rules part of input path. Rule default is to fail.
+
+#hide elf.RULE-FAIL-HANDLER.
+elf.RULE-FAIL-HANDLER:
+    <> == elf.RULES-TOP:<>
+    <$rule> == Local:<GlobalNode rule $rule elf.NON-RULES:<> .>
+    <rule $rule> == elf.UNDEF:<>
+.
+
+
+%%  elf.RULE-NULL-HANDLER dummy handler for modules that support rules but
+%%                  do not execute them (eg because they pass them down
+%%                  to a submodule). Strips off rule part and does a
+%%                  global inheritance of non-rule part
+
+#hide elf.RULE-NULL-HANDLER.
+elf.RULE-NULL-HANDLER:
+    <> == elf.RULES-TOP:<>
+    <$rule> == Local:<GlobalNode elf.NON-RULES:<> .>
+.
+
+
+%%  elf.RULE-TOP    ultimate default for rule definitions which do
+%%                  nothing by default
+
+#hide elf.RULE-TOP.
+elf.RULE-TOP:
+    <> == elf.INPUT:<>
+.
+
+
+%%  elf.RULE-FAIL-TOP ultimate default for rule definitions which fail by
+%%                  default
+
+#hide elf.RULE-FAIL-TOP.
+elf.RULE-FAIL-TOP:
+    <> == elf.UNDEF
+.

@@ -1,0 +1,57 @@
+% preprocess.dtr
+
+% preprocessing functions applied to construct elf processing environment
+
+#hide nimrodel.preprocess.Span.
+nimrodel.preprocess.Span:
+	<> == elf.TOP
+	% <newspan $$type $$start $$end>
+	<newspan> == openNLP.NewSpan:<>
+	
+	% <absspan $$span $$offsetSpan>
+	<absspan> == openNLP.AbsoluteSpan:<>
+	
+	% <spanstrings $documentString $sentenceSpan>
+	<spanstrings> == openNLP.GetSpanStrings:<>
+	
+	<start> == openNLP.Span:<start>
+	<end> == openNLP.Span:<end>
+	<type> == openNLP.Span:<type>
+.
+
+#hide nimrodel.preprocess.Tokenizer.
+nimrodel.preprocess.Tokenizer:
+	<> == nimrodel.TOP
+	% <$language $sentence >
+	<$$language> == openNLP.OpenNLP:<tokenizer tokenizePos>
+.
+
+#hide nimrodel.preprocess.PosTagger.
+nimrodel.preprocess.PosTagger:
+	<> == nimrodel.TOP
+	<$$language> == openNLP.PosTagger:<>
+.
+
+#hide nimrodel.preprocess.Chunker.
+nimrodel.preprocess.Chunker:
+	<> == nimrodel.TOP
+	<$$language> == openNLP.Chunker:<>
+.
+
+#hide nimrodel.preprocess.Soundex.
+nimrodel.preprocess.Soundex:
+	<> == nimrodel.TOP
+	<$$language> == elflib.SOUNDEX:<>
+.
+
+#hide nimrodel.preprocess.POSMap.
+nimrodel.preprocess.POSMap:
+	<> == nimrodel.TOP
+	<$$language> == elflib.POSMap:<map>
+.
+
+#hide nimrodel.preprocess.Stemmer.
+nimrodel.preprocess.Stemmer:
+	<> == nimrodel.TOP
+	<$$language> == elflib.STEMMER:<morph>
+.

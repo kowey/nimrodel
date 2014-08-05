@@ -1,0 +1,14 @@
+%   File:       load.dtr
+%   Purpose:    DATR loader for core example code
+%   Author:     Roger Evans
+%   Version:    0.1
+%   Date:       15/03/10
+%
+%   (c) Copyright 2010, University of Brighton
+
+%   load the DATR files of the lexicon
+
+#load
+    '$ELFAPP/src/core.dtr'  % core lexicon code
+    '$ELFAPP/src/lex.dtr'   % lexical entries
+.

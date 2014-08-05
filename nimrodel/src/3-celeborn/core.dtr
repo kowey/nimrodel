@@ -1,0 +1,66 @@
+%   File:       core.dtr
+%   Purpose:    links to underlying core ELF code
+%   Author:     Roger Evans
+%   Version:    1.0
+%   Date:       19/08/12
+%
+%   (c) Copyright 2012, University of Brighton
+
+
+%   nimrodel.PARAMS
+
+#hide nimrodel.TOP.
+nimrodel.TOP:
+	<> == elf.TOP
+.
+
+#hide nimrodel.DEFAULT-PARAMS.
+nimrodel.DEFAULT-PARAMS:
+    <> == elf.PARAMS
+	<default model> == sem
+	<default language> == english
+	<default title> == myDocument
+.
+
+#hide nimrodel.LOOKUP.
+nimrodel.LOOKUP:
+	<> == elf.LOOKUP
+    <id> == nimrodel.LEX-LOOKUP
+.
+
+
+%   nimrodel.CONTEXT - specify context information used by ELF library
+
+#hide nimrodel.CONTEXT.
+nimrodel.CONTEXT:
+    <> == elf.CONTEXT
+    <version> == "nimrodel.VERSION:<>"
+    <params> == "nimrodel.PARAMS:<>"
+	<lookup> == "nimrodel.LOOKUP:<>"
+.
+
+
+%   nimrodel.QUERY-TOP - top node for all example nodes 
+%	- make sure ELF can find its context info
+
+#hide nimrodel.QUERY-TOP.
+nimrodel.QUERY-TOP:
+    <> == elf.QUERY-TOP
+    <elf> == nimrodel.CONTEXT:<>
+.
+
+#hide nimrodel.STRING.
+nimrodel.STRING:
+	<> == elf.STRING
+	<$elf-prev id> == '**START**'
+    <$elf-next id> == '**END**'
+	<elf> == nimrodel.CONTEXT:<>
+.
+
+#hide nimrodel.COMPILE-STRING.
+nimrodel.COMPILE-STRING:
+	<> == elf.COMPILE-STRING
+	<elf> == nimrodel.CONTEXT:<>
+.
+
+

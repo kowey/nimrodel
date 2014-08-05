@@ -1,0 +1,149 @@
+% regular site words - these can just use the SITEROOT node directly 
+#vars $nimrodel-sitestem:  
+	acre
+	%%%apple tree
+	appurtenance
+	arable
+	ash
+	balk
+	bank
+	bar
+	barn
+	baulk
+	blackthorn
+	boundary
+	%%%bovate of land
+	brewhouse
+	bridge
+	building
+	bullace 
+	%%%capital messuage
+	%%%carucate of land
+	castle
+	cellar 
+	cemetery
+	chamber
+	channel
+	close
+	common
+	convent
+	corner
+	cottage
+	court
+	courtyard
+	%%%crab apple
+	croft
+	cross
+	crypt
+	curtilage
+	demesne
+	dike
+	ditch
+	dole 
+	door
+	dovecote
+	eastern
+	entrance
+	fence
+	field
+	foothpath
+	furlong
+	%%%gable of the church
+	garden
+	gate
+	glebe
+	great
+	guildhall
+	gutter
+	%haimald messuage
+	hall 
+	hamlet
+	hawthorn
+	hedge
+	holly
+	hospital
+	house
+	hurdle
+	kiln
+	%land
+	lane
+	latrine
+	%malt-kiln
+	manor
+	manse
+	maple
+	market
+	marshes
+	meadow
+	meat market
+	messuage
+	mill
+	moiety
+	monastery 
+	moor
+	%%%new town
+	%%%newly-broken
+	%%%northern corner
+	oak
+	orchard
+	paling
+	parcel
+	parish
+	%%%parish church
+	pasture
+	path
+	place
+	%%%place of land
+	%%%place or street
+	plains
+	plaster
+	%%%plot of land
+	point
+	pond
+	post
+	residence
+	river
+	%%%royal way
+	seld
+	selion
+	shipfold
+	shop
+	side
+	%%%slaughter-yard
+	solar
+	%%%southern corner
+	square
+	stable
+	stream 
+	street
+	suburb
+	tenement
+	territory
+	%%%tile works
+	toft  
+	tree
+	vill
+	village
+	virgate
+	wall 
+	warehouse
+	waste 
+	way
+	%%%west side
+	wold
+	wood	
+.
+
+% sites that can have names (church of St peter, city of York etc.)
+#vars $nimrodel-namedsitestem:
+	chapel
+	church
+	churchyard
+	city
+	county 
+	minster
+	palace
+	priory
+	rectory
+	vicarage
+.
