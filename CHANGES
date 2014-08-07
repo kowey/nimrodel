@@ -1,0 +1,3 @@
+nimrodel 0.1	4/8/14
+	Base version of nimrodel - this is in fact just celeborn 0.8 with a global substitute 
+	celeborn -> nimrodel
