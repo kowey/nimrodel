@@ -1,5 +1,5 @@
 #!/bin/bash
 
-. ${0%/*}/env
+. "${0%/*}/env"
 
-swipl -q -f $ELFAPP/swiprolog.pl -g main -t halt -- $*
+"$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g main -t halt -- "$@"

@@ -21,6 +21,7 @@ if [ -e "$LOCALENV" ]; then
 fi
 
 export SWI_HOME_DIR=${SWI_HOME_DIR-/usr/lib/swi-prolog}
+export SWIPL=${SWIPL-swipl}
 export JVM_DIR=${JVM_DIR-$JAVA_HOME/jre/lib/server}
 
 if [ -z "$TCROOT" ]; then
