@@ -1,7 +1,12 @@
 #!/bin/bash
 
 # SCRIPT_DIR is the directory this very script lives in.
-ZERO_DIR=$(dirname "$0")
+
+if [ "$0" == "-bash" ]; then
+    ZERO_DIR=$PWD/bin # sourced, so guess
+else
+    ZERO_DIR=$(dirname "$0")
+fi
 # The pushd/popd dance seems to help find the "true" path
 # in case of symlinking
 pushd "$ZERO_DIR" > /dev/null
