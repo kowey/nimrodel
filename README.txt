@@ -4,7 +4,9 @@ version 0.1  4 August 2014
 
 nimrodel is a historical charter analysis engine based around the DATR ELF framework
 It is derived from celeborn, the NLP component of the ChartEx project
-Runs under Windows (tested with Windows 7) and linux (tested with Ubuntu 11)
+Runs under Windows (tested with Windows 7) and Linux (tested with Ubuntu
+11), and MacOS (tested with 10.9).
+
 Output is in the form of BRAT annotation data
 
 Dependencies
