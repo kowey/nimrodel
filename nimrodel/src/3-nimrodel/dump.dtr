@@ -1,0 +1,16 @@
+% null output (dump of intermediary semantics)
+
+#uses Gensym Length Implode Explode LocalPath Rest.
+
+
+app.DUMP:
+	<> == elf.TOP
+	<sp> == ' '
+	<nl> == '\n'
+		
+	<dump title> == <unwords LocalPath:<>> <nl>
+	<dump sentence $documentString> == <unwords LocalPath:<>> <nl>
+	
+	<unwords $any> == $any <sp> <unwords LocalPath:<> .>
+	<unwords> ==
+.

@@ -1,33 +1,47 @@
-
+#vars $output-format: brat dump.
 #uses System Length Explode Add.
 
 #hide nimrodel.NIMRODEL.
 nimrodel.NIMRODEL:
 	<> == nimrodel.QUERY-TOP:<>
 	
-	<init> == app.BRAT:<brat reset>
+	<init $output-format> == <reset $output-format>
 	
-	<process $$model $$language $documentString $$title $document> == 
-		<process-title $$model $$language $$title .>
+	<reset brat> == app.BRAT:<brat reset>
+	<reset dump> == app.DUMP:<dump reset>
+	
+	<process $$model $$language $output-format $documentString $$title $document> ==
+		<process-title $$model $$language $output-format $$title .>
 		<process-sentenceSpans 
 			$$model
 			$$language
+			$output-format
 			$documentString
 			nimrodel.preprocess.Span:<newspan document Add:<1 Length:<Explode:<$$title.>.>.> 100000 .> % offset of document start - don't care about upper limit
 			%openNLP.OpenNLP:<sentenceDetector sentPosDetect $document .> 
-			nimrodel.preprocess.Span:<newspan sentence 0 Length:<Explode:<$document.>.> .>
+			nimrodel.preprocess.Span:<newspan sentence 0 Length:<Explode:<$document.>.>
+			.>
 		.>
-	<process-title $model $$language $title> ==
+	
+	<process-title $model $$language brat $title> ==
 		app.BRAT:<brat title $title [ model $model ] [ language $$language ] .>
+	<process-title $model $$language dump $title> ==
+		app.DUMP:<dump title $title [ model $model ] [ language $$language ] .>
 		
-	<process-sentenceSpans $model $$language $documentString $offsetSpan $sentenceSpan> ==
+	<process-sentenceSpans $model $$language $output-format $documentString $offsetSpan $sentenceSpan> ==
 		% set up nodes for next sentence
 		<process-offset-sentence $$language $documentString nimrodel.preprocess.Span:<absspan $sentenceSpan $offsetSpan.> .>
-		% query first word of sentence (node 0) with <$$language process $model>, and render as BRAT
-		app.BRAT:<brat sentence $documentString System:<query System:<nodename <default-node> .> 0 $$language process $model .> .>
+		% query first word of sentence (node 0) with <$$language process $model>, and render it
+		<query-word $output-format $documentString System:<query System:<nodename <default-node> .> 0 $$language process $model .> .>
 		% process remaining sentences
-		<process-sentenceSpans $model $$language $documentString $offsetSpan>
+		% TODO: EYK: isn't this missing one of its sentence span arguments?
+		<process-sentenceSpans $model $$language $output-format $documentString $offsetSpan>
 	<process-sentenceSpans> ==
+	
+	<query-word brat $documentString $$query> ==
+		app.BRAT:<brat sentence $documentString $$query>
+	<query-word dump $documentString $$query> ==
+		app.DUMP:<dump sentence $documentString $$query>
 	
 	<process-offset-sentence $$language $documentString $sentenceSpan> ==
 		<process-sentence $$language $sentenceSpan nimrodel.preprocess.Span:<spanstrings $documentString $sentenceSpan>>

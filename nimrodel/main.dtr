@@ -13,6 +13,7 @@ app.MAIN:
 
 %% nimrodel.MAIN is an application stub for the nimrodel example lexicon.
 
+#vars $output-format: brat dump.
 #uses System Implode Idem.
 
 
@@ -60,7 +61,7 @@ nimrodel.MAIN:
 	<arglist3 yes $$model $$language -title $$title> == <arglist4 $$model $$language $$title>
 
 	% extract the document, and process it with all the args
-	<arglist4 $$model $$language $$title> == <process $$model $$language <docstring $$title> .>
+	<arglist4 $$model $$language $$title> == <process $$model $$language dump <docstring $$title> .>
 	
 	% check model is a known model (ie matches $model, rather than just $$model)
 	<modelcheck> == no
@@ -90,7 +91,7 @@ nimrodel.MAIN:
 	<docstring5 $$doc> == $$doc System:<firstline $$doc .> System:<skipfirstline $$doc .>
 	
 	% process - intialise nimrodel then pass it the args to process
-	<process> == <nimrodel init .> <nimrodel process>
+	<process $$model $$language $output-format> == <nimrodel init $output-format .> <nimrodel process $$model $$language $output-format>
 	
 	<nimrodel> == nimrodel.NIMRODEL:<> 
 .
