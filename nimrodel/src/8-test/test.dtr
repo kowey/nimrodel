@@ -2,7 +2,7 @@ TEST:
 
 	<sp> == ' '
 
-	<unwords $any> == $any <sp> <unwords LocalPath:<> .>
+	<unwords $any> == $any <sp> <unwords>
 	<unwords> == % nb: base case not because of matching on empty path
 		     % but only by virtue of above not matching
 .
