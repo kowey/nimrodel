@@ -8,9 +8,9 @@ app.DUMP:
 	<sp> == ' '
 	<nl> == '\n'
 		
-	<dump title> == <unwords LocalPath:<>> <nl>
-	<dump sentence $documentString> == <unwords LocalPath:<>> <nl>
+	<dump title> == <unwords> <nl>
+	<dump sentence $documentString> == <unwords> <nl>
 	
-	<unwords $any> == $any <sp> <unwords LocalPath:<> .>
+	<unwords $any> == $any <sp> <unwords>
 	<unwords> ==
 .
