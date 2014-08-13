@@ -61,7 +61,8 @@ nimrodel.MAIN:
 	<arglist3 yes $$model $$language -title $$title> == <arglist4 $$model $$language $$title>
 
 	% extract the document, and process it with all the args
-	<arglist4 $$model $$language $$title> == <process $$model $$language dump <docstring $$title> .>
+	<arglist4 $$model $$language $$title> == <arglist4 $$model $$language $$title -format dump>
+	<arglist4 $$model $$language $$title -format $output-format> == <process $$model $$language $output-format <docstring $$title> .>
 	
 	% check model is a known model (ie matches $model, rather than just $$model)
 	<modelcheck> == no
