@@ -49,6 +49,31 @@
 main :- swi_get_arglist(L), main(L).
 main(L) :- datr_query('app.MAIN', [arglist|L], _V), halt.	
 
+use(library(pio)).
+
+% force a lazy list
+all([])     --> [].
+all([L|Ls]) --> [L], all(Ls).
+
+% on_files/0, on_files/1
+% invoke DATR app.MAIN on each file in the list
+on_files :- swi_get_arglist(L), on_files(L).
+on_files(Files) :-
+	foreach(member(File,Files), on_file(File)),
+	halt.
+
+% on_file/1
+% run DATR app.MAIN on a single file, for now printing the
+% results to stdout
+on_file(File) :-
+	% EYK: I don't understand this magic from
+	% http://stackoverflow.com/a/11107786
+	% to slurp a file
+	once(phrase_from_file(all(Chars), File)),
+	string_codes(Str, Chars),
+	datr_query('app.MAIN', [arglist,Str|[]], _V).
+
+
 
 % swi_get_arglist/1
 % return all args following '--' from command line 
