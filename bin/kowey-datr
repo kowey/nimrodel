@@ -1,0 +1,5 @@
+#!/bin/bash
+
+. "${0%/*}/env"
+
+"$SWIPL" -q -f "$ELFAPP"/testdatr.pl -g main -t halt -- "$@"
