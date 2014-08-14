@@ -47,7 +47,7 @@
 % main/1
 % invoke DATR app.MAIN with user supplied args (main/1), or args from command line (main/0)
 main(L) :-
-	datr_query('TEST', [unwords|L], Vs),
+	datr_query('JSON', [record|L], Vs),
 	foreach(member(V,Vs), write(V)),
 	nl,
 	halt.

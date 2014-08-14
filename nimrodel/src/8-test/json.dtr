@@ -1,0 +1,38 @@
+% JSON:record converts an even length list of the form k1 v1 k2 v2 k3 v3...
+% into a JSON record {"k1":"v1", ...}
+%
+% At the moment there isn't any sanity checking or escaping; use at your
+% own risk
+
+JSON:
+
+	<sp> == ' '
+	<nl> == '\n'
+
+	<quote $any> == '"' $any '"'
+	<attr $$key $$val> == <quote $$key .> ':' <quote $$val .>
+
+	<bracket $$left $$right> == $$left LocalPath:<> $$right
+
+	% check that we have an even number of items, returning either
+	% ok or fail and the last token
+	<check-even $$x $$y $$z> == <check-even $$z>
+	<check-even $$x $$y> == <check-even>
+	<check-even $$z> == fail $$z
+	<check-even> == ok
+
+	<record> == <record-checked <check-even>>
+	
+	<record-checked ok> ==
+		<bracket { }
+			<bracket <nl> <nl> <record-helper> .>
+		.>
+	<record-checked fail $any> == 'ERROR: uneven list; no value after ' $any
+	
+	<record-helper $$key $$val $$key2> ==
+		<sp> <attr $$key $$val .> , <nl>
+		<record-helper $$key2>
+	<record-helper $$key $$val> ==
+		<sp> <attr $$key $$val .>
+	<record-helper> ==
+.
