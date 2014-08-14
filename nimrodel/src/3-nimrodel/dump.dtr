@@ -31,9 +31,8 @@ app.DUMP:
 		)
 		<hint $documentString>
 
-	% slight variant of unwords that
-	% - inserts indents/breaks on start brackets
-	% - annotates spans with the text that goes with them
+	% variant of unwords that uses indentation and line breaks
+	% to make input format a bit to understand
 	<pretty> == <pretty-helper 0>
 	
 	<pretty-helper $indent [> ==
