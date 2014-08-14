@@ -36,7 +36,7 @@ app.DUMP:
 	<pretty> == <pretty-helper 0>
 	
 	<pretty-helper $indent [> ==
-		<nl> <indent $indent> <sp>
+		<nl> <indent $indent>
 		[ <sp> <pretty-helper Add:<$indent 1 .>>
 	<pretty-helper $indent ]> ==
 		] <sp> <pretty-helper Subtract:<$indent 1 .>>
