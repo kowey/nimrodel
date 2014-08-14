@@ -9,40 +9,42 @@ app.DUMP:
 	<nl> == '\n'
 		
 	<dump title> == <unwords> <nl>
-	<dump sentence $documentString> == <pretty $documentString> <nl>
+	<dump sentence $documentString> == <pretty <hint $documentString> .> <nl>
 	
 	<unwords $any> == $any <sp> <unwords>
 	<unwords> ==
+
+	% annotate spans with the text that goes with them
+	<hint $documentString entity **endpoint**> ==
+		entity **endpoint** <hint $documentString>
+	<hint $documentString entity> ==
+		<hint-entity $documentString>
+	<hint> == <hint2>
+	<hint2 $documentString $any> ==
+		$any <hint $documentString>
+	<hint2 $documentString> ==
 	
+	<hint-entity $documentString $type $start-char $end-char> ==
+		entity $type $start-char $end-char
+		( openNLP.GetSpanStrings:<$documentString
+			openNLP.NewSpan:<'Person' $start-char $end-char .> .>
+		)
+		<hint $documentString>
+
 	% slight variant of unwords that
 	% - inserts indents/breaks on start brackets
 	% - annotates spans with the text that goes with them
 	<pretty> == <pretty-helper 0>
 	
-	<pretty-helper $indent $documentString entity **endpoint**> ==
-		entity <sp> **endpoint** <sp>
-		<pretty-helper $indent $documentString>
-	<pretty-helper $indent $documentString entity> ==
-		<pretty-helper-entity $indent $documentString>
-	<pretty-helper $indent $documentString [> ==
+	<pretty-helper $indent [> ==
 		<nl> <indent $indent> <sp>
-		[ <sp>
-		<pretty-helper Add:<$indent 1 .> $documentString>
-	<pretty-helper $indent $documentString ]> ==
-		]
-		<pretty-helper Subtract:<$indent 1 .> $documentString>
+		[ <sp> <pretty-helper Add:<$indent 1 .>>
+	<pretty-helper $indent ]> ==
+		] <sp> <pretty-helper Subtract:<$indent 1 .>>
 	<pretty-helper> == <pretty-helper2>
-	<pretty-helper2 $indent $documentString $any> ==
-		$any <sp>
-		<pretty-helper $indent $documentString>
-	<pretty-helper2 $indent $documentString> ==
-	
-	<pretty-helper-entity $indent $documentString $type $start-char $end-char> ==
-		entity <sp> $type <sp> $start-char <sp> $end-char <sp>
-		( openNLP.GetSpanStrings:<$documentString
-			openNLP.NewSpan:<'Person' $start-char $end-char .> .>
-		) <sp>
-		<pretty-helper $indent $documentString>
+	<pretty-helper2 $indent $any> ==
+		$any <sp> <pretty-helper $indent>
+	<pretty-helper2 $indent> ==
 	
 	% I'm sure there's a better way to express this sort of thing
 	<indent 0> ==
