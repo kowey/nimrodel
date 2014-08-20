@@ -4,8 +4,8 @@
 % At the moment there isn't any sanity checking or escaping; use at your
 % own risk
 
-JSON:
 
+JSON_:
 	<sp> == ' '
 	<nl> == '\n'
 
@@ -28,7 +28,6 @@ JSON:
 	<check-even> == ok
 
 	<record> == <record-checked <check-even>>
-	
 	<record-checked ok> ==
 		<bracket Implode:<{ <nl> .>
 			 Implode:<<nl> } .>
@@ -41,4 +40,9 @@ JSON:
 	<record-helper $$key $$val> ==
 		<sp> <attr $$key $$val .>
 	<record-helper> ==
+.
+
+JSON:
+	<> == JSON_   % uncomment to expose internals
+	<record> == JSON_:<record>
 .
