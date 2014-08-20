@@ -14,6 +14,12 @@ JSON:
 
 	<bracket $$left $$right> == $$left LocalPath:<> $$right
 
+	% put a token between every other tokeen
+	<intersperse $$sep $$x1 $$x2> == $$x1 $$sep <intersperse $$sep $$x2>
+	<intersperse $$sep> == <intersperse-end $$sep>
+	<intersperse-end $$sep $$x1> == $$x1
+	<intersperse-end> ==
+
 	% check that we have an even number of items, returning either
 	% ok or fail and the last token
 	<check-even $$x $$y $$z> == <check-even $$z>
