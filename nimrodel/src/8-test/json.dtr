@@ -24,9 +24,9 @@ JSON:
 	<record> == <record-checked <check-even>>
 	
 	<record-checked ok> ==
-		<bracket { }
-			<bracket <nl> <nl> <record-helper> .>
-		.>
+		<bracket Implode:<{ <nl> .>
+			 Implode:<<nl> } .>
+			 <record-helper> .>
 	<record-checked fail $any> == 'ERROR: uneven list; no value after ' $any
 	
 	<record-helper $$key $$val $$key2> ==
