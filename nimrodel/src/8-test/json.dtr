@@ -8,6 +8,7 @@
 JSON_:
 	<sp> == ' '
 	<nl> == '\n'
+	<nl-comma> == '\n, '
 
 	<quote $any> == '"' $any '"'
 	<attr $$key $$val> == <quote $$key .> ':' <quote $$val .>
@@ -40,6 +41,12 @@ JSON_:
 	<record-helper $$key $$val> ==
 		<sp> <attr $$key $$val .>
 	<record-helper> ==
+
+	% render a list of json strings (ie. each token here is assumed to be
+	% some arbitrary json)
+	<list> == [ <intersperse ,> ]
+	% functionally the same as list but meant for use in longer outputs
+	<long-list> == [ <sp.> <intersperse <nl-comma .> > <sp> ]
 .
 
 JSON:
