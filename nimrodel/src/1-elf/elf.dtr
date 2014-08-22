@@ -18,5 +18,6 @@
 
 	'$ELFROOT/opennlp/opennlpdatr.pl'
 	'$ELFROOT/hunspell/hunspelldatr.pl'
+	'debugdatr.pl'
 .
 

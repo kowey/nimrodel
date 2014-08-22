@@ -23,7 +23,13 @@ app.BRAT:
 		>
 		
 	<brat sentence $documentString [ > ==
-		<brat clause $documentString <next> ] .>
+		Debug:<writeline 'SENTENCE!'
+			Implode:<app.DUMP:<dump sentence $documentString [ <next> ] .> .>
+			<nl> .>
+		%Debug:<trace
+                        <brat clause $documentString <next> ] .>
+                %.>
+		Debug:<writeline 'END SENTENCE' .>
 		<brat sentence $documentString <skip> .>
 	<brat sentence> ==	
 	
@@ -31,13 +37,19 @@ app.BRAT:
 	<brat clause $documentString> == <tail <brat clause2 $documentString > .>
 	
 	<brat clause2 $documentString entity> == <brat entity Gensym:<gensym 'T'.> $documentString>
-	<brat clause2 $documentString rel> == <brat rel Gensym:<gensym 'R' .> $documentString>
+	<brat clause2 $documentString rel> ==
+		 <brat rel Gensym:<gensym 'R' .> $documentString>
 	<brat clause2 $documentString rel $f equals> == <brat rel equals $documentString $f equals>
 	<brat clause2 $documentString attr> == <brat attr Gensym:<gensym 'A' .> $documentString>
 	<brat clause2 $documentString property> == <brat property $documentString>
 	<brat clause2> == <brat error clause-error>
 	
-	<brat entity $id $documentString> == <brat entity2 <brat check> $id $documentString>
+	<brat entity $id $documentString> ==
+                Debug:<writeline start entity $id >
+                Debug:<trace
+                    <brat entity2 <brat check> $id $documentString>
+                .>
+                Debug:<writeline end entity $id .>
 	<brat entity2 ok $id $documentString $type $start-char $end-char> ==	
 		$id
 		<brat render-entity $documentString $id $type $start-char $end-char .>
@@ -59,7 +71,13 @@ app.BRAT:
 		<brat entity $id $documentString $type 0 0 error 'Range error: ' $start-char ' ' $end-char '(set to 0)'  >
 
 	<brat rel $id $documentString $focus $type [ > == 
-		<brat rel2 $id $documentString $focus $type <brat clause2 $documentString <next> ] .> ] <skip> .>
+		Debug:<writeline 'START rel!' $id $focus $type .>
+		Debug:<trace
+                <brat rel2 $id $documentString $focus $type
+                           <brat clause2 $documentString <next> ] .>
+                           ] <skip> .>
+                .>
+		Debug:<writeline 'END   rel!' $id .>
 	<brat rel2 $id $documentString $focus $type $arg1> ==
 		<brat focus $focus $arg1 			% target id for clause
 			<next>	]		% annotation for first operand
@@ -75,7 +93,10 @@ app.BRAT:
 		<brat render-rel $id $type $arg1 $arg2>
 	% handle equals relations by rewriting second id arg as first
 	<brat rel6 equals $documentString $type $arg1 [ > ==
-		<brat rewrite-id $arg1 <brat clause2 $documentString> .>
+		Debug:<writeline 'equals s/' '???/' $arg1 '/ |' <nl> .>
+		Debug:<trace
+                    <brat rewrite-id $arg1 <brat clause2 $documentString> .>
+                .>
 		
 	<brat focus 1 $arg1> == $arg1 <next> <brat focus3 <skip> .>
 	<brat focus 2 $arg1> == <brat focus2 <skip> .> <next> <brat focus3 <skip> .>
@@ -83,9 +104,17 @@ app.BRAT:
 	<brat focus3 $arg2 > == LocalPath:<>
 		
 	<brat rewrite-id $$arg1 $$arg2> ==
+                Debug:<writeline 'start rewrite s/' $$arg2 '/' $$arg1 '/' .>
+                Debug:<writeline>
+                Debug:<writeline '--- mid rewrite s/' $$arg2 '/' $$arg1 '/ ---' .>
+                Debug:<trace <brat rewrite-id0 $$arg1 $$arg2> .>
+                Debug:<writeline 'end rewrite' $$arg2 .>
+        <brat rewrite-id0 $$arg1 $$arg2> ==
 		$$arg1
 		Rest:< <brat rewrite-id2 $$arg1 $$arg2 '\n' > .>
+        % delete any line that starts with $$arg2
 	<brat rewrite-id2 $$arg1 $$arg2 '\n' $$arg2> == <brat rewrite-id2 $$arg1 $$arg2 <skipline> .>
+        % replace any internal symbol that is $arg2 with $arg
 	<brat rewrite-id2 $$arg1 $$arg2 $$arg2> == $$arg1 <brat rewrite-id3 $$arg1 $$arg2>
 	<brat rewrite-id2> == <brat rewrite-id3>
 	<brat rewrite-id3 $$arg1 $$arg2 $$any> == $$any <brat rewrite-id2 $$arg1 $$arg2>
