@@ -199,19 +199,17 @@ app.JSON:
 	% --------------------------------------------------
 	% json conversion proper
 	% --------------------------------------------------
-	<json> == json.STRUCT:<>
-	<unique> == json.UNIQUE:<unique>
 
 	% convert flat list of nimrodel internal semantic literals to
 	% list of json records; we ignore types and assume that each
 	% feature in each literal is meant to serve as a dictionary key
-	<convert> == <json long-list <convert-helper> .>
+	<convert> == <mk-json long-list <convert-helper> .>
 	<convert-helper [> ==
 		<convert-one <next> ] .>
 		<convert-helper <skip> .>
 	<convert-helper> ==	
 	<convert-one entity $any $start-char $end-char> ==
-		<json record <unique <strip-eq> .> .>
+		<mk-json record json.UNIQUE:<unique <strip-eq> .> .>
 
 	% from [ f1 = v2 f2 =v3 ] to just [ f1 v2 f2 v3 ]
 	<strip-eq $$f $eq $$v> == $$f $$v <strip-eq>
@@ -221,4 +219,6 @@ app.JSON:
 		'ERROR: was expecting only sequence of f = v, but got'
 		$any LocalPath:<>
 	<strip-eq2> ==
+
+	<mk-json> == json.STRUCT:<>
 .
