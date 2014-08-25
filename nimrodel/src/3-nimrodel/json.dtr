@@ -1,0 +1,224 @@
+% outputting JSON annotations for people only
+
+#uses Gensym Length Implode Explode LocalPath Rest.
+#vars $eq: '=' '=='.
+
+
+app.JSON:
+	<> == elf.TOP
+	<sp> == ' '
+	<tab> == '\t'
+	<nl> == '\n'
+	<json reset> == 
+		Gensym:<reset 'T' 'R' 'E' 'A' 'N' '#'>	
+	
+	% ignore document title
+	<json title> ==
+		
+	<json sentence $documentString [ > ==
+		<convert [ <json clause $documentString <next> ] .> .>
+		<json sentence $documentString <skip> .>
+	<json sentence> ==	
+	
+	<json clause $documentString entity **endpoint** > ==
+	<json clause $documentString> ==
+	 	Debug:<writeline Implode:<app.DUMP:<pretty> .>.>
+		Debug:<trace
+			<tail <json clause2 $documentString > .>
+		.>
+	
+	<json clause2 $documentString entity> == <json entity Gensym:<gensym 'T'.> $documentString>
+	<json clause2 $documentString rel> == <json rel Gensym:<gensym 'R' .> $documentString>
+	<json clause2 $documentString rel $f equals> == <json rel equals $documentString $f equals>
+	<json clause2 $documentString attr> == <json attr Gensym:<gensym 'A' .> $documentString>
+	<json clause2 $documentString property> == <json property $documentString>
+	<json clause2> == <json error clause-error>
+	
+	<json entity $id $documentString> == <json entity2 <json check> $id $documentString>
+	<json entity2 ok $id $documentString $type $start-char $end-char> ==	
+		$id
+		<json render-entity $documentString $id $type $start-char $end-char>
+		%<json annotation $id >
+	<json entity2 skip $id> == $id
+	<json entity2> == <json error> 
+	
+	<json check> == ok
+	<json check **endpoint**> == skip
+	<json check **fail**> == type-error
+	<json check $any **fail**> == range-error
+	<json check $any $any2 **fail**> == range-error
+
+	<json error clause-error $documentString> == 
+		'T1' <json note 'T1' error 'unknown clause: ' LocalPath:<>  .>
+	<json error type-error $id $documentString $type $start-char $end-char> ==
+		<json clause2 $documentString entity unknown $start-char $end-char error 'No type specified (type set to unknown)'  >
+	<json error range-error $id $documentString $type $start-char $end-char> ==
+		<json entity $id $documentString $type 0 0 error 'Range error: ' $start-char ' ' $end-char '(set to 0)'  >
+
+	<json rel $id $documentString $focus $type [ > == 
+		<json rel2 $id $documentString $focus $type <json clause2 $documentString <next> ] .> ] <skip> .>
+	<json rel2 $id $documentString $focus $type $arg1> ==
+		<json focus $focus $arg1 			% target id for clause
+			<next>	]		% annotation for first operand
+			<json rel3 $id $documentString $type $arg1 <skip> .>
+		.>
+	<json rel3 equals> == <json rel6 equals>
+	<json rel3> == <json rel4>
+	<json rel4 $id $documentString $type $arg1 [ > ==
+		<json rel5 $id $type $arg1 <json clause2 $documentString> .>
+	<json rel5 $id $type $arg1 $arg2> ==
+		$arg2
+		LocalPath:<> 	% annotation for second operand
+		<json render-rel $id $type $arg1 $arg2>
+	% handle equals relations by rewriting second id arg as first
+	<json rel6 equals $documentString $type $arg1 [ > ==
+		<json rewrite-id $arg1 <json clause2 $documentString> .>
+		
+	<json focus 1 $arg1> == $arg1 <next> <json focus3 <skip> .>
+	<json focus 2 $arg1> == <json focus2 <skip> .> <next> <json focus3 <skip> .>
+	<json focus2 $arg2 > == $arg2
+	<json focus3 $arg2 > == LocalPath:<>
+		
+	<json rewrite-id $$arg1 $$arg2> ==
+		$$arg1
+		Rest:< <json rewrite-id2 $$arg1 $$arg2 '\n' > .>
+	<json rewrite-id2 $$arg1 $$arg2 '\n' $$arg2> == <json rewrite-id2 $$arg1 $$arg2 <skipline> .>
+	<json rewrite-id2 $$arg1 $$arg2 $$arg2> == $$arg1 <json rewrite-id3 $$arg1 $$arg2>
+	<json rewrite-id2> == <json rewrite-id3>
+	<json rewrite-id3 $$arg1 $$arg2 $$any> == $$any <json rewrite-id2 $$arg1 $$arg2>
+	<json rewrite-id3> ==
+		
+	<json attr $id $documentString $attr $val [ > ==
+		<json attr2 $id $documentString $attr $val <json clause2 $documentString> .>
+	<json attr2 $id $documentString $attr $val $arg> ==
+		$arg
+		LocalPath:<>
+		<json render-attr $id $arg $attr $val>
+		
+	<json property $documentString $attr $val [ > ==
+		<json property2 $documentString $attr $val <json clause2 $documentString> .>
+	<json property2 $documentString $attr $val $arg> ==
+		$arg
+		LocalPath:<>
+		<json prop $arg $attr '=' $val .>	
+		
+	<json render-entity $documentString $id 'Person' $start-char $end-char> == 
+		$id <tab .> 
+		% pass entity through (later on, we can rewrite as JSON)
+		[ entity 'Person' $start-char $end-char
+			origOccurence '='
+			openNLP.GetSpanStrings:<$documentString openNLP.NewSpan:<'Person' $start-char $end-char .> .>
+			LocalPath:<>
+		%
+		%Implode:<JSON:<record <json annotation $id
+		%	origOccurence '='
+		%	openNLP.GetSpanStrings:<$documentString openNLP.NewSpan:<'Person' $start-char $end-char .> .>
+		%>.>.>
+		<nl .> 
+		<json render-trans 'Person' $id>
+	<json render-entity> == <json render-entity2>
+	<json render-entity2 $documentString $id $type $start-char $end-char> ==
+		$id <tab .> 
+		$type <sp .> 
+		$start-char <sp .> 
+		$end-char <tab .> 
+		openNLP.GetSpanStrings:<$documentString openNLP.NewSpan:<$type $start-char $end-char .> .> <nl .> 
+		<json render-trans $type $id>
+	
+	<json render-trans> ==
+	
+	<json render-rel $id $type $arg1 $arg2> ==
+		$id <tab .>
+		$type <sp .>
+		'Arg1:' $arg1 <sp .>
+		'Arg2:' $arg2 <nl .>
+		
+	<json render-attr $id $arg $attr $val> == 
+		$id <tab .>
+		$attr <sp .> 
+		$arg <sp .> 
+		$val <nl .>
+		
+		
+	<json annotation $id ']'> ==
+	<json annotation $id $f $eq $v> == <json map-feature $f $v .> <json annotation $id>
+	<json annotation $id> == <json note $id>
+
+	% rename, delete, or pass through features
+	<json map-feature gender> == 'gender-TO-DELETE' LocalPath:<>
+	<json map-feature> == LocalPath:<>
+	
+	<json notes $id [ > == <json notes2 $id>
+	<json notes $id> == 
+	<json notes2 $id> == <json note $id> <json notes $id <skip> .>
+	
+	<json note> == <json note1 'Note'>
+	<json note $id error> == <json errnote $id>
+	<json errnote> == <json note1 'ERROR'>
+	<json prop> == <json note1 'Property'>
+	
+	<json note1 $label $id ] > ==
+	<json note1> == <json note2>
+	
+	<json note2 $label $id $any> ==
+		Gensym:<gensym '#'> <tab>
+		$label <sp>
+		$id <tab>
+		<json note3 $any>
+		<nl>
+	<json note2> ==
+	<json note3 ']'> ==
+	<json note3> == <json note4>
+	<json note4 $any> == $any <sp> <json note3>
+	<json note4> ==
+
+	<skipb [> == <skip>	
+		
+	<skip ] > == LocalPath:<>
+	<skip [ > == <skip <skip> .>
+	<skip> == <skip2>
+	<skip2 $any> == <skip>
+	<skip2> ==
+	
+	<skipline '\n'> == '\n' LocalPath:<>
+	<skipline> == <skipline2>
+	<skipline2 $$any> == <skipline>
+	<skipline2> ==
+	
+	<nextb [ > == <next>
+	
+	<next ] > == 
+	<next [ > == [ <next> ] <next <skip> .>
+	<next> == <next2>
+	<next2 $any> == $any <next>
+	<next2> ==
+	
+	<tail $any> == LocalPath:<>
+	<tail> ==
+
+	% --------------------------------------------------
+	% json conversion proper
+	% --------------------------------------------------
+	<json> == json.STRUCT:<>
+	<unique> == json.UNIQUE:<unique>
+
+	% convert flat list of nimrodel internal semantic literals to
+	% list of json records; we ignore types and assume that each
+	% feature in each literal is meant to serve as a dictionary key
+	<convert> == <json long-list <convert-helper> .>
+	<convert-helper [> ==
+		<convert-one <next> ] .>
+		<convert-helper <skip> .>
+	<convert-helper> ==	
+	<convert-one entity $any $start-char $end-char> ==
+		<json record <unique <strip-eq> .> .>
+
+	% from [ f1 = v2 f2 =v3 ] to just [ f1 v2 f2 v3 ]
+	<strip-eq $$f $eq $$v> == $$f $$v <strip-eq>
+	<strip-eq ]> ==
+	<strip-eq> == <strip-eq2>
+	<strip-eq2 $any> ==
+		'ERROR: was expecting only sequence of f = v, but got'
+		$any LocalPath:<>
+	<strip-eq2> ==
+.
