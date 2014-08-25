@@ -43,7 +43,7 @@ json.UNIQUE:
 
 	% ok if there are no duplicate keys in the list with mismatched values
 	<check-no-dupes $$key $$val> ==
-		<hopefully check-no-dupes
+		<hopefully2 check-no-dupes
 			<check-same-key-val $$key $$val>
 			<delete-key $$key>
 		.>
@@ -72,15 +72,22 @@ json.UNIQUE:
 
 	<msg> == json.ERROR:<msg>
 	<error-msg> == json.ERROR:<error-msg>
-	<hopefully> == json.ERROR:<hopefully>
 	<check-even> == json.ERROR:<check-even>
+
+	% basically same as in json.ERROR
+	% but avoids path interpretation confusion; we only want paths
+	% restricted to this sentence when calling hopefully
+	<hopefully $$next ok> == <$$next>
+	<hopefully $$next fail $$msg> == $$msg
+
+	% like hopefully but also returns fail on fail
+	% works on the basis of $$next next also returning ok/fail
+	<hopefully2 $$next ok> == <$$next>
+	<hopefully2 $$next fail $$msg> == fail $$msg
 .
 
 
 json.STRUCT:
-	<hopefully> == json.ERROR:<hopefully>
-	<check-even> == json.ERROR:<check-even>
-
 	<sp> == ' '
 	<nl> == '\n'
 	<nl-comma> == '\n, '
@@ -111,13 +118,20 @@ json.STRUCT:
 
 	% render a list of json strings (ie. each token here is assumed to be
 	% some arbitrary json)
-	<list> == [ <intersperse ,> ]
+	<list> == Implode:< [ <intersperse ,> ] .>
 	% functionally the same as list but meant for use in longer outputs
-	<long-list> == [ <sp.> <intersperse <nl-comma .> > <sp> ]
+	<long-list> == Implode:< [ <sp.> <intersperse <nl-comma .> > <sp> ] .>
+
+	<check-even> == json.ERROR:<check-even>
+
+	% basically same as in json.ERROR
+	% but avoids path interpretation confusion; we only want paths
+	% restricted to this sentence when calling hopefully
+	<hopefully $$next ok> == <$$next>
+	<hopefully $$next fail $$msg> == $$msg
 .
 
 JSON:
-	<> == json.STRUCT:<>   % uncomment to expose internals
-	<record> == json.STRUCT:<record>
+	<mk> == json.STRUCT:<>
 	<unique> == json.UNIQUE:<unique>
 .
