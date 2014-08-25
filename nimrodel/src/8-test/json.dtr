@@ -36,6 +36,10 @@ json.UNIQUE:
 	<unique>  == <hopefully unique2 <check-even>>
 	<unique2> == <hopefully unique3 <check-no-dupes>>
 	<unique3> == <checked>
+	
+	% actually delete the duplicates
+	<checked $$key $$val> == $$key $$val <checked <delete-key $$key> .>
+	<checked> ==
 
 	% ok if there are no duplicate keys in the list with mismatched values
 	<check-no-dupes $$key $$val> ==
@@ -44,10 +48,6 @@ json.UNIQUE:
 			<delete-key $$key>
 		.>
 	<check-no-dupes> == ok
-
-	% actually delete the duplicates
-	<checked $$key $$val> == $$key $$val <checked <delete-key $$key> .>
-	<checked> ==
 
 	% delete all instances of the given key
 	<delete-key $$key $$key $$any> == <delete-key $$key>
@@ -63,7 +63,7 @@ json.UNIQUE:
 	<check-same-key-val> == <check-same-key-val2>
 	% case 2: same key, different value (fail)
 	<check-same-key-val2 $$key $$val1 $$key $$val2> ==
-		fail <msg 'ERROR: value mismatch for' $$key ':' $$val1 'vs' $$val2 .>
+		fail <error-msg 'value mismatch for' $$key ':' $$val1 'vs' $$val2 .>
 	<check-same-key-val2> == <check-same-key-val3>
 	% case 3: different keys (ok)
 	<check-same-key-val3 $$key $$val $$key2 $$val2> ==
@@ -71,6 +71,7 @@ json.UNIQUE:
 	<check-same-key-val3> == ok
 
 	<msg> == json.ERROR:<msg>
+	<error-msg> == json.ERROR:<error-msg>
 	<hopefully> == json.ERROR:<hopefully>
 	<check-even> == json.ERROR:<check-even>
 .
