@@ -5,4 +5,26 @@ TEST:
 	<unwords $any> == $any <sp> <unwords>
 	<unwords> == % nb: base case not because of matching on empty path
 		     % but only by virtue of above not matching
+
+	<select $supertype $type [> ==
+		Debug:<writeline 'SELECT' $supertype $type [>
+		<select-one $supertype $type [ <next> ] .>
+		<select $supertype $type <skip> .>
+	<select> ==
+		
+	<select-one $supertype $type [ $supertype $type> ==
+		[ $supertype $type LocalPath:<>
+	<select-one $supertype $type> ==
+
+	<skip ] > == LocalPath:<>
+	<skip [ > == <skip <skip> .>
+	<skip> == <skip2>
+	<skip2 $any> == <skip>
+	<skip2> ==
+	
+	<next ] > == 
+	<next [ > == [ <next> ] <next <skip> .>
+	<next> == <next2>
+	<next2 $any> == $any <next>
+	<next2> ==
 .

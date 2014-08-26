@@ -14,11 +14,13 @@ app.JSON:
 	
 	% ignore document title
 	<json title> ==
-		
-	<json sentence $documentString [ > ==
-		<convert [ <json clause $documentString <next> ] .> .>
-		<json sentence $documentString <skip> .>
-	<json sentence> ==	
+	
+	<json sentence> == <convert <select entity 'Person'
+		<json sentence-next> .> .>
+	<json sentence-next $documentString [ > ==
+		<json clause $documentString <next> ] .>
+		<json sentence-next $documentString <skip> .>
+	<json sentence-next> ==	
 	
 	<json clause $documentString entity **endpoint** > ==
 	<json clause $documentString> ==
@@ -102,29 +104,14 @@ app.JSON:
 		LocalPath:<>
 		<json prop $arg $attr '=' $val .>	
 		
-	<json render-entity $documentString $id 'Person' $start-char $end-char> == 
-		$id <tab .> 
-		% pass entity through (later on, we can rewrite as JSON)
-		[ entity 'Person' $start-char $end-char
+	% slightly modify entity by adding an origOccurence attribute
+	<json render-entity $documentString $id $type $start-char $end-char> == 
+		[ entity $type $start-char $end-char
 			origOccurence '='
-			openNLP.GetSpanStrings:<$documentString openNLP.NewSpan:<'Person' $start-char $end-char .> .>
+			<text-for-span $documentString $type $start-char $end-char .>
 			LocalPath:<>
-		%
-		%Implode:<JSON:<record <json annotation $id
-		%	origOccurence '='
-		%	openNLP.GetSpanStrings:<$documentString openNLP.NewSpan:<'Person' $start-char $end-char .> .>
-		%>.>.>
 		<nl .> 
-		<json render-trans 'Person' $id>
-	<json render-entity> == <json render-entity2>
-	<json render-entity2 $documentString $id $type $start-char $end-char> ==
-		$id <tab .> 
-		$type <sp .> 
-		$start-char <sp .> 
-		$end-char <tab .> 
-		openNLP.GetSpanStrings:<$documentString openNLP.NewSpan:<$type $start-char $end-char .> .> <nl .> 
-		<json render-trans $type $id>
-	
+
 	<json render-trans> ==
 	
 	<json render-rel $id $type $arg1 $arg2> ==
@@ -172,6 +159,25 @@ app.JSON:
 	<json note4 $any> == $any <sp> <json note3>
 	<json note4> ==
 
+	<text-for-span $documentString $type $start-char $end-char> ==
+		openNLP.GetSpanStrings:<$documentString
+			openNLP.NewSpan:<$type $start-char $end-char .> .>
+
+	% --------------------------------------------------
+	% manipulating nimrodel literals
+	% --------------------------------------------------
+
+	% combine two nimrodel internal semantic literals into one
+	% assume they share the same prefix (taken from the first)
+	% (this is really just dumb token rewriting)
+	<append> == [ <append-helper> ]
+	<append-helper [ $$x1 $$x2 $$x3 $$x4> ==
+		$$x1 $$x2 $$x3 $$x4
+		<next>
+		<append-last <skip> .>
+	<append-last [ $$x1 $$x2 $$x3 $$x4 > ==
+		<next>
+
 	<skipb [> == <skip>	
 		
 	<skip ] > == LocalPath:<>
@@ -197,14 +203,32 @@ app.JSON:
 	<tail> ==
 
 	% --------------------------------------------------
-	% json conversion proper
+	% filtering
+	% --------------------------------------------------
+
+	% pick out only literals of the given type
+	<select $supertype $type [> ==
+		<select-one $supertype $type [ <next> ] .>
+		<select $supertype $type <skip> .>
+	<select> ==
+		
+	<select-one $supertype $type [ $supertype $type> ==
+		[ $supertype $type LocalPath:<>
+	<select-one $supertype $type> ==
+
+
+	% --------------------------------------------------
+	% nimrodel to json conversion
 	% --------------------------------------------------
 
 	% convert flat list of nimrodel internal semantic literals to
 	% list of json records; we ignore types and assume that each
 	% feature in each literal is meant to serve as a dictionary key
-	<convert> == <mk-json long-list <convert-helper> .>
+	<convert> ==
+		Debug:<writeline 'CONVERT' >
+		<mk-json long-list <convert-helper> .>
 	<convert-helper [> ==
+		Debug:<writeline 'CONVERT-HELPER' [>
 		<convert-one <next> ] .>
 		<convert-helper <skip> .>
 	<convert-helper> ==	
