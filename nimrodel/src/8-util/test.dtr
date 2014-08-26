@@ -1,20 +1,84 @@
 TEST:
 
 	<sp> == ' '
-
+	<nl> == '\n'
 	<unwords $any> == $any <sp> <unwords>
 	<unwords> == % nb: base case not because of matching on empty path
 		     % but only by virtue of above not matching
 
-	<select $supertype $type [> ==
-		Debug:<writeline 'SELECT' $supertype $type [>
-		<select-one $supertype $type [ <next> ] .>
-		<select $supertype $type <skip> .>
-	<select> ==
-		
-	<select-one $supertype $type [ $supertype $type> ==
-		[ $supertype $type LocalPath:<>
-	<select-one $supertype $type> ==
+	<blop> ==
+		<rotate 'T4' 'T6' <sample .> .>
+
+	% given
+	%
+	% handle arg1 line1
+	% 	 arg2 line2
+	<rotate> == <rotate2 'origOccurence' 'injected-FIXME'>
+	<rotate2 $attr-src $attr-tgt $arg-src $arg-tgt> ==
+		$arg-tgt <named add-feature $arg-tgt $attr-tgt
+			<get-attr $attr-src <named takeline $arg-src> .>
+		>
+
+	% add-feature-named $key $val $named
+	%
+	% add the feature to the line prefixed with $named
+	% pass the rest of lines through
+	<named add-feature $arg $key $value $any> ==
+		<named add-feature-one $arg $key $value $any>
+		<named add-feature $arg $key $value <tail <skipline> .> .>
+	<named add-feature> ==
+	% helper: what to do when we actually hit the line
+	<named add-feature-one $arg $key $value $arg> ==
+		$arg <add-feature $key $value <takeline> .> <nl>
+	<named add-feature-one> == <named add-feature-one2>
+	<named add-feature-one2 $arg $key $value $any> ==
+		$any <takeline> <nl> % pass through
+
+
+	% nimrodel attribute value pair
+	<feature $key $val> == $key '=' $val
+
+	<add-feature $key $value $handle [ $x1 $x2 $x3 $x4> ==
+		$handle [ $x1 $x2 $x3 $x4 <feature $key $value .> LocalPath:<>
+	<add-feature $key $value [ $x1 $x2 $x3 $x4> ==
+		[ $x1 $x2 $x3 $x4 <feature $key $value .> LocalPath:<>
+
+
+	% take the handle associated with a fragmentary output
+	<get-handle $any> == $any
+
+	% take the value of an attribute
+	<get-attr $key $key $eq $value> == $value
+	<get-attr $key $any> == <get-attr $key>
+	<get-attr> ==
+
+
+	<sample> ==
+		'T3' [ entity 'Person' 45 60 origOccurence '=' 'widow of Thomas' gender '=' female ] <nl>
+		'T5' [ entity 'Person' 45 60 origOccurence '=' 'NYET-5' ] <nl>
+		'T6' [ entity 'Person' 45 60 origOccurence '=' 'NYET-6' ] <nl>
+		'T4' [ entity 'Person' 54 60 origOccurence '=' 'Thomas' gender '=' male ] <nl>
+		'T7' [ entity 'Person' 45 60 origOccurence '=' 'NYET-7' ] <nl>
+
+	% named takeline $name:
+	% given a block of named lines, select the line prefixed with $name
+	<named takeline $arg $arg> == $arg <takeline>
+	<named takeline> == <named takeline2>
+	<named takeline2 $arg $any> == <named takeline $arg
+		<tail <skipline> .>
+	.>
+	<named takeline2> ==
+
+	<takeline '\n'> ==
+	<takeline> == <takeline2>
+	<takeline2 $any> == $any <takeline>
+	<takeline2> ==
+
+	<skipline '\n'> == '\n' LocalPath:<>
+	<skipline> == <skipline2>
+	<skipline2 $$any> == <skipline>
+	<skipline2> ==
+
 
 	<skip ] > == LocalPath:<>
 	<skip [ > == <skip <skip> .>
@@ -27,4 +91,7 @@ TEST:
 	<next> == <next2>
 	<next2 $any> == $any <next>
 	<next2> ==
+
+	<tail $any> == LocalPath:<>
+	<tail> ==
 .

@@ -36,10 +36,17 @@ app.JSON:
 	<json clause2 $documentString property> == <json property $documentString>
 	<json clause2> == <json error clause-error>
 	
-	<json entity $id $documentString> == <json entity2 <json check> $id $documentString>
+	<json entity $id $documentString> ==
+		<json entity2 <json check> $id $documentString>
 	<json entity2 ok $id $documentString $type $start-char $end-char> ==	
+		Debug:<writeline '--- vvv entity' $id $type 'vvv ---' .>
+		Debug:<writeline>
+		Debug:<writeline '------- entity' $id $type '-------' .>
+		Debug:<trace
 		$id
 		<json render-entity $documentString $id $type $start-char $end-char>
+		.>
+		Debug:<writeline '--- ^^^ entity' $id $type '^^^ ---' .>
 		%<json annotation $id >
 	<json entity2 skip $id> == $id
 	<json entity2> == <json error> 
@@ -58,8 +65,21 @@ app.JSON:
 		<json entity $id $documentString $type 0 0 error 'Range error: ' $start-char ' ' $end-char '(set to 0)'  >
 
 	<json rel $id $documentString $focus $type [ > == 
+		Debug:<writeline '--- vvv rel ' $id $type 'vvv ---' .>
+		Debug:<trace
 		<json rel2 $id $documentString $focus $type <json clause2 $documentString <next> ] .> ] <skip> .>
-	<json rel2 $id $documentString $focus $type $arg1> ==
+		.>
+		Debug:<writeline '--- ^^^ rel ' $id $type '^^^ ---' .>
+
+	<json rel2 $id $documentString $focus is_widow_of $arg1> ==
+		%<rotate
+		<json focus $focus $arg1 			% target id for clause
+			<next>	]		% annotation for first operand
+			<json rel3 $id $documentString is_widow_of $arg1 <skip> .>
+		.>
+		%.>
+	<json rel2> == <json rel2-generic>
+	<json rel2-generic $id $documentString $focus $type $arg1> ==
 		<json focus $focus $arg1 			% target id for clause
 			<next>	]		% annotation for first operand
 			<json rel3 $id $documentString $type $arg1 <skip> .>
@@ -71,11 +91,12 @@ app.JSON:
 	<json rel5 $id $type $arg1 $arg2> ==
 		$arg2
 		LocalPath:<> 	% annotation for second operand
-		<json render-rel $id $type $arg1 $arg2>
+		%<json render-rel $id $type $arg1 $arg2>
 	% handle equals relations by rewriting second id arg as first
 	<json rel6 equals $documentString $type $arg1 [ > ==
 		<json rewrite-id $arg1 <json clause2 $documentString> .>
-		
+	
+	% prefix our output with the id of the focused line
 	<json focus 1 $arg1> == $arg1 <next> <json focus3 <skip> .>
 	<json focus 2 $arg1> == <json focus2 <skip> .> <next> <json focus3 <skip> .>
 	<json focus2 $arg2 > == $arg2
@@ -106,12 +127,12 @@ app.JSON:
 		
 	% slightly modify entity by adding an origOccurence attribute
 	<json render-entity $documentString $id $type $start-char $end-char> == 
+		$id
 		[ entity $type $start-char $end-char
 			origOccurence '='
 			<text-for-span $documentString $type $start-char $end-char .>
-			LocalPath:<>
-		<nl .> 
-
+			<next>% take till closing bracket (ignores multiples)
+		] <nl .>
 	<json render-trans> ==
 	
 	<json render-rel $id $type $arg1 $arg2> ==
@@ -164,8 +185,55 @@ app.JSON:
 			openNLP.NewSpan:<$type $start-char $end-char .> .>
 
 	% --------------------------------------------------
+	% relation rotation
+	% --------------------------------------------------
+
+	% given
+	%
+	% handle arg1 line1
+	% 	 arg2 line2
+	<rotate> == <rotate2 'origOccurence' 'injected-FIXME'>
+	<rotate2 $attr-src $attr-tgt $arg $arg> ==
+		$arg <promote-left $attr-src $attr-tgt $arg>
+	<rotate2 $attr-src $attr-tgt $arg> ==
+		$arg <promote-right $attr-src $attr-tgt $arg>
+
+	% rotate the left argument of a relation to the top and
+	% inject some identifying feature from the right argument
+	<promote-left $attr-src $attr-tgt> ==
+		<add-feature $attr-tgt
+			<get-attr $attr-src <skipline> .>
+			<takeline>
+		.>
+		<skipline>
+	% mirror of promote-left
+	<promote-right $attr-src $attr-tgt> ==
+		<add-feature $attr-tgt
+			<get-attr $attr-src <takeline> .>
+			<tail <skipline> .>
+		.>
+		<takeline> <nl>
+
+	% --------------------------------------------------
 	% manipulating nimrodel literals
 	% --------------------------------------------------
+
+	% nimrodel attribute value pair
+	<feature $key $val> == $key '=' $val
+
+	<add-feature $key $value $handle [ $x1 $x2 $x3 $x4> ==
+		$handle [ $x1 $x2 $x3 $x4 <feature $key $value .> LocalPath:<>
+	<add-feature $key $value [ $x1 $x2 $x3 $x4> ==
+		[ $x1 $x2 $x3 $x4 <feature $key $value .> LocalPath:<>
+
+
+	% take the handle associated with a fragmentary output
+	<get-handle $any> == $any
+
+	% take the value of an attribute
+	<get-attr $key $key $eq $value> == $value
+	<get-attr $key $any> == <get-attr $key>
+	<get-attr> ==
 
 	% combine two nimrodel internal semantic literals into one
 	% assume they share the same prefix (taken from the first)
@@ -185,12 +253,7 @@ app.JSON:
 	<skip> == <skip2>
 	<skip2 $any> == <skip>
 	<skip2> ==
-	
-	<skipline '\n'> == '\n' LocalPath:<>
-	<skipline> == <skipline2>
-	<skipline2 $$any> == <skipline>
-	<skipline2> ==
-	
+
 	<nextb [ > == <next>
 	
 	<next ] > == 
@@ -202,6 +265,47 @@ app.JSON:
 	<tail $any> == LocalPath:<>
 	<tail> ==
 
+	% --------------------------------------------------
+	% manipulating named lines
+	% a named line has the form
+	%
+	% prefix <payload> <nl>
+	% --------------------------------------------------
+
+	% named takeline $name:
+	% given a block of named lines, select the line prefixed with $name
+	<named takeline $arg $arg> == $arg <takeline>
+	<named takeline> == <named takeline2>
+	<named takeline2 $arg $any> == <named takeline $arg
+		<tail <skipline> .>
+	.>
+	<named takeline2> ==
+
+	% named add-feature $named $key $val
+	%
+	% add the feature to the line prefixed with $named
+	% pass the rest of lines through
+	<named add-feature $arg $key $value $any> ==
+		<named add-feature-one $arg $key $value $any>
+		<named add-feature $arg $key $value <tail <skipline> .> .>
+	<named add-feature> ==
+	% helper: what to do when we actually hit the line
+	<named add-feature-one $arg $key $value $arg> ==
+		$arg <add-feature $key $value <takeline> .> <nl>
+	<named add-feature-one> == <named add-feature-one2>
+	<named add-feature-one2 $arg $key $value $any> ==
+		$any <takeline> <nl> % pass through
+
+	<takeline '\n'> ==
+	<takeline> == <takeline2>
+	<takeline2 $any> == $any <takeline>
+	<takeline2> ==
+	
+	<skipline '\n'> == '\n' LocalPath:<>
+	<skipline> == <skipline2>
+	<skipline2 $$any> == <skipline>
+	<skipline2> ==
+	
 	% --------------------------------------------------
 	% filtering
 	% --------------------------------------------------
