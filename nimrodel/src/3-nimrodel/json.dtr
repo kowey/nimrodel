@@ -1,4 +1,5 @@
 % outputting JSON annotations for people only
+% vim: set noexpandtab:
 
 #uses Gensym Length Implode Explode LocalPath Rest.
 #vars $eq: '=' '=='.
