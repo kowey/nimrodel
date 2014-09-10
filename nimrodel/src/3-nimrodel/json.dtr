@@ -70,10 +70,13 @@ app.JSON:
 	<json rel $id $documentString $focus $type [ > == 
 		Debug:<writeline '--- vvv rel ' $id $type 'vvv ---' .>
 		Debug:<trace
-		<json rel2 $id $documentString $focus $type <json clause2 $documentString <next> ] .> ] <skip> .>
+		<json rel2 $id $documentString $focus $type
+		        <json clause2 $documentString <next> ] .> ] <skip> .>
 		.>
 		Debug:<writeline '--- ^^^ rel ' $id $type '^^^ ---' .>
 
+	<json rel2 $id $documentString $focus equals $arg1> ==
+                <json rel2-equals $id $documentString $focus equals $arg1>
 	<json rel2 $id $documentString $focus is_widow_of $arg1> ==
 		%<rotate
 		<json focus $focus $arg1 			% target id for clause
@@ -87,7 +90,11 @@ app.JSON:
 			<next>	]		% annotation for first operand
 			<json rel3 $id $documentString $type $arg1 <skip> .>
 		.>
-	<json rel3 equals> == <json rel6 equals>
+	<json rel2-equals $id $documentString $focus $type $arg1> ==
+		<json merge-id $arg1
+			<json clause2 $documentString <tail <skip> .> .>
+			<next>
+		.>
 	<json rel3> == <json rel4>
 	<json rel4 $id $documentString $type $arg1 [ > ==
 		<json rel5 $id $type $arg1 <json clause2 $documentString> .>
@@ -95,25 +102,35 @@ app.JSON:
 		$arg2
 		LocalPath:<> 	% annotation for second operand
 		%<json render-rel $id $type $arg1 $arg2>
-	% handle equals relations by rewriting second id arg as first
-	<json rel6 equals $documentString $type $arg1 [ > ==
-		<json rewrite-id $arg1 <json clause2 $documentString> .>
-	
+
 	% prefix our output with the id of the focused line
 	<json focus 1 $arg1> == $arg1 <next> <json focus3 <skip> .>
 	<json focus 2 $arg1> == <json focus2 <skip> .> <next> <json focus3 <skip> .>
 	<json focus2 $arg2 > == $arg2
 	<json focus3 $arg2 > == LocalPath:<>
 		
-	<json rewrite-id $$arg1 $$arg2> ==
+        % rewrite the block replacing both the $$arg1 and the $$arg2 line with
+        % a merged equivalent
+	<json merge-id $$arg1 $$arg2> ==
 		$$arg1
-		Rest:< <json rewrite-id2 $$arg1 $$arg2 '\n' > .>
-	<json rewrite-id2 $$arg1 $$arg2 '\n' $$arg2> == <json rewrite-id2 $$arg1 $$arg2 <skipline> .>
-	<json rewrite-id2 $$arg1 $$arg2 $$arg2> == $$arg1 <json rewrite-id3 $$arg1 $$arg2>
-	<json rewrite-id2> == <json rewrite-id3>
-	<json rewrite-id3 $$arg1 $$arg2 $$any> == $$any <json rewrite-id2 $$arg1 $$arg2>
-	<json rewrite-id3> ==
-		
+		$$arg1 nimrodel.INNER:<merge
+			<tail <named takeline $$arg1> .>
+			<tail <named takeline $$arg2> .> .> <nl>
+		Rest:< <json merge-id2 $$arg1 $$arg2 '\n' > .>
+	<json merge-id2 $$arg1 $$arg2 '\n' $$arg1> ==
+                <json merge-id2 $$arg1 $$arg2 <skipline> .>
+ 	<json merge-id2 $$arg1 $$arg2 '\n' $$arg2> ==
+                <json merge-id2 $$arg1 $$arg2 <skipline> .>
+        % this is just straight token rewriting s/$$arg2/$$arg1/
+	<json merge-id2 $$arg1 $$arg2 $$arg2> ==
+                $$arg1 <json merge-id3 $$arg1 $$arg2>
+	<json merge-id2> == <json merge-id3>
+	<json merge-id3 $$arg1 $$arg2 $$any> ==
+                $$any <json merge-id2 $$arg1 $$arg2>
+	<json merge-id3> ==
+
+
+
 	<json attr $id $documentString $attr $val [ > ==
 		<json attr2 $id $documentString $attr $val <json clause2 $documentString> .>
 	<json attr2 $id $documentString $attr $val $arg> ==
@@ -238,17 +255,6 @@ app.JSON:
 	<get-attr $key $any> == <get-attr $key>
 	<get-attr> ==
 
-	% combine two nimrodel internal semantic literals into one
-	% assume they share the same prefix (taken from the first)
-	% (this is really just dumb token rewriting)
-	<append> == [ <append-helper> ]
-	<append-helper [ $$x1 $$x2 $$x3 $$x4> ==
-		$$x1 $$x2 $$x3 $$x4
-		<next>
-		<append-last <skip> .>
-	<append-last [ $$x1 $$x2 $$x3 $$x4 > ==
-		<next>
-
 	<skipb [> == <skip>	
 		
 	<skip ] > == LocalPath:<>
@@ -357,4 +363,71 @@ app.JSON:
 	<strip-eq2> ==
 
 	<mk-json> == json.STRUCT:<>
+.
+
+% tools for manipulating the nimrodel internal semantics
+nimrodel.INNER:
+
+	% merge: literal -> literal -> literal
+	%
+	% given two adjacent literals, return a single merged literal
+	% by appending any features not found in the first (from the
+	% second literal). Note that duplicate features are ignored
+	<merge> == <keep-one <append> .>
+
+	% keep-one : literal -> literal
+	% retain the first instance of each attribute
+	% ignore any subsequent instances
+	<keep-one> == <tweak-features keep-one-inner>
+	<keep-one-inner $$key $eq $$val> ==
+		$$key $eq $$val
+		<keep-one-inner <delete-key $$key> .>
+	<keep-one-inner> ==
+
+	% delete-key : features -> features
+	<delete-key $$key $$key $eq $$val> == <delete-key $$key>
+	<delete-key> == <delete-key2>
+	<delete-key2 $$key $$any $eq $$val> ==
+		$$any $eq $$val <delete-key $$key>
+	<delete-key2> ==
+
+	% tweak-features : (features -> features) -> (literal -> literal)
+	% apply $$fn on just the key = val pairs, keeping
+	% the rest of the literal the same
+	<tweak-features $$fn [ $x1 $x2 $x3 $x4> ==
+		[ $x1 $x2 $x3 $x4
+		<$$fn <init> .>
+		]
+
+	% append : literal -> literal -> literal
+	% combine two nimrodel internal semantic literals into one
+	% assume they share the same prefix (taken from the first)
+	% (this is really just dumb token rewriting)
+	<append> == [ <append-helper> ]
+	<append-helper [ $$x1 $$x2 $$x3 $$x4> ==
+		$$x1 $$x2 $$x3 $$x4
+		<next>
+		<append-last <skip> .>
+	<append-last [ $$x1 $$x2 $$x3 $$x4 > == <next>
+
+	% init : stream -> stream
+	% init on empty stream also returns empty stream
+	<init $$any1 $$any2> == $$any1 <init $$any2>
+	<init> == <init2>
+	<init2 $$any> ==
+	<init2> ==
+
+	% skip : stream -> stream
+	<skip ] > == LocalPath:<>
+	<skip [ > == <skip <skip> .>
+	<skip> == <skip2>
+	<skip2 $any> == <skip>
+	<skip2> ==
+
+	% next : stream -> stream
+	<next ] > ==
+	<next [ > == [ <next> ] <next <skip> .>
+	<next> == <next2>
+	<next2 $any> == $any <next>
+	<next2> ==
 .
