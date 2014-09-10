@@ -75,15 +75,8 @@ app.JSON:
 	<json entity $id $documentString> ==
 		<json entity2 <json check> $id $documentString>
 	<json entity2 ok $id $documentString $type $start-char $end-char> ==	
-		Debug:<writeline '--- vvv entity' $id $type 'vvv ---' .>
-		Debug:<writeline>
-		Debug:<writeline '------- entity' $id $type '-------' .>
-		Debug:<trace
 		$id
 		<json render-entity $documentString $id $type $start-char $end-char>
-		.>
-		Debug:<writeline '--- ^^^ entity' $id $type '^^^ ---' .>
-		%<json annotation $id >
 	<json entity2 skip $id> == $id
 	<json entity2> == <json error> 
 	
@@ -136,53 +129,76 @@ app.JSON:
 	<json rel $id $documentString $focus $type [ > == 
 		Debug:<writeline '--- vvv rel ' $id $type 'vvv ---' .>
 		Debug:<trace
-		<json rel2 $id $documentString $focus $type
+		<json rel-inner $id $documentString $focus $type
 		        <json clause2 $documentString <next> ] .> ] <skip> .>
 		.>
 		Debug:<writeline '--- ^^^ rel ' $id $type '^^^ ---' .>
 
-	<json rel2 $id $documentString $focus equals $arg1> ==
-                <json rel2-equals $id $documentString $focus equals $arg1>
-	<json rel2 $id $documentString $focus is_widow_of $arg1> ==
-		%<rotate
-		<json focus $focus $arg1 			% target id for clause
-			<next>	]		% annotation for first operand
-			<json rel3 $id $documentString is_widow_of $arg1 <skip> .>
-		.>
-		%.>
-	<json rel2> == <json rel2-generic>
-	<json rel3> == <json rel4>
-	<json rel4 $id $documentString $type $arg1 [ > ==
-		<json rel5 $id $type $arg1 <json clause2 $documentString> .>
-	<json rel5 $id $type $arg1 $arg2> ==
-		$arg2
-		LocalPath:<> 	% annotation for second operand
+	<json rel-inner $id $documentString $focus equals $arg1> ==
+                <json rel-equals $id $documentString $focus equals $arg1>
+	<json rel-inner $id $documentString $focus is_widow_of $arg1> ==
+		<json rel-inject 'lateHusband' $id $documentString $focus is_widow_of $arg1>
+	<json rel-inner> == <json rel-generic>
 
-	% json rel2-generic: return a tagged bundle
+	% json rel-generic: relation literal (ish) -> tagged bundle
 	% render both sides and do nothing else
-	<json rel2-generic $id $documentString $focus $type $arg1> ==
+	<json rel-generic $id $documentString $focus $type $arg1> ==
 		<json focus $focus $arg1 			% target id for clause
 			<next>	]		% annotation for first operand
-			<json rel3 $id $documentString $type $arg1 <skip> .>
+			<json rel-next $id $documentString $type $arg1 <skip> .>
 		.>
-	% json rel2-equals: return a tagged bundle
+	% json rel-equals: relation literal (ish) -> tagged bundle
 	% merge the distinguished entity in the two sides
 	% (other lines are left intact)
-	<json rel2-equals $id $documentString $focus $type $arg1> ==
+	<json rel-equals $id $documentString $focus $type $arg1> ==
 		<json merge-id $arg1
 			<json clause2 $documentString <tail <skip> .> .>
 			<next>
 		.>
+	% json rel-inject: string -> relation literal (ish) -> tagged bundle
+	% in addition to the usual, inject the origOccurence feature
+	% into the focused argument as the target feature name
+	<json rel-inject $attr-tgt $id $documentString $focus $type $arg1> ==
+		<named inject 'origOccurence' $attr-tgt
+		<json endpoints $focus $arg1 			% target id for clause
+			<next>	]		% annotation for first operand
+			<json rel-next $id $documentString $type $arg1 <skip> .>
+		.>
+		.>
 
+	% json rel-next: produce annotation for second operand
+	<json rel-next $id $documentString $type $arg1 [ > ==
+		<json rel-next2 $id $type $arg1 <json clause2 $documentString> .>
+	<json rel-next2 $id $type $arg1 $arg2> ==
+		$arg2
+		LocalPath:<> 	% annotation for second operand
 
+	% json focus: focus -> ??? -> tagged bundle
+	% (here it's not a list of lines per se that's the input, but
+	% something close to it)
 	% prefix our output with the id of the focused line
 	<json focus 1 $arg1> == $arg1 <next> <json focus3 <skip> .>
 	<json focus 2 $arg1> == <json focus2 <skip> .> <next> <json focus3 <skip> .>
 	<json focus2 $arg2 > == $arg2
 	<json focus3 $arg2 > == LocalPath:<>
-		
-        % rewrite the block replacing both the $$arg1 and the $$arg2 line with
-        % a merged equivalent
+
+	% json endpoints: focus -> ??? -> tagged bundle
+	% almost identical to json focus, only we prefix with
+	% the less prefered one, and then the handle
+	%
+	% (so json focus should be a suffix of this)
+	<json endpoints 1 $arg1> ==
+		<get-handle <skip> .> $arg1
+		<next> <json endpoints3 <skip> .>
+	<json endpoints 2 $arg1> ==
+		$arg1 <get-handle <skip> .>
+		<next> <json endpoints3 <skip> .>
+	<json endpoints2 $arg2 > == $arg2
+	<json endpoints3 $arg2 > == LocalPath:<>
+
+
+	% rewrite the block replacing both the $$arg1 and the $$arg2 line with
+	% a merged equivalent
 	<json merge-id $$arg1 $$arg2> ==
 		$$arg1
 		$$arg1 nimrodel.INNER:<merge
@@ -190,15 +206,15 @@ app.JSON:
 			<tail <named takeline $$arg2> .> .> <nl>
 		Rest:< <json merge-id2 $$arg1 $$arg2 '\n' > .>
 	<json merge-id2 $$arg1 $$arg2 '\n' $$arg1> ==
-                <json merge-id2 $$arg1 $$arg2 <skipline> .>
- 	<json merge-id2 $$arg1 $$arg2 '\n' $$arg2> ==
-                <json merge-id2 $$arg1 $$arg2 <skipline> .>
-        % this is just straight token rewriting s/$$arg2/$$arg1/
+		<json merge-id2 $$arg1 $$arg2 <skipline> .>
+	<json merge-id2 $$arg1 $$arg2 '\n' $$arg2> ==
+		<json merge-id2 $$arg1 $$arg2 <skipline> .>
+	% this is just straight token rewriting s/$$arg2/$$arg1/
 	<json merge-id2 $$arg1 $$arg2 $$arg2> ==
-                $$arg1 <json merge-id3 $$arg1 $$arg2>
+		$$arg1 <json merge-id3 $$arg1 $$arg2>
 	<json merge-id2> == <json merge-id3>
 	<json merge-id3 $$arg1 $$arg2 $$any> ==
-                $$any <json merge-id2 $$arg1 $$arg2>
+		$$any <json merge-id2 $$arg1 $$arg2>
 	<json merge-id3> ==
 
 	% --------------------------------------------------
@@ -229,12 +245,6 @@ app.JSON:
 		] <nl .>
 	<json render-trans> ==
 	
-	<json render-rel $id $type $arg1 $arg2> ==
-		$id <tab .>
-		$type <sp .>
-		'Arg1:' $arg1 <sp .>
-		'Arg2:' $arg2 <nl .>
-		
 	<json render-attr $id $arg $attr $val> == 
 		$id <tab .>
 		$attr <sp .> 
@@ -284,29 +294,17 @@ app.JSON:
 
 	% given
 	%
-	% handle arg1 line1
-	% 	 arg2 line2
-	<rotate> == <rotate2 'origOccurence' 'injected-FIXME'>
-	<rotate2 $attr-src $attr-tgt $arg $arg> ==
-		$arg <promote-left $attr-src $attr-tgt $arg>
-	<rotate2 $attr-src $attr-tgt $arg> ==
-		$arg <promote-right $attr-src $attr-tgt $arg>
+	% attr-src attr-tgt
+	% arg-src arg-tgt [named line]
+	%
+	% lift a feature from the arg-src line and inject it into
+	% arg-tgt line
+	<named inject $attr-src $attr-tgt $arg-src $arg-tgt> ==
+		$arg-tgt
+		<named add-feature $arg-tgt
+			$attr-tgt
+			<get-attr $attr-src <named takeline $arg-src> .>>
 
-	% rotate the left argument of a relation to the top and
-	% inject some identifying feature from the right argument
-	<promote-left $attr-src $attr-tgt> ==
-		<add-feature $attr-tgt
-			<get-attr $attr-src <skipline> .>
-			<takeline>
-		.>
-		<skipline>
-	% mirror of promote-left
-	<promote-right $attr-src $attr-tgt> ==
-		<add-feature $attr-tgt
-			<get-attr $attr-src <takeline> .>
-			<tail <skipline> .>
-		.>
-		<takeline> <nl>
 
 	% --------------------------------------------------
 	% manipulating nimrodel literals
@@ -347,6 +345,7 @@ app.JSON:
 	
 	<tail $any> == LocalPath:<>
 	<tail> ==
+
 
 	% --------------------------------------------------
 	% manipulating named lines
