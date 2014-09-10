@@ -4,6 +4,37 @@
 #uses Gensym Length Implode Explode LocalPath Rest.
 #vars $eq: '=' '=='.
 
+% ---------------------------------------------------------------------
+% glossary
+%
+% nimrodel literal: tokens that correspond to a single fragment
+%     of nimodel's internal semantic representation
+%
+%     [ supertype type start-char end-char etc... ]
+%
+%     Syntactically, the nimrodel internal semantic representation
+%     is nested/recursive; although it is flat in essence.
+%
+%     Literals for entities are completely flat, and we will try
+%     to refer to these as entity literals
+%
+% named line: a line of the form <prefix> <entity literal> <nl>
+%     the payload is some arbitrary token sequence
+%     (here an entity literal)
+%
+%     the prefix serves as an identifier for the literal
+%
+% tagged bundle: a handle followed by a list of named lines.
+%      the handle is the prefix of one of the named lines;
+%
+%      It says in essence that while the bundle represents
+%      several entities, one of them is of particular interest
+%      to us
+%
+% distinguished entity: in a tagged bundle, the entity that
+%      is being pointed to by the bundle handle
+% ---------------------------------------------------------------------
+
 
 app.JSON:
 	<> == elf.TOP
@@ -69,6 +100,39 @@ app.JSON:
 	<json error range-error $id $documentString $type $start-char $end-char> ==
 		<json entity $id $documentString $type 0 0 error 'Range error: ' $start-char ' ' $end-char '(set to 0)'  >
 
+	% ---------------------------------------------------------------------
+	% Relations are tricky.
+	%
+	% The input is more or less a (recursive) nimrodel literal, although
+	% abstracting from the detail, we can think of the input as being
+	% fundementally `Rel(focus, side1, side2)`, where focus is either
+	% 1 or % 2 referring to which side the relation is about.
+	%
+	% It may be useful to keep a few key points in mind:
+	%
+	% 1. in essence, a relation literal actually refers to a single
+	%    entity, ie. the one represented by side1 or side2
+	%
+	% 2. in form, a relation literal is a nested representation for
+	%    several entities, so we don't just emit one entity but a
+	%    whole list of them as output
+	%
+	% 3. indeed the same is true for side1 and side2; while they
+	%    are in essence referring to a single entity, they return
+	%    tagged bundles (see glossary) along the way which we want
+	%    to merge and emit
+	%
+	% We manage this by using a tagged bundle representation for
+	% our output: ie. a list of named lines (multiple entities),
+	% along with a handle saying which one we are referring to.
+	% This allows us to manipulate the individual entities referred
+	% to by side1 or side2 (we scurry up and down the named lines
+	% looking for the entity referred to by the bundle handle).
+	% This may make a bit more sense after some (hopefully now less)
+	% squinting at the code.
+	% ---------------------------------------------------------------------
+
+
 	<json rel $id $documentString $focus $type [ > == 
 		Debug:<writeline '--- vvv rel ' $id $type 'vvv ---' .>
 		Debug:<trace
@@ -87,23 +151,29 @@ app.JSON:
 		.>
 		%.>
 	<json rel2> == <json rel2-generic>
-	<json rel2-generic $id $documentString $focus $type $arg1> ==
-		<json focus $focus $arg1 			% target id for clause
-			<next>	]		% annotation for first operand
-			<json rel3 $id $documentString $type $arg1 <skip> .>
-		.>
-	<json rel2-equals $id $documentString $focus $type $arg1> ==
-		<json merge-id $arg1
-			<json clause2 $documentString <tail <skip> .> .>
-			<next>
-		.>
 	<json rel3> == <json rel4>
 	<json rel4 $id $documentString $type $arg1 [ > ==
 		<json rel5 $id $type $arg1 <json clause2 $documentString> .>
 	<json rel5 $id $type $arg1 $arg2> ==
 		$arg2
 		LocalPath:<> 	% annotation for second operand
-		%<json render-rel $id $type $arg1 $arg2>
+
+	% json rel2-generic: return a tagged bundle
+	% render both sides and do nothing else
+	<json rel2-generic $id $documentString $focus $type $arg1> ==
+		<json focus $focus $arg1 			% target id for clause
+			<next>	]		% annotation for first operand
+			<json rel3 $id $documentString $type $arg1 <skip> .>
+		.>
+	% json rel2-equals: return a tagged bundle
+	% merge the distinguished entity in the two sides
+	% (other lines are left intact)
+	<json rel2-equals $id $documentString $focus $type $arg1> ==
+		<json merge-id $arg1
+			<json clause2 $documentString <tail <skip> .> .>
+			<next>
+		.>
+
 
 	% prefix our output with the id of the focused line
 	<json focus 1 $arg1> == $arg1 <next> <json focus3 <skip> .>
@@ -131,7 +201,9 @@ app.JSON:
                 $$any <json merge-id2 $$arg1 $$arg2>
 	<json merge-id3> ==
 
-
+	% --------------------------------------------------
+	% render helpers
+	% --------------------------------------------------
 
 	<json attr $id $documentString $attr $val [ > ==
 		<json attr2 $id $documentString $attr $val <json clause2 $documentString> .>
