@@ -16,8 +16,10 @@ app.JSON:
 	% ignore document title
 	<json title> ==
 	
-	<json sentence> == <convert <select entity 'Person'
-		<json sentence-next> .> .>
+	<json sentence> == <convert
+		<select entity 'Person' <named strip
+			<json sentence-next>
+		.> .> .>
 	<json sentence-next $documentString [ > ==
 		<json clause $documentString <next> ] .>
 		<json sentence-next $documentString <skip> .>
@@ -296,6 +298,11 @@ app.JSON:
 	<named add-feature-one> == <named add-feature-one2>
 	<named add-feature-one2 $arg $key $value $any> ==
 		$any <takeline> <nl> % pass through
+
+	% named strip : [named literal] -> [literal]
+	<named strip $id [> ==
+		[ <takeline> <named strip <tail <skipline> .> .>
+	<named strip> ==
 
 	<takeline '\n'> ==
 	<takeline> == <takeline2>
