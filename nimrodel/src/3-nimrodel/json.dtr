@@ -18,7 +18,9 @@ app.JSON:
 	
 	<json sentence> == <convert
 		<select entity 'Person' <named strip
+			Debug:<tracemsg '----v--sentence--v----\n'
 			<json sentence-next>
+			.>
 		.> .> .>
 	<json sentence-next $documentString [ > ==
 		<json clause $documentString <next> ] .>
