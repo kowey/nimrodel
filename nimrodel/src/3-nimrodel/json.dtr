@@ -1,11 +1,16 @@
-% outputting JSON annotations for people only
 % vim: set noexpandtab:
+
+% outputting JSON annotations for people only
+
+% note: type signatures should be treated informal only
+% keeping datr's stream processing model in mine
 
 #uses Gensym Length Implode Explode LocalPath Rest.
 #vars $eq: '=' '=='.
 
 % ---------------------------------------------------------------------
 % glossary
+% ========
 %
 % nimrodel literal: sequence of tokens that correspond to
 %     a single fragment of nimrodel's internal semantic
@@ -162,10 +167,10 @@ app.JSON:
 	% into the focused argument as the target feature name
 	<json rel-inject $attr-tgt $id $documentString $focus $type $arg1> ==
 		<named inject 'origOccurence' $attr-tgt
-		<json endpoints $focus $arg1 			% target id for clause
-			<next>	]		% annotation for first operand
-			<json rel-next $id $documentString $type $arg1 <skip> .>
-		.>
+			<json endpoints $focus $arg1	% target id for clause
+				<next>	]		% annotation for first operand
+				<json rel-next $id $documentString $type $arg1 <skip> .>
+			.>
 		.>
 
 	% json rel-next: produce annotation for second operand
@@ -190,10 +195,10 @@ app.JSON:
 	%
 	% (so json focus should be a suffix of this)
 	<json endpoints 1 $arg1> ==
-		<get-handle <skip> .> $arg1
+		<named handle <skip> .> $arg1
 		<next> <json endpoints3 <skip> .>
 	<json endpoints 2 $arg1> ==
-		$arg1 <get-handle <skip> .>
+		$arg1 <named handle <skip> .>
 		<next> <json endpoints3 <skip> .>
 	<json endpoints2 $arg2 > == $arg2
 	<json endpoints3 $arg2 > == LocalPath:<>
@@ -203,9 +208,9 @@ app.JSON:
 	% a merged equivalent
 	<json merge-id $$arg1 $$arg2> ==
 		$$arg1
-		$$arg1 nimrodel.INNER:<merge
-			<tail <named takeline $$arg1> .>
-			<tail <named takeline $$arg2> .> .> <nl>
+		$$arg1 <literal merge
+			<named strip-takeline $$arg1>
+			<named strip-takeline $$arg2> .> <nl>
 		Rest:< <json merge-id2 $$arg1 $$arg2 '\n' > .>
 	<json merge-id2 $$arg1 $$arg2 '\n' $$arg1> ==
 		<json merge-id2 $$arg1 $$arg2 <skipline> .>
@@ -220,7 +225,22 @@ app.JSON:
 	<json merge-id3> ==
 
 	% --------------------------------------------------
-	% render helpers
+	% entities
+	% --------------------------------------------------
+
+	% slightly modify entity by adding an origOccurence attribute
+	<json render-entity $documentString $id $type $start-char $end-char> ==
+		$id
+		[ entity $type $start-char $end-char
+			origOccurence '='
+			<text-for-span $documentString $type $start-char $end-char .>
+			<next>% take till closing bracket (ignores multiples)
+		] <nl .>
+
+	% --------------------------------------------------
+	% FIXME: we don't yet know what to do with attributes
+	% or properties, so these are just the same as the
+	% BRAT output (they'll break everything)
 	% --------------------------------------------------
 
 	<json attr $id $documentString $attr $val [ > ==
@@ -237,31 +257,12 @@ app.JSON:
 		LocalPath:<>
 		<json prop $arg $attr '=' $val .>	
 		
-	% slightly modify entity by adding an origOccurence attribute
-	<json render-entity $documentString $id $type $start-char $end-char> == 
-		$id
-		[ entity $type $start-char $end-char
-			origOccurence '='
-			<text-for-span $documentString $type $start-char $end-char .>
-			<next>% take till closing bracket (ignores multiples)
-		] <nl .>
-	<json render-trans> ==
-	
 	<json render-attr $id $arg $attr $val> == 
 		$id <tab .>
 		$attr <sp .> 
 		$arg <sp .> 
 		$val <nl .>
-		
-		
-	<json annotation $id ']'> ==
-	<json annotation $id $f $eq $v> == <json map-feature $f $v .> <json annotation $id>
-	<json annotation $id> == <json note $id>
 
-	% rename, delete, or pass through features
-	<json map-feature gender> == 'gender-TO-DELETE' LocalPath:<>
-	<json map-feature> == LocalPath:<>
-	
 	<json notes $id [ > == <json notes2 $id>
 	<json notes $id> == 
 	<json notes2 $id> == <json note $id> <json notes $id <skip> .>
@@ -286,120 +287,14 @@ app.JSON:
 	<json note4 $any> == $any <sp> <json note3>
 	<json note4> ==
 
-	<text-for-span $documentString $type $start-char $end-char> ==
-		openNLP.GetSpanStrings:<$documentString
-			openNLP.NewSpan:<$type $start-char $end-char .> .>
-
 	% --------------------------------------------------
-	% relation rotation
+	% post-processing after tree rewriting and before
+	% converting to json
 	% --------------------------------------------------
 
-	% given
-	%
-	% attr-src attr-tgt
-	% arg-src arg-tgt [named line]
-	%
-	% lift a feature from the arg-src line and inject it into
-	% arg-tgt line
-	<named inject $attr-src $attr-tgt $arg-src $arg-tgt> ==
-		$arg-tgt
-		<named add-feature $arg-tgt
-			$attr-tgt
-			<get-attr $attr-src <named takeline $arg-src> .>>
-
-
-	% --------------------------------------------------
-	% manipulating nimrodel literals
-	% --------------------------------------------------
-
-	% nimrodel attribute value pair
-	<feature $key $val> == $key '=' $val
-
-	<add-feature $key $value $handle [ $x1 $x2 $x3 $x4> ==
-		$handle [ $x1 $x2 $x3 $x4 <feature $key $value .> LocalPath:<>
-	<add-feature $key $value [ $x1 $x2 $x3 $x4> ==
-		[ $x1 $x2 $x3 $x4 <feature $key $value .> LocalPath:<>
-
-
-	% take the handle associated with a fragmentary output
-	<get-handle $any> == $any
-
-	% take the value of an attribute
-	<get-attr $key $key $eq $value> == $value
-	<get-attr $key $any> == <get-attr $key>
-	<get-attr> ==
-
-	<skipb [> == <skip>	
-		
-	<skip ] > == LocalPath:<>
-	<skip [ > == <skip <skip> .>
-	<skip> == <skip2>
-	<skip2 $any> == <skip>
-	<skip2> ==
-
-	<nextb [ > == <next>
-	
-	<next ] > == 
-	<next [ > == [ <next> ] <next <skip> .>
-	<next> == <next2>
-	<next2 $any> == $any <next>
-	<next2> ==
-	
-	<tail $any> == LocalPath:<>
-	<tail> ==
-
-
-	% --------------------------------------------------
-	% manipulating named lines
-	% a named line has the form
-	%
-	% prefix <payload> <nl>
-	% --------------------------------------------------
-
-	% named takeline $name:
-	% given a block of named lines, select the line prefixed with $name
-	<named takeline $arg $arg> == $arg <takeline>
-	<named takeline> == <named takeline2>
-	<named takeline2 $arg $any> == <named takeline $arg
-		<tail <skipline> .>
-	.>
-	<named takeline2> ==
-
-	% named add-feature $named $key $val
-	%
-	% add the feature to the line prefixed with $named
-	% pass the rest of lines through
-	<named add-feature $arg $key $value $any> ==
-		<named add-feature-one $arg $key $value $any>
-		<named add-feature $arg $key $value <tail <skipline> .> .>
-	<named add-feature> ==
-	% helper: what to do when we actually hit the line
-	<named add-feature-one $arg $key $value $arg> ==
-		$arg <add-feature $key $value <takeline> .> <nl>
-	<named add-feature-one> == <named add-feature-one2>
-	<named add-feature-one2 $arg $key $value $any> ==
-		$any <takeline> <nl> % pass through
-
-	% named strip : [named literal] -> [literal]
-	<named strip $id [> ==
-		[ <takeline> <named strip <tail <skipline> .> .>
-	<named strip> ==
-
-	<takeline '\n'> ==
-	<takeline> == <takeline2>
-	<takeline2 $any> == $any <takeline>
-	<takeline2> ==
-	
-	<skipline '\n'> == '\n' LocalPath:<>
-	<skipline> == <skipline2>
-	<skipline2 $$any> == <skipline>
-	<skipline2> ==
-	
-	% --------------------------------------------------
-	% filtering
-	% --------------------------------------------------
-
-	% pick out only literals of the given type
+	% select: string -> string -> [literal] -> [literal]
+	% pick out only literals of the given type and subtype
+	% eg. <select entity "Person">
 	<select $supertype $type [> ==
 		<select-one $supertype $type [ <next> ] .>
 		<select $supertype $type <skip> .>
@@ -408,7 +303,6 @@ app.JSON:
 	<select-one $supertype $type [ $supertype $type> ==
 		[ $supertype $type LocalPath:<>
 	<select-one $supertype $type> ==
-
 
 	% --------------------------------------------------
 	% nimrodel to json conversion
@@ -436,71 +330,89 @@ app.JSON:
 	<strip-eq2> ==
 
 	<mk-json> == json.STRUCT:<>
+
+	% --------------------------------------------------
+	% low-level nimrodel token stream or literal stuff
+	% --------------------------------------------------
+
+	<named> == nimrodel.NAMED:<>
+	<literal> == nimrodel.LITERAL:<>
+	<stream> == nimrodel.STREAM:<>
+
+	<init> == <stream init>
+	<tail> == <stream tail>
+	<takeline> == <stream takeline>
+	<skipline> == <stream skipline>
+	<next> == <stream next>
+	<skip> == <stream skip>
+
+	<skipb [> == <stream skip>
+	<nextb [ > == <steram next>
+
+	% --------------------------------------------------
+	% working with the document text
+	% --------------------------------------------------
+
+	<text-for-span $documentString $type $start-char $end-char> ==
+		openNLP.GetSpanStrings:<$documentString
+			openNLP.NewSpan:<$type $start-char $end-char .> .>
+
 .
 
-% tools for manipulating the nimrodel internal semantics
-nimrodel.INNER:
 
-	% merge: literal -> literal -> literal
+% nimrodel named lines
+nimrodel.NAMED:
+	% inject :  string -> string -> string -> string
+	%        -> [namedline] -> [namedline]
 	%
-	% given two adjacent literals, return a single merged literal
-	% by appending any features not found in the first (from the
-	% second literal). Note that duplicate features are ignored
-	<merge> == <keep-one <append> .>
+	% given attr-src attr-tgt arg-src arg-tgt [named line]
+	% lift the source feature from the source line and
+	% inject it into the target line
+	<inject $attr-src $attr-tgt $arg-src $arg-tgt> ==
+		$arg-tgt
+		<add-feature $arg-tgt
+			$attr-tgt
+			<literal get-attr $attr-src
+				<takeline $arg-src> .>>
 
-	% keep-one : literal -> literal
-	% retain the first instance of each attribute
-	% ignore any subsequent instances
-	<keep-one> == <tweak-features keep-one-inner>
-	<keep-one-inner $$key $eq $$val> ==
-		$$key $eq $$val
-		<keep-one-inner <delete-key $$key> .>
-	<keep-one-inner> ==
+	% named add-feature $named $key $val
+	%
+	% add the feature to the line prefixed with $named
+	% pass the rest of lines through
+	<add-feature $arg $key $value $any> ==
+		<add-feature-one $arg $key $value $any>
+		<add-feature $arg $key $value <tail <stream skipline> .> .>
+	<add-feature> ==
+	% helper: what to do when we actually hit the line
+	<add-feature-one $arg $key $value $arg> ==
+		$arg <literal add-feature $key $value <stream takeline> .> <nl>
+	<add-feature-one> == <add-feature-one2>
+	<add-feature-one2 $arg $key $value $any> ==
+		$any <stream takeline> <nl> % pass through
 
-	% delete-key : features -> features
-	<delete-key $$key $$key $eq $$val> == <delete-key $$key>
-	<delete-key> == <delete-key2>
-	<delete-key2 $$key $$any $eq $$val> ==
-		$$any $eq $$val <delete-key $$key>
-	<delete-key2> ==
+	% strip : [namedline] -> [literal]
+	<strip $id [> ==
+		[ <stream takeline> <strip <tail <stream skipline> .> .>
+	<strip> ==
 
-	% tweak-features : (features -> features) -> (literal -> literal)
-	% apply $$fn on just the key = val pairs, keeping
-	% the rest of the literal the same
-	<tweak-features $$fn [ $x1 $x2 $x3 $x4> ==
-		[ $x1 $x2 $x3 $x4
-		<$$fn <init> .>
-		]
+	% handle: namedline -> string
+	% take the handle associated with a fragmentary output
+	<handle $any> == $any
 
-	% append : literal -> literal -> literal
-	% combine two nimrodel internal semantic literals into one
-	% assume they share the same prefix (taken from the first)
-	% (this is really just dumb token rewriting)
-	<append> == [ <append-helper> ]
-	<append-helper [ $$x1 $$x2 $$x3 $$x4> ==
-		$$x1 $$x2 $$x3 $$x4
-		<next>
-		<append-last <skip> .>
-	<append-last [ $$x1 $$x2 $$x3 $$x4 > == <next>
+	% strip-takeline : string -> [namedline] -> flat_literal
+	<strip-takeline> == <tail <takeline> .>
 
-	% init : stream -> stream
-	% init on empty stream also returns empty stream
-	<init $$any1 $$any2> == $$any1 <init $$any2>
-	<init> == <init2>
-	<init2 $$any> ==
-	<init2> ==
+	% takeline : string -> [namedline] -> named line
+	% given a block of named lines, select the line prefixed with $name
+	<takeline $arg $arg> == $arg <stream takeline>
+	<takeline> == <takeline2>
+	<takeline2 $arg $any> == <takeline $arg
+		<tail <stream skipline> .>
+	.>
+	<takeline2> ==
 
-	% skip : stream -> stream
-	<skip ] > == LocalPath:<>
-	<skip [ > == <skip <skip> .>
-	<skip> == <skip2>
-	<skip2 $any> == <skip>
-	<skip2> ==
-
-	% next : stream -> stream
-	<next ] > ==
-	<next [ > == [ <next> ] <next <skip> .>
-	<next> == <next2>
-	<next2 $any> == $any <next>
-	<next2> ==
+	<literal> == nimrodel.LITERAL:<>
+	<stream> == nimrodel.STREAM:<>
+	<tail> == <stream tail>
+	<nl> == '\n'
 .

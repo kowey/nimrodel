@@ -1,0 +1,129 @@
+% vim: set noexpandtab:
+
+% Intermediary semantic representation.
+% Nimrodel has two basic phases:
+%
+% 1. parse raw text yielding an intermediary semantics
+% 2. convert from intermediary semantics to some output format
+%    such as brat or json
+%
+% The DATR sentences here provide tools for working with this
+% internal semantic representation, particularly when converting
+% to some other format
+
+% Some informal type synonyms
+% ===========================
+% Take these with salt and keep DATRs overall [token] -> [token]
+% processing model in mind.
+%
+% flat_literal : flat nimrodel literal
+%
+% feature : sequence of the form: key = value
+%           (when say [feature], I just mean a
+%           succession of features)
+
+#vars $eq: '=' '=='.
+
+% nimrodel literals
+nimrodel.LITERAL:
+	<> == nimrodel.STREAM:<>
+
+	% merge: flat_literal -> flat_literal -> flat_literal
+	% given two adjacent literals, return a single merged literal
+	% by appending any features not found in the first (from the
+	% second literal). Note that duplicate features are ignored
+	<merge> == <keep-one <append> .>
+
+	% keep-one : flat_literal -> flat_literal
+	% retain the first instance of each attribute
+	% ignore any subsequent instances
+	<keep-one> == <tweak-features keep-one-inner>
+	<keep-one-inner $$key $eq $$val> ==
+		$$key $eq $$val
+		<keep-one-inner <delete-key $$key> .>
+	<keep-one-inner> ==
+
+	% delete-key : [feature] -> [feature]
+	<delete-key $$key $$key $eq $$val> == <delete-key $$key>
+	<delete-key> == <delete-key2>
+	<delete-key2 $$key $$any $eq $$val> ==
+		$$any $eq $$val <delete-key $$key>
+	<delete-key2> ==
+
+	% tweak-features : ([feature] -> [feature]) -> (literal -> literal)
+	% apply $$fn on just the key = val pairs, keeping
+	% the rest of the literal the same
+	<tweak-features $$fn [ $x1 $x2 $x3 $x4> ==
+		[ $x1 $x2 $x3 $x4
+		<$$fn <init> .>
+		]
+
+	% append : literal -> literal -> literal
+	% combine two nimrodel internal semantic literals into one
+	% assume they share the same prefix (taken from the first)
+	% (this is really just dumb token rewriting)
+	<append> == [ <append-helper> ]
+	<append-helper [ $$x1 $$x2 $$x3 $$x4> ==
+		$$x1 $$x2 $$x3 $$x4
+		<next>
+		<append-last <skip> .>
+	<append-last [ $$x1 $$x2 $$x3 $$x4 > == <next>
+
+	% add-feature: string -> string -> literal -> literal
+	<add-feature $key $value [ $x1 $x2 $x3 $x4> ==
+		[ $x1 $x2 $x3 $x4 <feature $key $value .> LocalPath:<>
+
+	% get-attr: string -> [feature] -> string
+	% take the value of an attribute
+	<get-attr $key $key $eq $value> == $value
+	<get-attr $key $any> == <get-attr $key>
+	<get-attr> ==
+
+	% create a nimrodel attribute value pair
+	<feature $key $val> == $key '=' $val
+.
+
+
+% token streams
+nimrodel.STREAM:
+	% tail : stream -> stream
+	<tail $any> == LocalPath:<>
+	<tail> ==
+
+	% init : stream -> stream
+	% init on empty stream also returns empty stream
+	<init $$any1 $$any2> == $$any1 <init $$any2>
+	<init> == <init2>
+	<init2 $$any> ==
+	<init2> ==
+
+	% skip : stream -> stream
+	% roughly speaking, skip over the current literal
+	% warning: can have some surprising effects with closing
+	% brackets etc, may be worth a squint
+	<skip ] > == LocalPath:<>
+	<skip [ > == <skip <skip> .>
+	<skip> == <skip2>
+	<skip2 $any> == <skip>
+	<skip2> ==
+
+	% next : stream -> stream
+	% roughly speaking, return the current literal only
+	% warning: can have some surprising effects with closing
+	% brackets etc, may be worth a squint
+	<next ] > ==
+	<next [ > == [ <next> ] <next <skip> .>
+	<next> == <next2>
+	<next2 $any> == $any <next>
+	<next2> ==
+
+	<takeline '\n'> ==
+	<takeline> == <takeline2>
+	<takeline2 $any> == $any <takeline>
+	<takeline2> ==
+	
+	<skipline '\n'> == '\n' LocalPath:<>
+	<skipline> == <skipline2>
+	<skipline2 $$any> == <skipline>
+	<skipline2> ==
+.
