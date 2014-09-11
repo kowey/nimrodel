@@ -82,7 +82,6 @@ app.JSON:
 	<json entity $id $documentString> ==
 		<json entity2 <json check> $id $documentString>
 	<json entity2 ok $id $documentString $type $start-char $end-char> ==	
-		$id
 		<json render-entity $documentString $id $type $start-char $end-char>
 	<json entity2 skip $id> == $id
 	<json entity2> == <json error> 
@@ -94,11 +93,23 @@ app.JSON:
 	<json check $any $any2 **fail**> == range-error
 
 	<json error clause-error $documentString> == 
-		'T1' <json note 'T1' error 'unknown clause: ' LocalPath:<>  .>
+		<json render-error 'T1' <implode-unwords
+			'unknown clause: ' <next>  .>>
 	<json error type-error $id $documentString $type $start-char $end-char> ==
-		<json clause2 $documentString entity unknown $start-char $end-char error 'No type specified (type set to unknown)'  >
+		<json render-error $id <implode-unwords
+			'No type specified'
+			$start-char $end-char
+			( <text-for-span $documentString $type $start-char $end-char .> )
+			<next> .> >
 	<json error range-error $id $documentString $type $start-char $end-char> ==
-		<json entity $id $documentString $type 0 0 error 'Range error: ' $start-char ' ' $end-char '(set to 0)'  >
+		<json render-error $id <implode-unwords
+			'Range error:' $type $start-char $end-char
+			<next> .> >
+	<implode-unwords> == Implode:<app.DUMP:<unwords> .>
+
+	% render-error : string -> string -> tagged bundle
+	<json render-error $id $msg> ==
+		$id $id [ entity error 0 0 error '=' $msg ] <nl .>
 
 	% ---------------------------------------------------------------------
 	% Relations are tricky.
@@ -228,9 +239,10 @@ app.JSON:
 	% entities
 	% --------------------------------------------------
 
+	% json render-entity : ??? -> tagged bundle
 	% slightly modify entity by adding an origOccurence attribute
 	<json render-entity $documentString $id $type $start-char $end-char> ==
-		$id
+		$id $id
 		[ entity $type $start-char $end-char
 			origOccurence '='
 			<text-for-span $documentString $type $start-char $end-char .>
@@ -254,25 +266,6 @@ app.JSON:
 		$arg
 		<named add-feature $arg $attr $val>
 
-	<json note> == <json note1 'Note'>
-	<json note $id error> == <json errnote $id>
-	<json errnote> == <json note1 'ERROR'>
-	
-	<json note1 $label $id ] > ==
-	<json note1> == <json note2>
-	
-	<json note2 $label $id $any> ==
-		Gensym:<gensym '#'> <tab>
-		$label <sp>
-		$id <tab>
-		<json note3 $any>
-		<nl>
-	<json note2> ==
-	<json note3 ']'> ==
-	<json note3> == <json note4>
-	<json note4 $any> == $any <sp> <json note3>
-	<json note4> ==
-
 	% --------------------------------------------------
 	% post-processing after tree rewriting and before
 	% converting to json
@@ -288,6 +281,9 @@ app.JSON:
 		
 	<select-one $supertype $type [ $supertype $type> ==
 		[ $supertype $type LocalPath:<>
+	% always propagate errors, no matter what
+	<select-one $supertype $type [ $supertype error> ==
+		[ $supertype error LocalPath:<>
 	<select-one $supertype $type> ==
 
 	% --------------------------------------------------
