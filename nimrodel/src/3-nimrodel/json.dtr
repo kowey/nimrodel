@@ -54,6 +54,7 @@ app.JSON:
 			<json sentence-next>
 			.>
 		.> .> .>
+		<nl>
 	<json sentence-next $documentString [ > ==
 		<json clause $documentString <next> ] .>
 		<json sentence-next $documentString <skip> .>
@@ -61,7 +62,7 @@ app.JSON:
 	
 	<json clause $documentString entity **endpoint** > ==
 	<json clause $documentString> ==
-	 	Debug:<writeline Implode:<app.DUMP:<pretty> .>.>
+		Debug:<writeline Implode:<'CLAUSE ' [ app.DUMP:<pretty> .>.>
 		Debug:<trace
 			<tail <json clause2 $documentString > .>
 		.>
@@ -417,10 +418,8 @@ app.JSON:
 	% list of json records; we ignore types and assume that each
 	% feature in each literal is meant to serve as a dictionary key
 	<convert> ==
-		Debug:<writeline 'CONVERT' >
 		<mk-json long-list <convert-helper> .>
 	<convert-helper [> ==
-		Debug:<writeline 'CONVERT-HELPER' [>
 		<convert-one <next> ] .>
 		<convert-helper <skip> .>
 	<convert-helper> ==	
