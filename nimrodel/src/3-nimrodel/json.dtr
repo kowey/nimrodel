@@ -238,39 +238,25 @@ app.JSON:
 		] <nl .>
 
 	% --------------------------------------------------
-	% FIXME: we don't yet know what to do with attributes
-	% or properties, so these are just the same as the
-	% BRAT output (they'll break everything)
+	% properties and attributes: insert an attribute/value
+	% pair into the literal for the embedded entity
 	% --------------------------------------------------
 
 	<json attr $id $documentString $attr $val [ > ==
 		<json attr2 $id $documentString $attr $val <json clause2 $documentString> .>
 	<json attr2 $id $documentString $attr $val $arg> ==
 		$arg
-		LocalPath:<>
-		<json render-attr $id $arg $attr $val>
+		<named add-feature $arg $attr $val>
 		
 	<json property $documentString $attr $val [ > ==
 		<json property2 $documentString $attr $val <json clause2 $documentString> .>
 	<json property2 $documentString $attr $val $arg> ==
 		$arg
-		LocalPath:<>
-		<json prop $arg $attr '=' $val .>	
-		
-	<json render-attr $id $arg $attr $val> == 
-		$id <tab .>
-		$attr <sp .> 
-		$arg <sp .> 
-		$val <nl .>
+		<named add-feature $arg $attr $val>
 
-	<json notes $id [ > == <json notes2 $id>
-	<json notes $id> == 
-	<json notes2 $id> == <json note $id> <json notes $id <skip> .>
-	
 	<json note> == <json note1 'Note'>
 	<json note $id error> == <json errnote $id>
 	<json errnote> == <json note1 'ERROR'>
-	<json prop> == <json note1 'Property'>
 	
 	<json note1 $label $id ] > ==
 	<json note1> == <json note2>
