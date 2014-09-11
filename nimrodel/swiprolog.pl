@@ -15,6 +15,9 @@
 % 	  if you redirect just stdin to a file or pipeline. But if you also redirect 
 % 	  stdout it works.
 
+use(library(pio)).
+use(library(filesex)).
+
 % set prolog prompt to be empty 
 :- prompt(_P, '').
 
@@ -49,7 +52,6 @@
 main :- swi_get_arglist(L), main(L).
 main(L) :- datr_query('app.MAIN', [arglist|L], _V), halt.	
 
-use(library(pio)).
 
 % force a lazy list
 all([])     --> [].
@@ -73,6 +75,58 @@ on_file(File) :-
 	string_codes(Str, Chars),
 	datr_query('app.MAIN', [arglist,Str|[]], _V).
 
+
+% traverse_dir/0, traverse_dir/2
+% walk a directory, and invoke DATR app.MAIN on each file
+% within that dir (recursive search)
+%
+% save the result with a mirror filename in the output dir
+traverse_dir :- swi_get_arglist([DirIn, DirOut]), !, traverse_dir(DirIn, DirOut), halt.
+traverse_dir :- write('Usage: <prognam> input-dir output-dir'), nl, halt.
+traverse_dir(DirIn, DirOut) :- on_dir(DirIn, DirOut, simple_job).
+
+% on_dir/3
+%
+% given an input directory, an output directory, and a job (/2)
+% apply that job to every input/output file name pair we can get
+% by walking the directory and mirroring any input filename into
+% an equivalent output file name
+%
+% We also create any intermediary output directories
+% along the way
+on_dir(DirIn, DirOut, Job) :-
+	write('walking dir '), write(DirIn), write(' (->'), write(DirOut), write(')'), nl,
+	directory_files(DirIn, Files),
+	make_directory_path(DirOut),
+	foreach(member(File, Files), on_dir_item(DirIn, File, DirOut, Job)).
+
+% on_dir_item
+on_dir_item(_, '.', _, _).
+on_dir_item(_, '..', _, _).
+on_dir_item(DirIn, Item, DirOut, Job) :-
+	directory_file_path(DirIn, Item, ItemIn),
+	directory_file_path(DirOut, Item, ItemOut),
+	on_dir_item_exp(ItemIn, ItemOut, Job).
+
+% on_dir_item with the item expanded to be relative
+on_dir_item_exp(ItemIn, ItemOut, Job) :-
+	exists_file(ItemIn),
+	DoJob =.. [Job, ItemIn, ItemOut],
+	call(DoJob).
+on_dir_item_exp(ItemIn, ItemOut, Job) :-
+	exists_directory(ItemIn),
+	on_dir(ItemIn, ItemOut, Job).
+
+simple_job(In, Out) :-
+	write('JOB! '),
+	write(In), write(' > '), write(Out),
+	nl.
+
+query_and_jsonify(In, Out) :-
+	once(phrase_from_file(all(Chars), In)),
+	string_codes(Str, Chars),
+	datr_query('app.MAIN', [arglist,Str|[]], V),
+	write(V).
 
 
 % swi_get_arglist/1
