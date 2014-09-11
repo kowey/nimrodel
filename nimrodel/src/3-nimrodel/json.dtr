@@ -7,8 +7,9 @@
 % ---------------------------------------------------------------------
 % glossary
 %
-% nimrodel literal: tokens that correspond to a single fragment
-%     of nimodel's internal semantic representation
+% nimrodel literal: sequence of tokens that correspond to
+%     a single fragment of nimrodel's internal semantic
+%     representation
 %
 %     [ supertype type start-char end-char etc... ]
 %
