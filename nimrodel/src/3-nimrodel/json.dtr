@@ -307,8 +307,8 @@ app.JSON:
 	<strip-eq ]> ==
 	<strip-eq> == <strip-eq2>
 	<strip-eq2 $any> ==
-		'ERROR: was expecting only sequence of f = v, but got'
-		$any LocalPath:<>
+		'error'
+		<implode-unwords 'was expecting only sequence of f = v, but got' $any>
 	<strip-eq2> ==
 
 	<mk-json> == json.STRUCT:<>
