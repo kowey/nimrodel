@@ -145,12 +145,12 @@ app.JSON:
 
 
 	<json rel $id $documentString $focus $type [ > == 
-		Debug:<writeline '--- vvv rel ' $id $type 'vvv ---' .>
-		Debug:<trace
+		%Debug:<writeline '--- vvv rel ' $id $type 'vvv ---' .>
+		%Debug:<trace
 		<json rel-inner $id $documentString $focus $type
 		        <json clause2 $documentString <next> ] .> ] <skip> .>
-		.>
-		Debug:<writeline '--- ^^^ rel ' $id $type '^^^ ---' .>
+		%.> % trace
+		%Debug:<writeline '--- ^^^ rel ' $id $type '^^^ ---' .>
 
 	<json rel-inner $id $documentString $focus equals $arg1> ==
                 <json rel-equals $id $documentString $focus equals $arg1>
