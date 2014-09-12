@@ -47,15 +47,20 @@ use(library(filesex)).
 
 % invocation as prolog 'application' 
 
+
+% ----------------------------------------------------------------------
+% mode 1: text directly on command line
+% ----------------------------------------------------------------------
+
 % main/0, main/1
 % invoke DATR app.MAIN with user supplied args (main/1), or args from command line (main/0)
 main :- swi_get_arglist(L), main(L).
 main(L) :- datr_query('app.MAIN', [arglist|L], _V), halt.	
 
 
-% force a lazy list
-all([])     --> [].
-all([L|Ls]) --> [L], all(Ls).
+% ----------------------------------------------------------------------
+% mode 2: multiple filenames on command line, one output
+% ----------------------------------------------------------------------
 
 % on_files/0, on_files/1
 % invoke DATR app.MAIN on each file in the list
@@ -75,6 +80,10 @@ on_file(File) :-
 	string_codes(Str, Chars),
 	datr_query('app.MAIN', [arglist,Str|[]], _V).
 
+% ----------------------------------------------------------------------
+% mode 3: input/output directory on command line
+% recursive traversal, one output file per input file
+% ----------------------------------------------------------------------
 
 % traverse_dir/0, traverse_dir/2
 % walk a directory, and invoke DATR app.MAIN on each file
@@ -83,7 +92,7 @@ on_file(File) :-
 % save the result with a mirror filename in the output dir
 traverse_dir :- swi_get_arglist([DirIn, DirOut]), !, traverse_dir(DirIn, DirOut), halt.
 traverse_dir :- write('Usage: <prognam> input-dir output-dir'), nl, halt.
-traverse_dir(DirIn, DirOut) :- on_dir(DirIn, DirOut, simple_job).
+traverse_dir(DirIn, DirOut) :- on_dir(DirIn, DirOut, query_and_jsonify).
 
 % on_dir/3
 %
@@ -117,17 +126,42 @@ on_dir_item_exp(ItemIn, ItemOut, Job) :-
 	exists_directory(ItemIn),
 	on_dir(ItemIn, ItemOut, Job).
 
-simple_job(In, Out) :-
-	write('JOB! '),
-	write(In), write(' > '), write(Out),
-	nl.
+% trivial example of a directory traversal job
+%simple_job(In, Out) :-
+%	write('JOB! '),
+%	write(In), write(' > '), write(Out),
+%	nl.
 
+% query_and_jsonify/2
+% read from input filename and write query result to output filename
 query_and_jsonify(In, Out) :-
+	write(In), nl,
 	once(phrase_from_file(all(Chars), In)),
 	string_codes(Str, Chars),
-	datr_query('app.MAIN', [arglist,Str|[]], V),
-	write(V).
+	query_and_jsonify_str(Str, Out).
+query_and_jsonify_str(Str, _) :- is_whitespace_only(Str).
+query_and_jsonify_str(Str, Out) :-
+	datr_query('app.MAIN', [arglist1,Str|[]], Vs),
+	open(Out,write,OutStream),
+	foreach(member(V,Vs), write(OutStream, V)),
+	close(OutStream).
 
+% ----------------------------------------------------------------------
+% file/string manipulation
+% ----------------------------------------------------------------------
+
+% force a lazy list
+all([])     --> [].
+all([L|Ls]) --> [L], all(Ls).
+
+% is_whitespace_only/1
+is_whitespace_only(Str) :-
+	normalize_space(string(NormStr), Str),
+	string_length(NormStr, 0).
+
+% ----------------------------------------------------------------------
+% command line arguments
+% ----------------------------------------------------------------------
 
 % swi_get_arglist/1
 % return all args following '--' from command line 
