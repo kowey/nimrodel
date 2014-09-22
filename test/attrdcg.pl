@@ -27,7 +27,7 @@ corename(A0, Atts) --> forename(A0, Atts).
 corename(A0, Atts) --> forename(A0, A1), surname(A1, Atts).
 
 title(X, ['title'|X]) --> ['Magister'].
-surname(X, ['gender','surname'|X]) --> ['Calvert'].
+surname(X, ['surname'|X]) --> ['Calvert'].
 forename(X, ['forename'|X]) --> ['Thomas'].
 role(X, ['role'|X]) --> ['Archbishop','of','York'].
 
