@@ -308,16 +308,16 @@ app.JSON:
 		<convert-helper <skip> .>
 	<convert-helper> ==	
 	<convert-one entity $any $start-char $end-char> ==
-		<mk-json record json.UNIQUE:<unique <strip-eq> .> .>
+		<mk-json record json.UNIQUE:<unique <clean-feat> .> .>
 
 	% from [ f1 = v2 f2 =v3 ] to just [ f1 v2 f2 v3 ]
-	<strip-eq $$f $eq $$v> == $$f $$v <strip-eq>
-	<strip-eq ]> ==
-	<strip-eq> == <strip-eq2>
-	<strip-eq2 $any> ==
+	<clean-feat $$f $eq $$v> == $$f $$v <clean-feat>
+	<clean-feat ]> ==
+	<clean-feat> == <clean-feat2>
+	<clean-feat2 $any> ==
 		'error'
 		<implode-unwords 'was expecting only sequence of f = v, but got' $any>
-	<strip-eq2> ==
+	<clean-feat2> ==
 
 	<mk-json> == json.STRUCT:<>
 
