@@ -92,8 +92,19 @@ json.STRUCT:
 	<nl> == '\n'
 	<nl-comma> == '\n, '
 
+	<norm-str '\n'> == ' '
+
+	<slash $any> == '\\' $any
+	<escape> == Implode:<<escape-helper Explode:<> .> .>
+	<escape-helper '\n'> == <slash 'n' .> <escape-helper>
+	<escape-helper '\t'> == <slash 't' .> <escape-helper>
+	<escape-helper '"'> == <slash '"' .> <escape-helper>
+	<escape-helper> == <escape-helper2>
+	<escape-helper2 $any> == $any <escape-helper>
+	<escape-helper2> ==
+
 	<quote $any> == '"' $any '"'
-	<attr $$key $$val> == <quote $$key .> ':' <quote $$val .>
+	<attr $$key $$val> == <quote $$key .> ':' <quote <escape $$val .>.>
 
 	<bracket $$left $$right> == $$left LocalPath:<> $$right
 
