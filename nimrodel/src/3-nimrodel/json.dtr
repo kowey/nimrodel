@@ -174,10 +174,10 @@ app.JSON:
 			<next>
 		.>
 	% json rel-inject: string -> relation literal (ish) -> tagged bundle
-	% in addition to the usual, inject the origOccurence feature
+	% in addition to the usual, inject the origOccurrence feature
 	% into the focused argument as the target feature name
 	<json rel-inject $attr-tgt $id $documentString $focus $type $arg1> ==
-		<named inject 'origOccurence' $attr-tgt
+		<named inject 'origOccurrence' $attr-tgt
 			<json endpoints $focus $arg1	% target id for clause
 				<next>	]		% annotation for first operand
 				<json rel-next $id $documentString $type $arg1 <skip> .>
@@ -240,11 +240,11 @@ app.JSON:
 	% --------------------------------------------------
 
 	% json render-entity : ??? -> tagged bundle
-	% slightly modify entity by adding an origOccurence attribute
+	% slightly modify entity by adding an origOccurrence attribute
 	<json render-entity $documentString $id $type $start-char $end-char> ==
 		$id $id
 		[ entity $type $start-char $end-char
-			origOccurence '='
+			origOccurrence '='
 			<text-for-span $documentString $type $start-char $end-char .>
 			<next>% take till closing bracket (ignores multiples)
 		] <nl .>
