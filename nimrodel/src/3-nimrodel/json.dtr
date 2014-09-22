@@ -55,9 +55,9 @@ app.JSON:
 	
 	<json sentence> == <convert
 		<select entity 'Person' <named strip
-			Debug:<tracemsg '----v--sentence--v----\n'
+			%Debug:<tracemsg '----v--sentence--v----\n'
 			<json sentence-next>
-			.>
+			%.>
 		.> .> .>
 		<nl>
 	<json sentence-next $documentString [ > ==
@@ -67,10 +67,10 @@ app.JSON:
 	
 	<json clause $documentString entity **endpoint** > ==
 	<json clause $documentString> ==
-		Debug:<writeline Implode:<'CLAUSE ' [ app.DUMP:<pretty> .>.>
-		Debug:<trace
-			<tail <json clause2 $documentString > .>
-		.>
+		%Debug:<writeline Implode:<'CLAUSE ' [ app.DUMP:<pretty> .>.>
+		%Debug:<trace
+		<tail <json clause2 $documentString > .>
+		%.>
 	
 	<json clause2 $documentString entity> == <json entity Gensym:<gensym 'T'.> $documentString>
 	<json clause2 $documentString rel> == <json rel Gensym:<gensym 'R' .> $documentString>
