@@ -171,7 +171,7 @@ nimrodel.family.Naunt:
 .
 
 
-nimrodel.family.Nnewphew:
+nimrodel.family.Nnephew:
 	<> == nimrodel.family.MALE
 	<phrase-nom rel> == is_familial_relation_to
 .
