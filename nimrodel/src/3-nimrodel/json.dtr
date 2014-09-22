@@ -246,8 +246,16 @@ app.JSON:
 		[ entity $type $start-char $end-char
 			origOccurrence '='
 			<text-for-span $documentString $type $start-char $end-char .>
-			<next>% take till closing bracket (ignores multiples)
+			% take till closing bracket (ignores multiples)
+			<tweak-features <next> .>
 		] <nl .>
+
+	% rename features as needed
+	<tweak-features 'occupation' $eq $val> == 'role' $eq $val <tweak-features>
+	<tweak-features> == <tweak-features2>
+	<tweak-features2 $any $eq $val> == $any $eq $val <tweak-features>
+	<tweak-features2 $any> == $any LocalPath:<>
+	<tweak-features2> ==
 
 	% --------------------------------------------------
 	% properties and attributes: insert an attribute/value
