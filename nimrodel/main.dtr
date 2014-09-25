@@ -13,7 +13,7 @@ app.MAIN:
 
 %% nimrodel.MAIN is an application stub for the nimrodel example lexicon.
 
-#vars $output-format: brat dump json.
+#vars $output-format: brat dump json raw.
 #uses System Implode Idem.
 
 

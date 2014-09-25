@@ -1,4 +1,4 @@
-#vars $output-format: brat dump json.
+#vars $output-format: brat dump json raw.
 #uses System Length Explode Add.
 
 #hide nimrodel.NIMRODEL.
@@ -10,6 +10,7 @@ nimrodel.NIMRODEL:
 	<reset brat> == app.BRAT:<brat reset>
 	<reset dump> == app.DUMP:<dump reset>
 	<reset json> == app.JSON:<json reset>
+	<reset raw>  ==
 	
 	<process $$model $$language $output-format $documentString $$title $document> ==
 		<process-title $$model $$language $output-format $$title .>
@@ -30,6 +31,8 @@ nimrodel.NIMRODEL:
 		app.DUMP:<dump title $title [ model $model ] [ language $$language ] .>
 	<process-title $model $$language json $title> ==
 		app.JSON:<json title $title [ model $model ] [ language $$language ] .>
+	<process-title $model $$language raw $title> ==
+		LocalPath:<>
 			
 	<process-sentenceSpans $model $$language $output-format $documentString $offsetSpan $sentenceSpan> ==
 		% set up nodes for next sentence
@@ -47,7 +50,9 @@ nimrodel.NIMRODEL:
 		app.DUMP:<dump sentence $documentString $$query>
 	<query-word json $documentString $$query> ==
 		app.JSON:<json sentence $documentString $$query>
-	
+	<query-word raw $documentString $$query> ==
+		LocalPath:<>
+		
 	<process-offset-sentence $$language $documentString $sentenceSpan> ==
 		<process-sentence $$language $sentenceSpan nimrodel.preprocess.Span:<spanstrings $documentString $sentenceSpan>>
 		
