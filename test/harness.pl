@@ -63,6 +63,7 @@ show_result(test(Attrs, Str, Result)) :-
 % show_result with the json already parsed
 show_result_inner(Attrs, Str, JTerm) :-
     write_unwords(Str), nl,
+    %write(JTerm), nl,
     findall(TRes, mk_test_result(Attrs, JTerm, TRes), TRes),
     forall(member(TR, TRes), show_result_single(TR)).
 show_result_single(result(Attr, Res)) :-
