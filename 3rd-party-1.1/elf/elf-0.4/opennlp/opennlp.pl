@@ -57,10 +57,12 @@ opennlp_resultlist(Type, [H|T], [NH|NT]) :-
 	opennlp_resultlist(Type, T, NT).
 	
 % return/instantiate spans as prolog objects
-opennlp_getSpans([], [], _In).
-opennlp_getSpans([JplSpan|Rest], [Span|Rest2], In) :-
-	opennlp_getSpan(JplSpan, Span, In),
-	opennlp_getSpans(Rest, Rest2, In).
+opennlp_getSpans(JplSpans, Spans, In) :-
+	mk_string_buffer(In, SBuf), % avoid unwanted unboxing (see mk_string_buffer)
+	maplist(opennlp_getSpan_flipped(SBuf), JplSpans, Spans).
+
+opennlp_getSpan_flipped(In, JplSpan, Span) :-
+	opennlp_getSpan(JplSpan, Span, In).
 
 opennlp_getSpan(JplSpan, Span, In) :-
 	Span=span(T, S, E, Text, JplSpan), 
@@ -70,10 +72,14 @@ opennlp_getSpan(JplSpan, Span, In) :-
 	opennlp_getSpanString(Span, Text, In).
 	
 % extract text strings from spans
-opennlp_getSpanStrings([], [], _In).
-opennlp_getSpanStrings([H|T], [NH|NT], In) :-
-	opennlp_getSpanString(H,NH, In),
-	opennlp_getSpanStrings(T,NT, In).
+opennlp_getSpanStrings(JplSpans, Strings, In) :-
+	mk_string_buffer(In, SBuf), % avoid unwanted unboxing (see mk_string_buffer)
+	maplist(opennlp_getSpanString_flipped(SBuf), JplSpans, Strings).
+
+opennlp_getSpanString_flipped(In, JplSpan, Text) :-
+	opennlp_getSpanString(JplSpan, Text, In).
+
+
 	
 opennlp_getSpanString(span(_T,_S,_E,Text,JplSpan), Text, In) :-
 	((nonvar(In), var(Text)) -> 
@@ -89,6 +95,19 @@ opennlp_newSpan(T,S,E,Text,span(T,S,E,Text,J)) :-
 	jpl_new('opennlp.tools.util.Span', [S, E, T], J).
 
 
+% This may be useful in cases where you have to repeatedly pass
+% the same very large string around.
+%
+% It appears that the JPL will create a lot of distinct char[]s,
+% so that if you're not careful, you quickly run out of Java
+% heap.
+%
+% The StringBuffer (only chosen for the virtue of not being
+% java.lang.String; presumably any CharSequence implementing
+% String wrapper will do) adds a layer of indirection that
+% allows us to pass a single reference instead.
+mk_string_buffer(In, Out) :-
+	jpl_new('java.lang.StringBuffer', [In], Out).
 
 % recover underlying string spans from list of spans and list of tokens
 opennlp_tokenSpansToStringSpans([], _TokenStringSpans, []).
