@@ -17,6 +17,11 @@
 
 'openNLP.NewSpan'([T,S,E|_L], _GN, _GP, [Span]) :- opennlp_newSpan(T,S,E,_Text,Span).
 
+'openNLP.WrapString'([Str|_L], _GN, _GP, [Wrapped]) :- !,
+	mk_string_buffer(Str, Wrapped).
+'openNLP.GetWrappedSpanStrings'([Source|Spans], _GN, _GP, Out) :- !,
+	opennlp_getWrappedSpanStrings(Spans, Out, Source).
+
 'openNLP.Span'([F|L], _GN, _GP, NL) :- !,
 	openNLPSpanField(F, N),
 	openNLPSpan(N,L,NL).

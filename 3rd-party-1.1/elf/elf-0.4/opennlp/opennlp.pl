@@ -74,6 +74,10 @@ opennlp_getSpan(JplSpan, Span, In) :-
 % extract text strings from spans
 opennlp_getSpanStrings(JplSpans, Strings, In) :-
 	mk_string_buffer(In, SBuf), % avoid unwanted unboxing (see mk_string_buffer)
+	opennlp_getWrappedSpanStrings(JplSpans, Strings, SBuf).
+
+% for use when you already have a pointer to the wrapped string
+opennlp_getWrappedSpanStrings(JplSpans, Strings, SBuf) :-
 	maplist(opennlp_getSpanString_flipped(SBuf), JplSpans, Strings).
 
 opennlp_getSpanString_flipped(In, JplSpan, Text) :-
