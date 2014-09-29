@@ -94,6 +94,17 @@ traverse_dir :- swi_get_arglist([DirIn, DirOut]), !, traverse_dir(DirIn, DirOut)
 traverse_dir :- write('Usage: <prognam> input-dir output-dir'), nl, halt.
 traverse_dir(DirIn, DirOut) :- on_dir(DirIn, DirOut, query_and_jsonify).
 
+% time_dir/0
+% walk a directory, and invoke DATR app.MAIN on each file
+% within that dir (recursive search),
+% time each DATR call and printing timing information to stdout
+%
+% save the result with a mirror filename in the output dir
+time_dir :- swi_get_arglist([DirIn, DirOut]), !, time_dir(DirIn, DirOut), halt.
+time_dir :- write('Usage: <prognam> input-dir output-dir'), nl, halt.
+time_dir(DirIn, DirOut) :- on_dir(DirIn, DirOut, time_query).
+
+
 % on_dir/3
 %
 % given an input directory, an output directory, and a job (/2)
@@ -145,6 +156,29 @@ query_and_jsonify_str(Str, Out) :-
 	open(Out,write,OutStream),
 	foreach(member(V,Vs), write(OutStream, V)),
 	close(OutStream).
+
+% time_query/2
+% read from input filename and time the datr query
+% without writing any other output
+time_query(In, _) :-
+	once(phrase_from_file(all(Chars), In)),
+	string_codes(Str, Chars),
+	time_query_str(In, Str).
+time_query_str(_, Str) :- is_whitespace_only(Str).
+time_query_str(In, Str) :-
+	Keys = [stack, localused, globalused, trailused, heapused],
+	time(datr_query('app.MAIN', [arglist1,'-format','raw',Str|[]], _)),
+	file_base_name(In, InBasename),
+	write(InBasename), write('\t'),
+	foreach(member(Key, Keys), write_stat(Key)),
+	nl,
+	statistics.
+
+write_stat(Key) :-
+	statistics(Key, Val),
+	%write(Key), write(': '), write(Val), nl.
+	write(Val), write('\t').
+
 
 % ----------------------------------------------------------------------
 % file/string manipulation
