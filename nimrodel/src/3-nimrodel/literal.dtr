@@ -21,6 +21,10 @@
 % feature : sequence of the form: key = value
 %           (when say [feature], I just mean a
 %           succession of features)
+%
+% See also
+% ========
+% * nimrodel.RENDER : seems to define this internal format
 
 #vars $eq: '=' '=='.
 
