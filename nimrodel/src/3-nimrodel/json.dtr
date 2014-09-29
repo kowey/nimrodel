@@ -53,36 +53,40 @@ app.JSON:
 	% ignore document title
 	<json title> ==
 	
-	<json sentence> == <convert
+	<json sentence $documentString> ==
+		<json sentence-wrapped
+			openNLP.WrapString:<$documentString .>
+		>
+	<json sentence-wrapped> == <convert
 		<select entity 'Person' <named strip
 			%Debug:<tracemsg '----v--sentence--v----\n'
 			<json sentence-next>
 			%.>
 		.> .> .>
 		<nl>
-	<json sentence-next $documentString [ > ==
-		<json clause $documentString <next> ] .>
-		<json sentence-next $documentString <skip> .>
+	<json sentence-next $$wrappedString [ > ==
+		<json clause $$wrappedString <next> ] .>
+		<json sentence-next $$wrappedString <skip> .>
 	<json sentence-next> ==	
 	
-	<json clause $documentString entity **endpoint** > ==
-	<json clause $documentString> ==
+	<json clause $$wrappedString entity **endpoint** > ==
+	<json clause $$wrappedString> ==
 		%Debug:<writeline Implode:<'CLAUSE ' [ app.DUMP:<pretty> .>.>
 		%Debug:<trace
-		<tail <json clause2 $documentString > .>
+		<tail <json clause2 $$wrappedString > .>
 		%.>
 	
-	<json clause2 $documentString entity> == <json entity Gensym:<gensym 'T'.> $documentString>
-	<json clause2 $documentString rel> == <json rel Gensym:<gensym 'R' .> $documentString>
-	<json clause2 $documentString rel $f equals> == <json rel equals $documentString $f equals>
-	<json clause2 $documentString attr> == <json attr Gensym:<gensym 'A' .> $documentString>
-	<json clause2 $documentString property> == <json property $documentString>
+	<json clause2 $$wrappedString entity> == <json entity Gensym:<gensym 'T'.> $$wrappedString>
+	<json clause2 $$wrappedString rel> == <json rel Gensym:<gensym 'R' .> $$wrappedString>
+	<json clause2 $$wrappedString rel $f equals> == <json rel equals $$wrappedString $f equals>
+	<json clause2 $$wrappedString attr> == <json attr Gensym:<gensym 'A' .> $$wrappedString>
+	<json clause2 $$wrappedString property> == <json property $$wrappedString>
 	<json clause2> == <json error clause-error>
 	
-	<json entity $id $documentString> ==
-		<json entity2 <json check> $id $documentString>
-	<json entity2 ok $id $documentString $type $start-char $end-char> ==	
-		<json render-entity $documentString $id $type $start-char $end-char>
+	<json entity $id $$wrappedString> ==
+		<json entity2 <json check> $id $$wrappedString>
+	<json entity2 ok $id $$wrappedString $type $start-char $end-char> ==	
+		<json render-entity $$wrappedString $id $type $start-char $end-char>
 	<json entity2 skip $id> == $id
 	<json entity2> == <json error> 
 	
