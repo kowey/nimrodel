@@ -81,8 +81,9 @@ on_file(File) :-
 	datr_query('app.MAIN', [arglist,Str|[]], _V).
 
 % ----------------------------------------------------------------------
-% mode 3: input/output directory on command line
-% recursive traversal, one output file per input file
+% mode 3 and 4: input/output directory on command line
+% 3. recursive traversal, one output file per input file
+% 4. recursive traversal, no output (just timing)
 % ----------------------------------------------------------------------
 
 % traverse_dir/0, traverse_dir/2
@@ -108,7 +109,6 @@ traverse_dir(Flags, DirIn, DirOut) :- on_dir(DirIn, DirOut, query_and_jsonify(Fl
 time_dir :- swi_get_arglist([DirIn, DirOut]), !, time_dir(DirIn, DirOut), halt.
 time_dir :- write('Usage: <prognam> input-dir output-dir'), nl, halt.
 time_dir(DirIn, DirOut) :- on_dir(DirIn, DirOut, time_query).
-
 
 % on_dir/3
 %
@@ -140,6 +140,32 @@ on_dir_item_exp(ItemIn, ItemOut, Job) :-
 on_dir_item_exp(ItemIn, ItemOut, Job) :-
 	exists_directory(ItemIn),
 	on_dir(ItemIn, ItemOut, Job).
+
+% ----------------------------------------------------------------------
+% mode 5: one input file plus iterations; timing only
+% ----------------------------------------------------------------------
+
+% time_repeat_on_file/0, time_repeat_on_file/2
+% repeatedly run a query on a file
+time_repeat_on_file :- swi_get_arglist([ItersStr, File]),
+	atom_to_term(ItersStr, Iters, []),
+	integer(Iters),
+	time_repeat_on_file(Iters, File).
+time_repeat_on_file :- write('Usage: <prognam> iterations file'), nl, halt.
+time_repeat_on_file(Iters, File) :-
+	once(phrase_from_file(all(Chars), File)),
+	string_codes(Str, Chars),
+	time_repeat_on_str(File, Iters, Str).
+
+time_repeat_on_str(_, N, _) :- N =< 0.
+time_repeat_on_str(File, N, Str) :-
+	time_query(File, Str),
+	Nm1 is N-1,
+	time_repeat_on_str(File, Nm1, Str).
+
+% ----------------------------------------------------------------------
+% core tasks
+% ----------------------------------------------------------------------
 
 % trivial example of a directory traversal job
 %simple_job(In, Out) :-
