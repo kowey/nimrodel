@@ -6,4 +6,4 @@
 
 . "${0%/*}/env"
 
-"$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g traverse_dir -t halt -- $1 $2
+"$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g traverse_dir -t halt -- "$@"

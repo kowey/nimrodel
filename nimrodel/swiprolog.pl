@@ -90,9 +90,14 @@ on_file(File) :-
 % within that dir (recursive search)
 %
 % save the result with a mirror filename in the output dir
-traverse_dir :- swi_get_arglist([DirIn, DirOut]), !, traverse_dir(DirIn, DirOut), halt.
-traverse_dir :- write('Usage: <prognam> input-dir output-dir'), nl, halt.
-traverse_dir(DirIn, DirOut) :- on_dir(DirIn, DirOut, query_and_jsonify).
+traverse_dir :- swi_get_arglist([A1, A2|As]),
+	!,
+	% last two args are dir in and out; any before are flags
+	reverse([A1, A2| As], [DirOut, DirIn | RevFlags]),
+	reverse(RevFlags, Flags),
+	traverse_dir(Flags, DirIn, DirOut), halt.
+traverse_dir :- write('Usage: <prognam> [nimrodel-arg...] input-dir output-dir'), nl, halt.
+traverse_dir(Flags, DirIn, DirOut) :- on_dir(DirIn, DirOut, query_and_jsonify(Flags)).
 
 % time_dir/0
 % walk a directory, and invoke DATR app.MAIN on each file
@@ -118,7 +123,7 @@ on_dir(DirIn, DirOut, Job) :-
 	write('walking dir '), write(DirIn), write(' (->'), write(DirOut), write(')'), nl,
 	directory_files(DirIn, Files),
 	make_directory_path(DirOut),
-	foreach(member(File, Files), on_dir_item(DirIn, File, DirOut, Job)).
+	forall(member(File, Files), on_dir_item(DirIn, File, DirOut, Job)).
 
 % on_dir_item
 on_dir_item(_, '.', _, _).
@@ -131,8 +136,7 @@ on_dir_item(DirIn, Item, DirOut, Job) :-
 % on_dir_item with the item expanded to be relative
 on_dir_item_exp(ItemIn, ItemOut, Job) :-
 	exists_file(ItemIn),
-	DoJob =.. [Job, ItemIn, ItemOut],
-	call(DoJob).
+	call(Job, ItemIn, ItemOut).
 on_dir_item_exp(ItemIn, ItemOut, Job) :-
 	exists_directory(ItemIn),
 	on_dir(ItemIn, ItemOut, Job).
@@ -145,16 +149,17 @@ on_dir_item_exp(ItemIn, ItemOut, Job) :-
 
 % query_and_jsonify/2
 % read from input filename and write query result to output filename
-query_and_jsonify(In, Out) :-
+query_and_jsonify(Args, In, Out) :-
 	write(In), nl,
 	once(phrase_from_file(all(Chars), In)),
 	string_codes(Str, Chars),
-	query_and_jsonify_str(Str, Out).
-query_and_jsonify_str(Str, _) :- is_whitespace_only(Str).
-query_and_jsonify_str(Str, Out) :-
-	datr_query('app.MAIN', [arglist1,Str|[]], Vs),
+	query_and_jsonify_str(Args, Str, Out).
+query_and_jsonify_str(_, Str, _) :- is_whitespace_only(Str).
+query_and_jsonify_str(Args, Str, Out) :-
+	append([arglist1|Args], [Str], DatrPath),
+	datr_query('app.MAIN', DatrPath, Vs),
 	open(Out,write,OutStream),
-	foreach(member(V,Vs), write(OutStream, V)),
+	forall(member(V,Vs), write(OutStream, V)),
 	close(OutStream).
 
 % time_query/2
