@@ -2,4 +2,6 @@
 
 . "${0%/*}/env"
 
+export JAVA_TOOL_OPTIONS="-XX:+HeapDumpOnOutOfMemoryError"
+
 "$SWIPL" -q -f "$ELFAPP"/testdatr.pl -g main -t halt -- "$@"
