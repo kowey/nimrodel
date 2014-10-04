@@ -66,7 +66,7 @@ main(L) :- datr_query('app.MAIN', [arglist|L], _V), halt.
 % invoke DATR app.MAIN on each file in the list
 on_files :- swi_get_arglist(L), on_files(L).
 on_files(Files) :-
-	foreach(member(File,Files), on_file(File)),
+	forall(member(File,Files), on_file(File)),
 	halt.
 
 % on_file/1
