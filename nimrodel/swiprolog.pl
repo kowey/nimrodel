@@ -197,11 +197,14 @@ time_query(In, _) :-
 	time_query_str(In, Str).
 time_query_str(_, Str) :- is_whitespace_only(Str).
 time_query_str(In, Str) :-
-	Keys = [stack, localused, globalused, trailused, heapused],
+	Keys = [atoms, functors, clauses, globalused, trailused, heapused],
+	statistics(cputime, TimeBefore),
 	time(datr_query('app.MAIN', [arglist1,'-format','raw',Str|[]], _)),
+	statistics(cputime, TimeAfter),
 	file_base_name(In, InBasename),
 	write(InBasename), write('\t'),
-	foreach(member(Key, Keys), write_stat(Key)),
+	format('~3f\t', [TimeAfter - TimeBefore]),
+	forall(member(Key, Keys), write_stat(Key)),
 	nl,
 	statistics.
 
