@@ -159,7 +159,7 @@ time_repeat_on_file(Iters, File) :-
 
 time_repeat_on_str(_, N, _) :- N =< 0.
 time_repeat_on_str(File, N, Str) :-
-	time_query(File, Str),
+	time_query_str(File, Str),
 	Nm1 is N-1,
 	time_repeat_on_str(File, Nm1, Str).
 
