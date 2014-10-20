@@ -16,4 +16,5 @@ nimrodel.surname.SURNAMEROOT:
 	% surnames only get picked up lexically if there's no first name, title etc 
 	% in front of them, so we just treat them as people
 	<lex type> == 'Person'
+	<lex surname> == <here lex word>
 .

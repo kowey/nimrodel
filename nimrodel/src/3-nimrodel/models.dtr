@@ -209,6 +209,8 @@ nimrodel.RENDER:
 		<process-attribute params casetype>
 		<process-attribute params soundex>
 	<process-attributes $model 'Person'> ==
+		<process-attribute $model forename .>
+		<process-attribute $model surname .>
 		<process-attribute $model gender .>
 		<process-attribute $model title .>
 		<process-attribute $model occupation .>

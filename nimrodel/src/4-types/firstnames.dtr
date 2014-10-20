@@ -1,4 +1,6 @@
 
+#uses Implode Hyphenate.
+
 % firstname support - see also list of firstnames in words/firstname.dtr
 
 nimrodel.firstname.FIRSTNAME-LOOKUP:
@@ -14,6 +16,8 @@ nimrodel.firstname.FIRSTNAMEROOT:
 	<token gender> == unknown
 	<lex type> == 'Person'
 	<lex cat> == propn
+	% nimrodel additions
+	<lex forename> == <here token word>
 .
 
 nimrodel.firstname.TRYFIRSTNAME:	
@@ -55,6 +59,7 @@ nimrodel.firstname.TRYFIRSTNAME:
 	<map3> == case skip 1 lex
 	
 	<$$n case skip $$m> == nimrodel.phraseutils.SKIP:< $$m 'nimrodel.firstname.FIRSTNAMEROOT'>
+	<$$n case skip $$m lex lex surname> == Implode:<Hyphenate:<' ' nimrodel.phraseutils.NEXT:< $$m 'nimrodel.firstname.FIRSTNAMEROOT' token token word .> .> .>
 	<$$n case brother> == nimrodel.phraseutils.SKIP:< 2 'nimrodel.firstname.FIRSTNAMEROOT' lex>
 	<$$n case default> == Local:<$$n>
 .
