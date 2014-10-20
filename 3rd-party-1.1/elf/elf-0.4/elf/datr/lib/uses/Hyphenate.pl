@@ -13,7 +13,7 @@
 'Hyphenate'([Sep,A|P], _GN, _GP, [A|L]) :- datr_lib_hyphenate(P,Sep,L), !.
 'Hyphenate'(P,GN,GP,V) :- 'Fail'(['Hyphenate' | P],GN,GP,V).
 
-datr_lib_hyphenate([A|T1],Sep,[A,Sep|T2]) :-
+datr_lib_hyphenate([A|T1],Sep,[Sep,A|T2]) :-
     datr_lib_hyphenate(T1, Sep, T2).
 datr_lib_hyphenate([], _Sep, []).
 

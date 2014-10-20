@@ -35,20 +35,18 @@ nimrodel.phraseutils.SKIP-TOKENS-PHR:
 #hide nimrodel.phraseutils.NEXT.
 nimrodel.phraseutils.NEXT:
 	<0> == 
-	<1 $$m> == <here $$m next>
-	<2 $$m> == <1 $$m> <here $$m next $$m next>
-	<3 $$m> == <2 $$m> <here $$m next $$m next $$m next>
-	<4 $$m> == <3 $$m> <here $$m next $$m next $$m next $$m next>
-	<5 $$m> == <4 $$m> <here $$m next $$m next $$m next $$m next $$m next>
+	<1 $$p $$m> == Local:<$$p here $$m next>
+	<2 $$p $$m> == <1 $$p $$m> Local:<$$p here $$m next $$m next>
+	<3 $$p $$m> == <2 $$p $$m> Local:<$$p here $$m next $$m next $$m next>
+	<4 $$p $$m> == <3 $$p $$m> Local:<$$p here $$m next $$m next $$m next $$m next>
+	<5 $$p $$m> == <4 $$p $$m> Local:<$$p here $$m next $$m next $$m next $$m next $$m next>
 	<> == <dynamic>
 	<dynamic> == elf.TOP:<>
-	<dynamic $$n $$m> == <Add:<-1 $$n.> $$m> <here <repeat $$n $$m .> >
+	<dynamic $$n $$p $$m> == <Add:<-1 $$n.> $$p $$m> Local:<$$p here <repeat $$n $$m .> >
 	
 	<repeat 0> ==
 	<repeat> == <repeat1>
 	<repeat1 $$n $$m> == $$m next <repeat Add:<-1 $$n.> $$m>
-	
-	<here> == LocalPath:<>
 .
 	
 % root node for possible phrases
