@@ -200,6 +200,8 @@ time_query_str(In, Str) :-
 	Keys = [atoms, functors, clauses, globalused, trailused, heapused],
 	statistics(cputime, TimeBefore),
 	time(datr_query('app.MAIN', [arglist1,'-format','raw',Str|[]], _)),
+	garbage_collect_atoms,
+	garbage_collect,
 	statistics(cputime, TimeAfter),
 	file_base_name(In, InBasename),
 	write(InBasename), write('\t'),
