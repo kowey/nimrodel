@@ -215,6 +215,15 @@ write_stat(Key) :-
 	%write(Key), write(': '), write(Val), nl.
 	write(Val), write('\t').
 
+write_listing(Dir) :-
+	make_directory_path(Dir),
+	get_time(Stamp),
+	format_time(atom(StampStr), '%FT%H%M%S', Stamp),
+	directory_file_path(Dir, StampStr, ListingsFile),
+	open(ListingsFile,write,OutStream),
+	with_output_to(OutStream, listing),
+	close(OutStream).
+
 
 % ----------------------------------------------------------------------
 % file/string manipulation
