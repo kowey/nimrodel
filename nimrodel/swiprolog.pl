@@ -200,7 +200,6 @@ time_query_str(In, Str) :-
 	Keys = [atoms, functors, clauses, globalused, trailused, heapused],
 	statistics(cputime, TimeBefore),
 	time(datr_query('app.MAIN', [arglist1,'-format','raw',Str|[]], _)),
-	retractall('datr_recorded'(_, _, _)),
 	garbage_collect_atoms,
 	garbage_collect,
 	statistics(cputime, TimeAfter),
