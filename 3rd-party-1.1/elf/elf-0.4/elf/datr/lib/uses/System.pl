@@ -22,7 +22,7 @@
 	db_retractall(F).
 'System'([remove, Command|NodeSpec], _GN, _GP, []) :- !, 
 	system_nodefunctor(NodeSpec, F),
-	datr_remove(F,Command,_Clauses).
+	datr_remove(Command,F,_Clauses).
 'System'([nodename|NodeSpec], _GN, _GP, [N]) :- !,
 	system_nodename(NodeSpec, N, []).
 'System'([prolog | Files], _GN, _GP, []) :- !, 
