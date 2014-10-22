@@ -86,7 +86,7 @@ elf.COMPILE-STRING:
 
 	<code init $name> == <code reset $name> $name
 	<code init> == <code init <default-node> >
-	<code reset $name> ==	System:<retract $name > 
+	<code reset $name> ==	System:<remove consult $name > 
 	<code reset> == <code reset <default-node> > 
 	<code start $name> ==  LocalPath:<$name> <colon> 
 	<code start> == <code start <default-node> >
