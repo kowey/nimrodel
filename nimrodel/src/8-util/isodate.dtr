@@ -1,0 +1,41 @@
+% year digits
+#vars $yd1: 0 1 2 3 4 5 6 7 8 9 .
+#vars $yd2: 0 1 2 3 4 5 6 7 8 9 .
+#vars $yd3: 0 1 2 3 4 5 6 7 8 9 .
+#vars $yd4: 0 1 2 3 4 5 6 7 8 9 .
+
+#vars $d01: 0 1 .
+#vars $d02: 0 1 2 .
+#vars $d12:   1 2 .
+#vars $d09: 0 1 2 3 4 5 6 7 8 9 .
+#vars $d19:   1 2 3 4 5 6 7 8 9 .
+
+
+ISODATE:
+
+	% 'true' if the first token looks like ISO 8601 date specification
+	% (YYYY-MM-DD or some valid prefix) with *very* crude checking for
+	% date ranges (months 01-12, days <= 31)
+	%
+	% 'false' otherwise
+	<is-date $$any> == <-is-date year Explode:<$$any .>>
+	<is-date> == false
+
+	% year (four digits)
+	<-is-date year $yd1 $yd2 $yd3 $yd4> == <-is-date end-or month>
+	% month (dash 01 to 12)
+	<-is-date month '-'> == <-is-date mm>
+	<-is-date mm 0 $d19> == <-is-date end-or day>
+	<-is-date mm 1 $d02> == <-is-date end-or day>
+	% day (dash 01 to 31)
+	<-is-date day '-'> == <-is-date dd>
+	<-is-date dd 0    $d19> == <-is-date end-or fail>
+	<-is-date dd $d12 $d09> == <-is-date end-or fail>
+	<-is-date dd 3    $d01> == <-is-date end-or fail>
+	% end of string or trigger next is-date parser
+	<-is-date end-or $$arg $$any> == <-is-date $$arg $$any>
+	<-is-date end-or $$arg> == true
+	% fail
+	<-is-date> == false
+
+.
