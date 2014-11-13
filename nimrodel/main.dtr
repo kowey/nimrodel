@@ -57,7 +57,7 @@ nimrodel.MAIN:
 	
 	% check for presence of -title arg
 	<arglist3 no $$model $$language> == 'Unknown language: ' $$language <nl>
-	<arglist3 yes $$model $$language> == <arglist3 yes $$model $$language -title no >
+	<arglist3 yes $$model $$language> == <arglist3 yes $$model $$language -title check >
 	<arglist3 yes $$model $$language -title $$title> == <arglist4 $$model $$language $$title>
 
 	% extract the document, and process it with all the args
@@ -76,6 +76,7 @@ nimrodel.MAIN:
 	% returns combined doc string, title, doc
 	<docstring> == <docstring2>
 	<docstring no> == <docstring4>
+	<docstring check> == <docstring4-check>
 	
 	% title supplied in arglist - get doc and glue together
 	<docstring2 $$title> == <docstring3 $$title System:<readinput .> .>
@@ -87,10 +88,23 @@ nimrodel.MAIN:
 	% no title supplied - get from first line of std input or use default
 	<docstring4> == <docstring5 System:<readinput .> .>
 	<docstring4 $$any> == <docstring3 elf.GET-CONTEXT:<params default title .> $$any .>
-	
+	<docstring4-check $$any> ==
+                <docstring-check-for-date $$any .>
+
 	% split document read from input into first line (title) and rest (document)
 	<docstring5 $$doc> == $$doc System:<firstline $$doc .> System:<skipfirstline $$doc .>
-	
+
+	% split document read from input into first line (title) and rest (document)
+	% provided that first line looks like a datestamp to us
+	<docstring-check-for-date $$doc> ==
+		<docstring-check-for-date2 System:<firstline $$doc .> $$doc .>
+	<docstring-check-for-date2 $$stamp $$doc> ==
+		<docstring-check-for-date3 ISODATE:<is-date $$stamp .> $$stamp $$doc .>
+	<docstring-check-for-date3 true $$stamp $$doc> ==
+		<docstring3 $$stamp System:<skipfirstline $$doc .> .>
+	<docstring-check-for-date3 false $$any $$doc> ==
+                <docstring3 elf.GET-CONTEXT:<params default date .> $$doc .>
+
 	% process - intialise nimrodel then pass it the args to process
 	<process $$model $$language $output-format> == <nimrodel init $output-format .> <nimrodel process $$model $$language $output-format>
 	

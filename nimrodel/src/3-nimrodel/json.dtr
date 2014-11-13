@@ -55,6 +55,7 @@ app.JSON:
 	
 	<json sentence $documentString> ==
 		<json sentence-wrapped
+			System:<firstline $documentString .>
 			openNLP.WrapString:<$documentString .>
 		>
 	<json sentence-wrapped> == <convert
@@ -64,29 +65,29 @@ app.JSON:
 			%.>
 		.> .> .>
 		<nl>
-	<json sentence-next $$wrappedString [ > ==
-		<json clause $$wrappedString <next> ] .>
-		<json sentence-next $$wrappedString <skip> .>
+	<json sentence-next $$date $$wrappedString [ > ==
+		<json clause $$date $$wrappedString <next> ] .>
+		<json sentence-next $$date $$wrappedString <skip> .>
 	<json sentence-next> ==	
 	
-	<json clause $$wrappedString entity **endpoint** > ==
-	<json clause $$wrappedString> ==
+	<json clause $$date $$wrappedString entity **endpoint** > ==
+	<json clause $$date $$wrappedString> ==
 		%Debug:<writeline Implode:<'CLAUSE ' [ app.DUMP:<pretty> .>.>
 		%Debug:<trace
-		<tail <json clause2 $$wrappedString > .>
+		<tail <json clause2 $$date $$wrappedString > .>
 		%.>
 	
-	<json clause2 $$wrappedString entity> == <json entity Gensym:<gensym 'T'.> $$wrappedString>
-	<json clause2 $$wrappedString rel> == <json rel Gensym:<gensym 'R' .> $$wrappedString>
-	<json clause2 $$wrappedString rel $f equals> == <json rel equals $$wrappedString $f equals>
-	<json clause2 $$wrappedString attr> == <json attr Gensym:<gensym 'A' .> $$wrappedString>
-	<json clause2 $$wrappedString property> == <json property $$wrappedString>
+	<json clause2 $$date $$wrappedString entity> == <json entity Gensym:<gensym 'T'.> $$date $$wrappedString>
+	<json clause2 $$date $$wrappedString rel> == <json rel Gensym:<gensym 'R' .> $$wrappedString>
+	<json clause2 $$date $$wrappedString rel $f equals> == <json rel equals $$wrappedString $f equals>
+	<json clause2 $$date $$wrappedString attr> == <json attr Gensym:<gensym 'A' .> $$wrappedString>
+	<json clause2 $$date $$wrappedString property> == <json property $$wrappedString>
 	<json clause2> == <json error clause-error>
 	
-	<json entity $id $$wrappedString> ==
-		<json entity2 <json check> $id $$wrappedString>
-	<json entity2 ok $id $$wrappedString $type $start-char $end-char> ==	
-		<json render-entity $$wrappedString $id $type $start-char $end-char>
+	<json entity $id $$date $$wrappedString> ==
+		<json entity2 <json check> $id $$date $$wrappedString>
+	<json entity2 ok $id $$date $$wrappedString $type $start-char $end-char> ==	
+		<json render-entity $$date $$wrappedString $id $type $start-char $end-char>
 	<json entity2 skip $id> == $id
 	<json entity2> == <json error> 
 	
@@ -245,9 +246,11 @@ app.JSON:
 
 	% json render-entity : ??? -> tagged bundle
 	% slightly modify entity by adding an origOccurrence attribute
-	<json render-entity $$wrappedString $id $type $start-char $end-char> ==
+	<json render-entity $$date $$wrappedString $id $type $start-char $end-char> ==
 		$id $id
 		[ entity $type $start-char $end-char
+			appearanceDate '='
+			$$date
 			origOccurrence '='
 			<text-for-span $$wrappedString $type $start-char $end-char .>
 			% take till closing bracket (ignores multiples)

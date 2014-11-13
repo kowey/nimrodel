@@ -20,6 +20,7 @@ nimrodel.DEFAULT-PARAMS:
 	<default model> == sem
 	<default language> == english
 	<default title> == myDocument
+	<default date> == unknownDate
 .
 
 #hide nimrodel.LOOKUP.
