@@ -4,9 +4,19 @@
 % firstname support - see also list of firstnames in words/firstname.dtr
 
 nimrodel.firstname.FIRSTNAME-LOOKUP:
-	<> == **fail**
-	<$nimrodel-firstnameword-male> == 'nimrodel.firstname.MALEFIRSTNAMEROOT'
-	<$nimrodel-firstnameword-female> == 'nimrodel.firstname.FEMALEFIRSTNAMEROOT'
+	<> == elf.TOP
+	<$$name> == <try firstname-male $$name>
+	
+	<try firstname-male> == <IF:< nimrodel.firstname.IS-FIRSTNAME-MALE:<> 
+							 THEN case firstname-male 
+							 ELSE try firstname-female .> >
+	<try firstname-female> == <IF:< nimrodel.firstname.IS-FIRSTNAME-FEMALE:<> 
+							 THEN case firstname-female 
+							 ELSE case default .> >
+	
+	<case firstname-male> == 'nimrodel.firstname.MALEFIRSTNAMEROOT'
+	<case firstname-female> == 'nimrodel.firstname.FEMALEFIRSTNAMEROOT'
+	<case default> == **fail**
 .
 
 nimrodel.firstname.FIRSTNAMEROOT:	

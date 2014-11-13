@@ -1,4 +1,11 @@
-% regular firstname words - these can just use the FIRSTNAMEROOT node directly 
+% regular male firstname words 
+
+nimrodel.firstname.IS-FIRSTNAME-MALE:
+	<> == **fail**
+	<$nimrodel-firstnameword-male> == $nimrodel-firstnameword-male
+.
+	
+
 #vars $nimrodel-firstnameword-male:  
 	alan 
 	anthony 
@@ -45,23 +52,3 @@
 	william
 .
 
-#vars $nimrodel-firstnameword-female:
-	alice 
-	ann 
-	anne 
-	catherine 
-	elinor 
-	eliz 
-	elizabeth 
-	ellen
-	frances
-	grace
-	jane 
-	judeth
-	katherine
-	margareth 
-	margery 
-	mariot
-	mary
-	ursula
-. 

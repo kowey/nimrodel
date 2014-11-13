@@ -1,0 +1,28 @@
+% regular female firstname words 
+
+nimrodel.firstname.IS-FIRSTNAME-FEMALE:
+	<> == **fail**
+	<$nimrodel-firstnameword-female> == $nimrodel-firstnameword-female
+.
+	
+
+#vars $nimrodel-firstnameword-female:
+	alice 
+	ann 
+	anne 
+	catherine 
+	elinor 
+	eliz 
+	elizabeth 
+	ellen
+	frances
+	grace
+	jane 
+	judeth
+	katherine
+	margareth 
+	margery 
+	mariot
+	mary
+	ursula
+. 
