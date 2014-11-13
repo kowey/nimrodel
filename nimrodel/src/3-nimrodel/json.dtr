@@ -249,13 +249,19 @@ app.JSON:
 	<json render-entity $$date $$wrappedString $id $type $start-char $end-char> ==
 		$id $id
 		[ entity $type $start-char $end-char
-			appearanceDate '='
-			$$date
-			origOccurrence '='
-			<text-for-span $$wrappedString $type $start-char $end-char .>
+			<json render-entity-date $$date .>
+			<json render-feature origOccurrence
+				<text-for-span $$wrappedString $type $start-char $end-char .>
+			.>
 			% take till closing bracket (ignores multiples)
 			<tweak-features <next> .>
 		] <nl .>
+	<json render-entity-date 'unknownDate'> ==
+	<json render-entity-date> == <json render-entity-date2>
+	<json render-entity-date2 $$date> ==
+		<json render-feature appearanceDate $$date .>
+	% av pair for render-entity
+	<json render-feature $$attr $$val> == $$attr '=' $$val
 
 	% rename features as needed
 	<tweak-features 'occupation' $eq $val> == 'role' $eq $val <tweak-features>
