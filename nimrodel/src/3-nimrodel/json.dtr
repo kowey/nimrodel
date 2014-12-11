@@ -182,7 +182,7 @@ app.JSON:
 	% in addition to the usual, inject the origOccurrence feature
 	% into the focused argument as the target feature name
 	<json rel-inject $attr-tgt $id $$date $$wrappedString $focus $type $arg1> ==
-		<named inject 'origOccurrence' $attr-tgt
+		<named inject 'ref' $attr-tgt
 			<json endpoints $focus $arg1	% target id for clause
 				<next>	]		% annotation for first operand
 				<json rel-next $id $$date $$wrappedString $type $arg1 <skip> .>
@@ -250,6 +250,7 @@ app.JSON:
 		$id $id
 		[ entity $type $start-char $end-char
 			<json render-entity-date $$date .>
+			<json render-feature ref $id .>
 			<json render-feature origOccurrence
 				<text-for-span $$wrappedString $type $start-char $end-char .>
 			.>
