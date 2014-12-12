@@ -7,6 +7,8 @@
 
 #uses Gensym Length Implode Explode LocalPath Rest.
 #vars $eq: '=' '=='.
+#vars $childrel: is_son_of is_daughter_of is_a_child_of.
+
 
 % ---------------------------------------------------------------------
 % glossary
@@ -160,7 +162,9 @@ app.JSON:
 	<json rel-inner $id $$date $$wrappedString $focus equals $arg1> ==
                 <json rel-equals $id $$date $$wrappedString $focus equals $arg1>
 	<json rel-inner $id $$date $$wrappedString $focus is_widow_of $arg1> ==
-		<json rel-inject 'lateHusband' $id $$date $$wrappedString $focus is_widow_of $arg1>
+		<json rel-inject 'widowOf' $id $$date $$wrappedString $focus is_widow_of $arg1>
+	<json rel-inner $id $$date $$wrappedString $focus $childrel $arg1> ==
+		<json rel-inject 'childOf' $id $$date $$wrappedString $focus $childrel $arg1>
 	<json rel-inner> == <json rel-generic>
 
 	% json rel-generic: relation literal (ish) -> tagged bundle
