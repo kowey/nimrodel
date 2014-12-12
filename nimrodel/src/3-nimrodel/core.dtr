@@ -16,7 +16,7 @@ nimrodel.TOP:
 
 #hide nimrodel.DEFAULT-PARAMS.
 nimrodel.DEFAULT-PARAMS:
-    <> == elf.PARAMS
+	<> == elf.PARAMS
 	<default model> == sem
 	<default language> == english
 	<default title> == myDocument
@@ -26,7 +26,7 @@ nimrodel.DEFAULT-PARAMS:
 #hide nimrodel.LOOKUP.
 nimrodel.LOOKUP:
 	<> == elf.LOOKUP
-    <id> == nimrodel.LEX-LOOKUP
+	<id> == nimrodel.LEX-LOOKUP
 .
 
 
@@ -34,9 +34,9 @@ nimrodel.LOOKUP:
 
 #hide nimrodel.CONTEXT.
 nimrodel.CONTEXT:
-    <> == elf.CONTEXT
-    <version> == "nimrodel.VERSION:<>"
-    <params> == "nimrodel.PARAMS:<>"
+	<> == elf.CONTEXT
+	<version> == "nimrodel.VERSION:<>"
+	<params> == "nimrodel.PARAMS:<>"
 	<lookup> == "nimrodel.LOOKUP:<>"
 .
 
@@ -46,15 +46,15 @@ nimrodel.CONTEXT:
 
 #hide nimrodel.QUERY-TOP.
 nimrodel.QUERY-TOP:
-    <> == elf.QUERY-TOP
-    <elf> == nimrodel.CONTEXT:<>
+	<> == elf.QUERY-TOP
+	<elf> == nimrodel.CONTEXT:<>
 .
 
 #hide nimrodel.STRING.
 nimrodel.STRING:
 	<> == elf.STRING
 	<$elf-prev id> == '**START**'
-    <$elf-next id> == '**END**'
+	<$elf-next id> == '**END**'
 	<elf> == nimrodel.CONTEXT:<>
 .
 

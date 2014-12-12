@@ -22,10 +22,10 @@ nimrodel.LEX-TOP:
 	<token prevrole> == <prevrole>
 	<token nextrole> == <nextrole>
 	<token prev> == Local:<QueryNode <here token prevrole.> end elf.LANG:<GlobalPath.>>
-    <token next> == Local:<QueryNode <here token nextrole.> start elf.LANG:<GlobalPath.>>
+	<token next> == Local:<QueryNode <here token nextrole.> start elf.LANG:<GlobalPath.>>
 	% avoiding long chains of prev/next links - but only works if never overridden locally
 	<token prevn $n> == Local:<QueryNode <here token prevrole $n.> end elf.LANG:<GlobalPath.>>
-    <token nextn $n> == Local:<QueryNode <here token nextrole $n.> start elf.LANG:<GlobalPath.>>
+	<token nextn $n> == Local:<QueryNode <here token nextrole $n.> start elf.LANG:<GlobalPath.>>
 	
 	<token> == **fail**
 	<token type> == unknown
@@ -61,7 +61,7 @@ nimrodel.LEX-TOP:
 	<lex> == <here token>
 	<lex parent> == token
 	<lex prev> == Local:<QueryNode <here lex prevrole.> lexend elf.LANG:<GlobalPath.>>
-    <lex next> == Local:<QueryNode <here lex nextrole.> lexstart elf.LANG:<GlobalPath.>>
+	<lex next> == Local:<QueryNode <here lex nextrole.> lexstart elf.LANG:<GlobalPath.>>
 	<port lexstart> == <here port start>
 	<port lexend> == <here port end>
 	
@@ -71,7 +71,7 @@ nimrodel.LEX-TOP:
 	<$phrase> == <here lex>
 	<$phrase parent> == lex
 	<$phrase prev> == Local:<QueryNode <here $phrase prevrole.> phraseend elf.LANG:<GlobalPath.>>
-    <$phrase next> == Local:<QueryNode <here $phrase nextrole.> phrasestart elf.LANG:<GlobalPath.>>
+	<$phrase next> == Local:<QueryNode <here $phrase nextrole.> phrasestart elf.LANG:<GlobalPath.>>
 	<port phrasestart> == <here port lexstart>
 	<port phraseend> == <here port lexend>
 	
@@ -93,7 +93,7 @@ nimrodel.LEX-TOP:
 	<sem> == <here phrase>
 	<sem parent> == phrase
 	<sem prev> == Local:<QueryNode <here sem prevrole.> semend elf.LANG:<GlobalPath.>>
-    <sem next> == Local:<QueryNode <here sem nextrole.> semstart elf.LANG:<GlobalPath.>>
+	<sem next> == Local:<QueryNode <here sem nextrole.> semstart elf.LANG:<GlobalPath.>>
 	<port semstart> == <here port phrasestart>
 	<port semend> == <here port phraseend>
 	
@@ -237,10 +237,10 @@ nimrodel.RENDER:
 
 #hide nimrodel.ENDROOT.
 nimrodel.ENDROOT:
-    <> == nimrodel.LEX-TOP
-    <all> ==
-    <allprev> ==
-    <allnext> ==
+	<> == nimrodel.LEX-TOP
+	<all> ==
+	<allprev> ==
+	<allnext> ==
 	
 	<token pos> == endpoint
 	<$model type> == **endpoint**
@@ -250,7 +250,7 @@ nimrodel.ENDROOT:
 
 #hide nimrodel.LEXROOT.
 nimrodel.LEXROOT:
-    <> == nimrodel.LEX-TOP
+	<> == nimrodel.LEX-TOP
 	
 	<$phrase> == <case <here lex cat .> $phrase>
 	<sem> == <case <here lex cat .> sem>
@@ -268,8 +268,8 @@ nimrodel.LEXROOT:
 	<case2 $any> == nimrodel.LEX-TOP:<>
 	
 	<all $model> == <allprev $model> <here> <allnext $model>
-    <allprev $model> == <here $model prev allprev $model> <here $model prev>
-    <allnext $model> == <here $model next> <here $model next allnext $model>
+	<allprev $model> == <here $model prev allprev $model> <here $model prev>
+	<allnext $model> == <here $model next> <here $model next allnext $model>
 .
 
 
