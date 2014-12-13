@@ -1,0 +1,3 @@
+[submodule "3rd-party/elf"]
+	path = 3rd-party/elf
+	url = https://github.com/datr-project/elf.git
