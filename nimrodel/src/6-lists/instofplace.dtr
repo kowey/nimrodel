@@ -1,10 +1,11 @@
 
-% regular institution words - these can just use the INSTITUTIONROOT node directly 
-#vars $nimrodel-institutionstem:  
+% institution words that can be followed by 'of place'
 
+nimrodel.institution.IS-INSTOFPLACE:
+	<> == **fail**
+	<$nimrodel-instofplacestem> == $nimrodel-instofplacestem
 .
 
-% institution words that can be followed by 'of place'
 #vars $nimrodel-instofplacestem:
 	abbey
 	%alien

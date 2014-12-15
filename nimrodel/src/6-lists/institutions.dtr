@@ -1,0 +1,12 @@
+
+% regular institution words - these can just use the INSTITUTIONROOT node directly 
+
+nimrodel.institution.IS-INSTITUTION:
+	<> == **fail**
+	<$nimrodel-institutionstem> == $nimrodel-institutionstem
+.
+	
+#vars $nimrodel-institutionstem:  
+
+.
+

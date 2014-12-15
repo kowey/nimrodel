@@ -2,9 +2,19 @@
 
 #hide nimrodel.institution.INSTITUTION-LOOKUP.
 nimrodel.institution.INSTITUTION-LOOKUP:
-	<> == **fail**
-	<$nimrodel-institutionstem> == 'nimrodel.institution.INSTITUTIONROOT'
-	<$nimrodel-instofplacestem> == 'nimrodel.institution.INSTOFPLACE0'
+	<> == elf.TOP
+	<$$name> == <try instofplace $$name>
+	
+	<try instofplace> == <IF:< nimrodel.institution.IS-INSTOFPLACE:<> 
+							 THEN case instofplace 
+							 ELSE try institution .> >
+	<try institution> == <IF:< nimrodel.institution.IS-INSTITUTION:<> 
+							 THEN case institution 
+							 ELSE case default .> >
+	
+	<case instofplace> == 'nimrodel.institution.INSTOFPLACE0'
+	<case institution> == 'nimrodel.institution.INSTITUTIONROOT'
+	<case default> == **fail**
 .
 
 #hide nimrodel.institution.INSTITUTIONROOT.
