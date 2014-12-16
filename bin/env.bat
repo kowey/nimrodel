@@ -21,7 +21,7 @@ if DEFINED ProgramFiles(x86) (
 if NOT DEFINED TCROOT set "TCROOT=%HOMEDRIVE%%HOMEPATH%\%TCAPP%\%TCAPP%-%TCVERSION%"
 if NOT DEFINED TC set "TC=%TCROOT%"
 set ELFAPP=%TC%\%TCAPP%
-set ELFROOT=%TCROOT%\3rd-party-1.1\elf\elf-0.4
+set ELFROOT=%TCROOT%\3rd-party\elf
 set ELF=%ELFROOT%\elf
 
 set PATH=%TC%\bin;%SWI_HOME_DIR%\bin;%JAVA_HOME%\bin;%PATH%

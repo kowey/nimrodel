@@ -32,7 +32,7 @@ fi
 export TC=${TC-$TCROOT}
 
 export ELFAPP=$TC/$TCAPP
-export ELFROOT=$TCROOT/3rd-party-1.1/elf/elf-0.4
+export ELFROOT=$TCROOT/3rd-party/elf
 export ELF=$ELFROOT/elf
 
 export PATH=$TC/bin:$SWI_HOME_DIR/bin:$PATH

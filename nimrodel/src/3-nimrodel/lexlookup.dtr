@@ -53,7 +53,7 @@ nimrodel.LEX-LOOKUP:
 
 #hide nimrodel.LEX-START.
 nimrodel.LEX-START:
-    <> == nimrodel.ENDROOT
+	<> == nimrodel.ENDROOT
 	<token stem> == **START**
 	<token word> == **START**
 	<token pos> == start
@@ -61,7 +61,7 @@ nimrodel.LEX-START:
 
 #hide nimrodel.LEX-END.
 nimrodel.LEX-END:
-    <> == nimrodel.ENDROOT
+	<> == nimrodel.ENDROOT
 	<token stem> == **END**
 	<token word> == **END**
 	<token pos> == end

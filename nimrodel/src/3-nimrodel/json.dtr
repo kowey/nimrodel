@@ -7,6 +7,8 @@
 
 #uses Gensym Length Implode Explode LocalPath Rest.
 #vars $eq: '=' '=='.
+#vars $childrel: is_son_of is_daughter_of is_a_child_of.
+
 
 % ---------------------------------------------------------------------
 % glossary
@@ -55,6 +57,7 @@ app.JSON:
 	
 	<json sentence $documentString> ==
 		<json sentence-wrapped
+			System:<firstline $documentString .>
 			openNLP.WrapString:<$documentString .>
 		>
 	<json sentence-wrapped> == <convert
@@ -64,29 +67,29 @@ app.JSON:
 			%.>
 		.> .> .>
 		<nl>
-	<json sentence-next $$wrappedString [ > ==
-		<json clause $$wrappedString <next> ] .>
-		<json sentence-next $$wrappedString <skip> .>
+	<json sentence-next $$date $$wrappedString [ > ==
+		<json clause $$date $$wrappedString <next> ] .>
+		<json sentence-next $$date $$wrappedString <skip> .>
 	<json sentence-next> ==	
 	
-	<json clause $$wrappedString entity **endpoint** > ==
-	<json clause $$wrappedString> ==
+	<json clause $$date $$wrappedString entity **endpoint** > ==
+	<json clause $$date $$wrappedString> ==
 		%Debug:<writeline Implode:<'CLAUSE ' [ app.DUMP:<pretty> .>.>
 		%Debug:<trace
-		<tail <json clause2 $$wrappedString > .>
+		<tail <json clause2 $$date $$wrappedString > .>
 		%.>
 	
-	<json clause2 $$wrappedString entity> == <json entity Gensym:<gensym 'T'.> $$wrappedString>
-	<json clause2 $$wrappedString rel> == <json rel Gensym:<gensym 'R' .> $$wrappedString>
-	<json clause2 $$wrappedString rel $f equals> == <json rel equals $$wrappedString $f equals>
-	<json clause2 $$wrappedString attr> == <json attr Gensym:<gensym 'A' .> $$wrappedString>
-	<json clause2 $$wrappedString property> == <json property $$wrappedString>
+	<json clause2 $$date $$wrappedString entity> == <json entity Gensym:<gensym 'T'.> $$date $$wrappedString>
+	<json clause2 $$date $$wrappedString rel> == <json rel Gensym:<gensym 'R' .> $$date $$wrappedString>
+	<json clause2 $$date $$wrappedString rel $f equals> == <json rel equals $$date $$wrappedString $f equals>
+	<json clause2 $$date $$wrappedString attr> == <json attr Gensym:<gensym 'A' .> $$date $$wrappedString>
+	<json clause2 $$date $$wrappedString property> == <json property $$date $$wrappedString>
 	<json clause2> == <json error clause-error>
 	
-	<json entity $id $$wrappedString> ==
-		<json entity2 <json check> $id $$wrappedString>
-	<json entity2 ok $id $$wrappedString $type $start-char $end-char> ==	
-		<json render-entity $$wrappedString $id $type $start-char $end-char>
+	<json entity $id $$date $$wrappedString> ==
+		<json entity2 <json check> $id $$date $$wrappedString>
+	<json entity2 ok $id $$date $$wrappedString $type $start-char $end-char> ==	
+		<json render-entity $$date $$wrappedString $id $type $start-char $end-char>
 	<json entity2 skip $id> == $id
 	<json entity2> == <json error> 
 	
@@ -96,16 +99,16 @@ app.JSON:
 	<json check $any **fail**> == range-error
 	<json check $any $any2 **fail**> == range-error
 
-	<json error clause-error $$wrappedString> ==
+	<json error clause-error $$date $$wrappedString> ==
 		<json render-error 'T1' <implode-unwords
 			'unknown clause: ' <next>  .>>
-	<json error type-error $id $$wrappedString $type $start-char $end-char> ==
+	<json error type-error $id $$date $$wrappedString $type $start-char $end-char> ==
 		<json render-error $id <implode-unwords
 			'No type specified'
 			$start-char $end-char
 			( <text-for-span $$wrappedString $type $start-char $end-char .> )
 			<next> .> >
-	<json error range-error $id $$wrappedString $type $start-char $end-char> ==
+	<json error range-error $id $$date $$wrappedString $type $start-char $end-char> ==
 		<json render-error $id <implode-unwords
 			'Range error:' $type $start-char $end-char
 			<next> .> >
@@ -148,49 +151,51 @@ app.JSON:
 	% ---------------------------------------------------------------------
 
 
-	<json rel $id $$wrappedString $focus $type [ > == 
+	<json rel $id $$date $$wrappedString $focus $type [ > == 
 		%Debug:<writeline '--- vvv rel ' $id $type 'vvv ---' .>
 		%Debug:<trace
-		<json rel-inner $id $$wrappedString $focus $type
-		        <json clause2 $$wrappedString <next> ] .> ] <skip> .>
+		<json rel-inner $id $$date $$wrappedString $focus $type
+		        <json clause2 $$date $$wrappedString <next> ] .> ] <skip> .>
 		%.> % trace
 		%Debug:<writeline '--- ^^^ rel ' $id $type '^^^ ---' .>
 
-	<json rel-inner $id $$wrappedString $focus equals $arg1> ==
-                <json rel-equals $id $$wrappedString $focus equals $arg1>
-	<json rel-inner $id $$wrappedString $focus is_widow_of $arg1> ==
-		<json rel-inject 'lateHusband' $id $$wrappedString $focus is_widow_of $arg1>
+	<json rel-inner $id $$date $$wrappedString $focus equals $arg1> ==
+		<json rel-equals $id $$date $$wrappedString $focus equals $arg1>
+	<json rel-inner $id $$date $$wrappedString $focus is_widow_of $arg1> ==
+		<json rel-inject 'widowOf' $id $$date $$wrappedString $focus is_widow_of $arg1>
+	<json rel-inner $id $$date $$wrappedString $focus $childrel $arg1> ==
+		<json rel-inject 'childOf' $id $$date $$wrappedString $focus $childrel $arg1>
 	<json rel-inner> == <json rel-generic>
 
 	% json rel-generic: relation literal (ish) -> tagged bundle
 	% render both sides and do nothing else
-	<json rel-generic $id $$wrappedString $focus $type $arg1> ==
+	<json rel-generic $id $$date $$wrappedString $focus $type $arg1> ==
 		<json focus $focus $arg1 			% target id for clause
 			<next>	]		% annotation for first operand
-			<json rel-next $id $$wrappedString $type $arg1 <skip> .>
+			<json rel-next $id $$date $$wrappedString $type $arg1 <skip> .>
 		.>
 	% json rel-equals: relation literal (ish) -> tagged bundle
 	% merge the distinguished entity in the two sides
 	% (other lines are left intact)
-	<json rel-equals $id $$wrappedString $focus $type $arg1> ==
+	<json rel-equals $id $$date $$wrappedString $focus $type $arg1> ==
 		<json merge-id $arg1
-			<json clause2 $$wrappedString <tail <skip> .> .>
+			<json clause2 $$date $$wrappedString <tail <skip> .> .>
 			<next>
 		.>
 	% json rel-inject: string -> relation literal (ish) -> tagged bundle
 	% in addition to the usual, inject the origOccurrence feature
 	% into the focused argument as the target feature name
-	<json rel-inject $attr-tgt $id $$wrappedString $focus $type $arg1> ==
-		<named inject 'origOccurrence' $attr-tgt
+	<json rel-inject $attr-tgt $id $$date $$wrappedString $focus $type $arg1> ==
+		<named inject 'ref' $attr-tgt
 			<json endpoints $focus $arg1	% target id for clause
 				<next>	]		% annotation for first operand
-				<json rel-next $id $$wrappedString $type $arg1 <skip> .>
+				<json rel-next $id $$date $$wrappedString $type $arg1 <skip> .>
 			.>
 		.>
 
 	% json rel-next: produce annotation for second operand
-	<json rel-next $id $$wrappedString $type $arg1 [ > ==
-		<json rel-next2 $id $type $arg1 <json clause2 $$wrappedString> .>
+	<json rel-next $id $$date $$wrappedString $type $arg1 [ > ==
+		<json rel-next2 $id $type $arg1 <json clause2 $$date $$wrappedString> .>
 	<json rel-next2 $id $type $arg1 $arg2> ==
 		$arg2
 		LocalPath:<> 	% annotation for second operand
@@ -245,14 +250,23 @@ app.JSON:
 
 	% json render-entity : ??? -> tagged bundle
 	% slightly modify entity by adding an origOccurrence attribute
-	<json render-entity $$wrappedString $id $type $start-char $end-char> ==
+	<json render-entity $$date $$wrappedString $id $type $start-char $end-char> ==
 		$id $id
 		[ entity $type $start-char $end-char
-			origOccurrence '='
-			<text-for-span $$wrappedString $type $start-char $end-char .>
+			<json render-entity-date $$date .>
+			<json render-feature ref $id .>
+			<json render-feature origOccurrence
+				<text-for-span $$wrappedString $type $start-char $end-char .>
+			.>
 			% take till closing bracket (ignores multiples)
 			<tweak-features <next> .>
 		] <nl .>
+	<json render-entity-date 'unknownDate'> ==
+	<json render-entity-date> == <json render-entity-date2>
+	<json render-entity-date2 $$date> ==
+		<json render-feature appearanceDate $$date .>
+	% av pair for render-entity
+	<json render-feature $$attr $$val> == $$attr '=' $$val
 
 	% rename features as needed
 	<tweak-features 'occupation' $eq $val> == 'role' $eq $val <tweak-features>
@@ -266,15 +280,15 @@ app.JSON:
 	% pair into the literal for the embedded entity
 	% --------------------------------------------------
 
-	<json attr $id $$wrappedString $attr $val [ > ==
-		<json attr2 $id $$wrappedString $attr $val <json clause2 $$wrappedString> .>
-	<json attr2 $id $$wrappedString $attr $val $arg> ==
+	<json attr $id $$date $$wrappedString $attr $val [ > ==
+		<json attr2 $id $$date $$wrappedString $attr $val <json clause2 $$date $$wrappedString> .>
+	<json attr2 $id $$date $$wrappedString $attr $val $arg> ==
 		$arg
 		<named add-feature $arg $attr $val>
 		
-	<json property $$wrappedString $attr $val [ > ==
-		<json property2 $$wrappedString $attr $val <json clause2 $$wrappedString> .>
-	<json property2 $$wrappedString $attr $val $arg> ==
+	<json property $$date $$wrappedString $attr $val [ > ==
+		<json property2 $$date $$wrappedString $attr $val <json clause2 $$date $$wrappedString> .>
+	<json property2 $$date $$wrappedString $attr $val $arg> ==
 		$arg
 		<named add-feature $arg $attr $val>
 
