@@ -1,5 +1,0 @@
-#!/bin/bash
-
-. "${0%/*}/env"
-
-"$SWIPL" -q -f "$ELFAPP"/../test/harness.pl -g main -t halt
