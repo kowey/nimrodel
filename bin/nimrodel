@@ -2,4 +2,48 @@
 
 . "${0%/*}/env"
 
-"$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g main -t halt -- "$@"
+exit_usage() {
+    "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g main -t halt -- "-help"
+    exit 1
+}
+
+if [ $# -lt 1 ]; then
+    exit_usage
+fi
+
+CMD=$1
+shift
+
+case "$CMD" in
+   string)
+        "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g main -t halt -- "$@"
+        ;;
+    dir)
+        "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g traverse_dir -t halt -- "$@"
+        ;;
+    parallel-dir)
+        if [ $# -lt 3 ]; then
+            exit_usage
+        fi
+        args=("$@")
+        JOBS="${args[$((${#}-3))]}"
+        INPUT_DIR="${args[$((${#}-2))]}"
+        OUTPUT_DIR="${args[$((${#}-1))]}"
+        POPPED="${@:1:$((${#}-3))}"
+        { cd "$INPUT_DIR" && find . -mindepth 1 -maxdepth 1 -type d ; } |\
+            parallel -j "$JOBS"\
+            "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g traverse_dir -t halt --\
+                 "$POPPED" "$INPUT_DIR/{}" "$OUTPUT_DIR/{}"
+        ;;
+    selftest)
+        "$SWIPL" -q -f "$ELFAPP"/../test/harness.pl -g main -t halt
+        ;;
+    *)
+        if [ "$CMD" == "-version" -o "$CMD" == "-help" ]; then
+            "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g main -t halt -- "$CMD"
+        else
+            echo >&2 "Unknown command: $CMD"
+            echo >&2
+            exit_usage
+        fi
+esac

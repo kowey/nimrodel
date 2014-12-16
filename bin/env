@@ -22,7 +22,7 @@ if [ -e "$LOCALENV" ]; then
     . "$LOCALENV"
 fi
 
-: "${JAVA_HOME?Please set JAVA_HOME in your environment or in your nimrodel env}"
+: "${JAVA_HOME?Please set JAVA_HOME in your environment or nimrodel local config}"
 
 export SWI_HOME_DIR=${SWI_HOME_DIR-/usr/lib/swi-prolog}
 export SWIPL=${SWIPL-swipl}
