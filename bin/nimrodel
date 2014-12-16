@@ -3,28 +3,7 @@
 . "${0%/*}/env"
 
 exit_usage() {
-    cat >&2 <<END
-Usage: $0 COMMAND [ARG]...
-
-Known commands:
-
-    string WORD [WORD]..
-         process string formed of command line arguments,
-         write results to stdout
-
-    dir INPUT OUTPUT
-         process files nested in INPUT dir (arbitrary depth),
-         write results to equivalent path in OUTPUT dir
-
-    parallel-dir JOBS INPUT OUTPUT
-         like dir, but assume INPUT is divided into subdirectories
-         and process JOBS subdirectories in parallel
-
-         (needs GNU parallel installed)
-
-    selftest
-         run a small unit test suite
-END
+    "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g main -t halt -- "-help"
     exit 1
 }
 
@@ -36,13 +15,16 @@ CMD=$1
 shift
 
 case "$CMD" in
-    string)
+   string)
         "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g main -t halt -- "$@"
         ;;
     dir)
         "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g traverse_dir -t halt -- "$@"
         ;;
     parallel-dir)
+        if [ $# -lt 3 ]; then
+            exit_usage
+        fi
         JOBS=$1; shift
         INPUT_DIR=$1; shift
         OUTPUT_DIR=$1; shift
@@ -55,5 +37,11 @@ case "$CMD" in
         "$SWIPL" -q -f "$ELFAPP"/../test/harness.pl -g main -t halt
         ;;
     *)
-        exit_usage
+        if [ "$CMD" == "-version" -o "$CMD" == "-help" ]; then
+            "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g main -t halt -- "$CMD"
+        else
+            echo >&2 "Unknown command: $CMD"
+            echo >&2
+            exit_usage
+        fi
 esac
