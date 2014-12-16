@@ -31,29 +31,36 @@ both.
       local.bat) uncomment lines that need changing and edit them to the
       right values.
 
-3.    Simple test by running 
+3.    Simple test by running
 
           nimrodel/bin/nimrodel -help
 
 4.    And the tool at work on an example input
 
-          nimrodel/bin/nimrodel "Robert son of Thomas"
+          nimrodel/bin/nimrodel string "Robert son of Thomas"
 
 5.    Try batch mode out (substitute `/tmp` with `C:/Temp` on Windows)
 
-          nimrodel/bin/nimrodel nimrodel/example /tmp/nimrodel-example
+          nimrodel/bin/nimrodel dir nimrodel/example /tmp/nimrodel-example
 
 ## Usage
 
 The script `nimrodel/bin/nimrodel` (nimrodel.bat under Windows) is a
-free-standing script for one-shot execution. It takes a single document
-as a command line string, or reads from standard input, and produces
-BRAT annotation output of the analysis
+free-standing script which provides several modes for using nimrodel,
+among which:
 
-The script `nimrodel/bin/nimrodel-on-dir` (nimrodel-on-dir.bat)
-likewise runs nimrodel on all the files nested at arbitrary depth
-within a directory. The results are saved in the output directory with
-filename and directory structure matching that of the input directory.
+* `nimrodel string` takes a single document as a command line string, or
+  reads from standard input, and produces BRAT annotation output of the
+  analysis
+
+* `nimrodel dir` likewise runs nimrodel on all the files nested at
+  arbitrary depth within a directory. The results are saved in the
+  output directory with filename and directory structure matching that
+  of the input directory.
+
+* `nimrodel parallel-dir` (Linux or MacOS X only, possibly Cygwin)
+  works like `nimrodel dir` but with the possibility of parallel
+  processing on subdirectories of the input directory
 
 The script `nimrodel/bin/env` (env.bat) sets up the
 environment for running nimrodel.  Under Linux/Mac you need to source
