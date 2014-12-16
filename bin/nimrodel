@@ -25,13 +25,15 @@ case "$CMD" in
         if [ $# -lt 3 ]; then
             exit_usage
         fi
-        JOBS=$1; shift
-        INPUT_DIR=$1; shift
-        OUTPUT_DIR=$1; shift
+        args=("$@")
+        JOBS="${args[$((${#}-3))]}"
+        INPUT_DIR="${args[$((${#}-2))]}"
+        OUTPUT_DIR="${args[$((${#}-1))]}"
+        POPPED="${@:1:$((${#}-3))}"
         { cd "$INPUT_DIR" && find . -mindepth 1 -maxdepth 1 -type d ; } |\
             parallel -j "$JOBS"\
             "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g traverse_dir -t halt --\
-                "$INPUT_DIR/{}" "$OUTPUT_DIR/{}" "$@"
+                 "$POPPED" "$INPUT_DIR/{}" "$OUTPUT_DIR/{}"
         ;;
     selftest)
         "$SWIPL" -q -f "$ELFAPP"/../test/harness.pl -g main -t halt

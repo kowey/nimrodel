@@ -39,7 +39,7 @@ nimrodel.MAIN:
 			'        Process files nested in the input directory (arbitrary depth), and'<nl>
 			'        results to equivalent path in the output dir'<nl>
 			<nl>
-			'    ' <appname> ' parallel-dir <jobs> <input-dir> <output-dir>'<nl>
+			'    ' <appname> ' parallel-dir <jobs> [-model <model>] [-language <lang>] <input-dir> <output-dir>'<nl>
 			'        Like dir, but assume input-dir is divided into subdirectories, and process '<nl>
 			'        process them in parallel. (Linux/Mac only, needs GNU parallel)'<nl>
 			<nl>
