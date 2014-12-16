@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -u
+
 # SCRIPT_DIR is the directory this very script lives in.
 
 if [ "$0" == "-bash" ]; then
@@ -20,11 +22,13 @@ if [ -e "$LOCALENV" ]; then
     . "$LOCALENV"
 fi
 
+: "${JAVA_HOME?Please set JAVA_HOME in your environment or in your nimrodel env}"
+
 export SWI_HOME_DIR=${SWI_HOME_DIR-/usr/lib/swi-prolog}
 export SWIPL=${SWIPL-swipl}
 export JVM_DIR=${JVM_DIR-$JAVA_HOME/jre/lib/server}
 
-if [ -z "$TCROOT" ]; then
+if [ -z "${TCROOT-}" ]; then
     pushd "$SCRIPT_DIR"/.. > /dev/null
     TCROOT=$PWD
     popd > /dev/null
@@ -36,5 +40,5 @@ export ELFROOT=$TCROOT/3rd-party/elf
 export ELF=$ELFROOT/elf
 
 export PATH=$TC/bin:$SWI_HOME_DIR/bin:$PATH
-export LD_LIBRARY_PATH=${JVM_DIR}:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=${JVM_DIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 export CLASSPATH=$SCRIPT_DIR:${ELFAPP}:$ELFROOT/opennlp/lib/jpl.jar:$ELFROOT/opennlp/lib/opennlp-tools-1.5.3.jar:$ELFROOT/opennlp/lib/opennlp-maxent-3.0.3.jar
