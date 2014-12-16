@@ -41,7 +41,7 @@ nimrodel.MAIN:
 			<nl>
 			'    ' <appname> ' parallel-dir <jobs> [-model <model>] [-language <lang>] <input-dir> <output-dir>'<nl>
 			'        Like dir, but assume input-dir is divided into subdirectories, and process '<nl>
-			'        process them in parallel. (Linux/Mac only, needs GNU parallel)'<nl>
+			'        them in parallel. (Linux/Mac only, needs GNU parallel)'<nl>
 			<nl>
 			'    ' <appname> ' selftest'<nl>
 			'        Run a self unit test suite'<nl>
@@ -68,12 +68,16 @@ nimrodel.MAIN:
 	
 	% check for presence of -title arg
 	<arglist3 no $$model $$language> == 'Unknown language: ' $$language <nl>
-	<arglist3 yes $$model $$language> == <arglist3 yes $$model $$language -title check >
+	<arglist3 yes $$model $$language> == <arglist3 yes $$model $$language -title elf.GET-CONTEXT:<params default title-mode .> >
 	<arglist3 yes $$model $$language -title $$title> == <arglist4 $$model $$language $$title>
-
+	
+	% check for presence of -format arg
+	<arglist4 $$model $$language $$title> == <arglist4 $$model $$language $$title -format elf.GET-CONTEXT:<params default format .> >
+	<arglist4 $$model $$language $$title -format $$format> == <arglist5 <formatcheck $$format .> $$model $$language $$title $$format>
+	
 	% extract the document, and process it with all the args
-	<arglist4 $$model $$language $$title> == <arglist4 $$model $$language $$title -format json>
-	<arglist4 $$model $$language $$title -format $output-format> == <process $$model $$language $output-format <docstring $$title> .>
+	<arglist5 no $$model $$language $$title $$format> == 'Unknown output format: ' $$format <nl>
+	<arglist5 yes $$model $$language $$title $$format> == <process $$model $$language $$format <docstring $$title> .>
 	
 	% check model is a known model (ie matches $model, rather than just $$model)
 	<modelcheck> == no
@@ -82,6 +86,10 @@ nimrodel.MAIN:
 	% check language is a known language (ie matches $elf-language)
 	<langcheck> == no
 	<langcheck $elf-language> == yes
+	
+	% check format is a known format (ie matches $output-format)
+	<formatcheck> == no
+	<formatcheck $output-format> == yes
 	
 	% get document as a string - from last argument if supplied, otherwise from standard input
 	% returns combined doc string, title, doc
@@ -99,6 +107,8 @@ nimrodel.MAIN:
 	% no title supplied - get from first line of std input or use default
 	<docstring4> == <docstring5 System:<readinput .> .>
 	<docstring4 $$any> == <docstring3 elf.GET-CONTEXT:<params default title .> $$any .>
+	
+	<docstring4-check> == <docstring-check-for-date System:<readinput .> .>
 	<docstring4-check $$any> ==
 		<docstring-check-for-date $$any .>
 

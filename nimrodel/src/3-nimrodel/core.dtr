@@ -19,6 +19,8 @@ nimrodel.DEFAULT-PARAMS:
 	<> == elf.PARAMS
 	<default model> == sem
 	<default language> == english
+	<default format> == json
+	<default title-mode> == check
 	<default title> == myDocument
 	<default date> == unknownDate
 .
