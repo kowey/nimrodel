@@ -88,4 +88,10 @@ Interactive use is good for development, because there is a big delay the first 
 
 The main application source files are in $NIMRODEL/src
 
+## Developer notes
+
+See `bin/devel` for various developer tools (eg. `bin/devel/tar` will
+create a tarball of nimrodel)
+
+
 [elf]: https://github.com/datr-project/elf
