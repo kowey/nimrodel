@@ -15,8 +15,12 @@ CMD=$1
 shift
 
 case "$CMD" in
-   string)
+    string)
         "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g main -t halt -- "$@"
+        ;;
+    file)
+        # undocumented because we still need to generalise this to accept flags
+        "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g on_files -t halt -- "$@"
         ;;
     dir)
         "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g traverse_dir -t halt -- "$@"
