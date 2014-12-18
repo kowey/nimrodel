@@ -1,0 +1,17 @@
+
+nimrodel.model.SEM:
+	<> == nimrodel.MODEL
+	
+	<sem> == <here phrase>
+	<sem parent> == phrase
+	<sem prev> == Local:<QueryNode <here sem prevrole.> semend elf.LANG:<GlobalPath.>>
+	<sem next> == Local:<QueryNode <here sem nextrole.> semstart elf.LANG:<GlobalPath.>>
+	
+	<port semstart> == <here port phrasestart>
+	<port semend> == <here port phraseend>
+	
+	<sem output> == <render entity sem>
+	<sem status> == complete
+	<sem binding> == unknown
+.
+	

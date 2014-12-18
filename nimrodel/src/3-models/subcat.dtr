@@ -1,0 +1,7 @@
+	
+nimrodel.model.SUBCAT:
+	<> == nimrodel.MODEL
+	<subcat> == <here phrase>
+	<subcat type> == <here phrase cat>
+	<subcat output> == <render entity subcat>
+.

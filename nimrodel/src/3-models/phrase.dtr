@@ -1,0 +1,17 @@
+
+nimrodel.model.PHRASE:
+	<> == nimrodel.MODEL
+	
+	<$phrase> == <here lex>
+	<$phrase parent> == lex
+	<$phrase prev> == Local:<QueryNode <here $phrase prevrole.> phraseend elf.LANG:<GlobalPath.>>
+	<$phrase next> == Local:<QueryNode <here $phrase nextrole.> phrasestart elf.LANG:<GlobalPath.>>
+	
+	<port phrasestart> == <here port lexstart>
+	<port phraseend> == <here port lexend>
+	
+	<$typedphrase cat> == **fail**
+	<$phrase rel> == unknown
+	<$phrase conjrel> == unknown
+	<$phrase output> == <render entity $phrase>
+.	

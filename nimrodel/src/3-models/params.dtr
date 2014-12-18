@@ -1,0 +1,23 @@
+
+nimrodel.model.PARAMS:
+	<> == nimrodel.MODEL
+	
+	<params> == <here token>
+	<params type> == <here token pos>
+	<params mform> == <here token mor form>
+	<params mtense> == <here token mor tense>
+	<params mper> == <here token mor per>
+	<params mnum> == <here token mor num>
+	<params output> == <render entity params>
+	
+	<params attributes> ==
+		form
+		stem
+		mform
+		mtense
+		mper
+		mnum
+		pos
+		casetype
+		soundex
+.

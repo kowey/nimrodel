@@ -1,0 +1,43 @@
+
+nimrodel.model.TOKEN:
+	<> == nimrodel.MODEL
+	
+	<token prevrole> == <prevrole>
+	<token nextrole> == <nextrole>
+	<token prev> == Local:<QueryNode <here token prevrole.> end elf.LANG:<GlobalPath.>>
+	<token next> == Local:<QueryNode <here token nextrole.> start elf.LANG:<GlobalPath.>>
+	% avoiding long chains of prev/next links - but only works if never overridden locally
+	<token prevn $n> == Local:<QueryNode <here token prevrole $n.> end elf.LANG:<GlobalPath.>>
+	<token nextn $n> == Local:<QueryNode <here token nextrole $n.> start elf.LANG:<GlobalPath.>>
+	
+	<token> == **fail**
+	<token type> == unknown
+	<token word> == <self param word>
+	<token form> == <self param form>
+	<token pos> == <self param pos>
+	<token stem> == <self param stem>
+	<token mor form> == <self param mform>
+	<token mor tense> == <self param mtense>
+	<token mor num> == <self param mnum>
+	<token mor per> == <self param mper>
+	<token casetype> == <self param casetype>
+	<token soundex> == <self param soundex>
+	<token start-char> == <self param pre-absStart>
+	<token end-char> == <self param pre-absEnd>
+	<token index> == elf.SELF
+	<token output> == <render entity token>
+	<token id> == <here token stem>
+	<token context> == token stem
+	
+	<token attributes 'PERSON'> ==
+		forename
+		surname
+		gender
+		title
+		occupation
+		age
+		
+	<token attr-type> == property % or attr
+	
+	<token annotation> == 
+.

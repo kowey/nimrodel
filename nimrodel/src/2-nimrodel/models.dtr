@@ -1,0 +1,22 @@
+%   File:       models.dtr
+%   Purpose:    nimrodel lexical models
+%   Author:     Roger Evans
+%   Version:    1.0
+%   Date:       06/02/2013
+%
+%   (c) Copyright 2013, University of Brighton
+%   MODELS
+
+
+
+% root node for models (actual models now in 3-models/*)	
+nimrodel.MODEL:
+	<> == elf.STRING-TOP
+	
+	<render> == nimrodel.RENDER
+.
+
+
+
+
+

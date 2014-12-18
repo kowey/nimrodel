@@ -8,6 +8,7 @@ app.DUMP:
 	<sp> == ' '
 	<nl> == '\n'
 		
+	<dump reset> ==	
 	<dump title> == <unwords> <nl>
 	<dump sentence $documentString> == <pretty <hint $documentString> .> <nl>
 	

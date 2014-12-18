@@ -1,4 +1,4 @@
-#vars $output-format: brat dump json raw.
+
 #uses System Length Explode Add.
 
 #hide nimrodel.NIMRODEL.

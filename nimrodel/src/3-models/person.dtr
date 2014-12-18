@@ -1,0 +1,9 @@
+
+nimrodel.model.PERSON:
+	<> == nimrodel.MODEL
+	<person> == <here phrase>
+	<person type> == <person-check <here phrase type .> >
+	
+	<person-check 'Person'> == 'Person'
+	<person-check> == unknown
+.

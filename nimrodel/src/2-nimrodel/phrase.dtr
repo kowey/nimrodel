@@ -1,8 +1,7 @@
 
 % phrase grammar
 
-#vars $typedphrase: phrase-n phrase-nom phrase-nom2 phrase-np phrase-adjp phrase-detp phrase-prepp phrase-pp.
-#vars $phrase: phrase $typedphrase.
+
 
 #hide nimrodel.phrase.PHRASEROOT.
 nimrodel.phrase.PHRASEROOT:

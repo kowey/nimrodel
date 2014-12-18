@@ -1,0 +1,14 @@
+
+nimrodel.model.LEX:
+	<> == nimrodel.MODEL
+	
+	<lex> == <here token>
+	<lex parent> == token
+	<lex prev> == Local:<QueryNode <here lex prevrole.> lexend elf.LANG:<GlobalPath.>>
+	<lex next> == Local:<QueryNode <here lex nextrole.> lexstart elf.LANG:<GlobalPath.>>
+	<port lexstart> == <here port start>
+	<port lexend> == <here port end>
+	
+	<lex cat> == <here token pos>
+	<lex output> == <render entity lex>
+.

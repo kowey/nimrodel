@@ -1,0 +1,9 @@
+
+
+nimrodel.model.POS:
+	<> == nimrodel.MODEL
+	
+	<pos> == <here token>
+	<pos type> == <here token pos>
+	<pos output> == <render entity pos>
+.
