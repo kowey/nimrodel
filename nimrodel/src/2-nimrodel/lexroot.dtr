@@ -23,12 +23,12 @@ nimrodel.LEX-TOP:
 	<sem> == nimrodel.model.SEM
 	<port semstart> == nimrodel.model.SEM
 	<port semend> == nimrodel.model.SEM
+	
+	<nimrodel02> == nimrodel.model.NIMRODEL02
 		
 	<process $model> == <here all $model process1 $model>
-	<process1 $model> == <process2 $model <here $model type.> .>
-	<process2 sem $type> == IF:<ONEOF:<$type unknown unbound.> THEN ELSE <here sem output $type> .>
-	<process2> == <process3>
-	<process3 $model $type> == IFEQ:<$type unknown THEN ELSE <here $model output $type> .>
+	<process1 $model> == <process2 $model <here $model type .> .>
+	<process2 $model $type> == IFEQ:<$type unknown THEN ELSE <here $model output $type> .>
 	
 	<all $model> == <allprev $model> <here> <allnext $model>
 	<allprev $model> == <here $model prev allprev $model> <here $model prev>

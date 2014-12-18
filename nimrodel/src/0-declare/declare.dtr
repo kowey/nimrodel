@@ -11,6 +11,9 @@
 	lex 
 	$phrase subcat person
 	sem
+	
+	% release models
+	nimrodel02
 .
 
 %	OUTPUT FORMATS

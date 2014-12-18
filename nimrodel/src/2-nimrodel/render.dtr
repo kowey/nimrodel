@@ -1,0 +1,100 @@
+% nimrodel.RENDER
+% create semantic representations from lexical entry data
+
+
+#hide nimrodel.RENDER.
+nimrodel.RENDER:
+	<> == elf.STRING-TOP
+	
+	% <render entity $model ($type) >
+	% start char and end char and per-model attributes and annotations added automatically
+	<render entity $model> == <render entity2 $model <here $model type.> .>
+	<render entity $model $type > == <render entity2 $model $type .>
+	<render entity2 $model $type> ==
+		[
+			entity
+			$type	
+			<here $model start-char>
+			<here $model end-char>	
+			<process-attribute $model norm>		% always have a norm attribute
+			<process-attributes $model $type>
+			<here $model annotation>			% add a comment
+		]
+	
+	
+	% <render rel $model ($type $rel) [ ... ]>
+	% apply rel to current entity as Arg1 and specified entity as Arg2
+	<render rel $model [ > == <render rel2 $model <here $model type.> <here $model rel.> [ >
+	<render rel> == <render rel2>
+	<render rel2 $model $type $rel > ==
+		[	
+			rel 1
+			$rel
+			<render entity $model $type.>	
+			LocalPath:<>
+		]	
+		
+	% <render rel $model ($type $rel) [ ... ]>
+	% apply rel to current entity as Arg2 and specified entity as Arg1	
+	<render relrev $model [ > == <render relrev2 $model <here $model type.> <here $model rel .> [ >
+	<render relrev> == <render relrev2>
+	<render relrev2 $model $type $rel > ==
+		[	
+			rel 2
+			$rel
+			LocalPath:<>
+			<render entity $model $type.>
+		]	
+
+	% <render conj $model ($conjrel) [ ... ] [ ... ] >
+	% use $conjrel to conjoin two instantiated arguments 
+	<render conj $model [ > == <render conj2 $model <here $model conjrel .> [ >
+	<render conj> == <render conj2>
+	<render conj2 $model $conjrel> ==
+		[
+			rel 1
+			$conjrel
+			LocalPath:<>
+		]
+	
+	% <render attr $model $attr>
+	% add attribute annotation for attribute name $attr to current entity
+	% if $attr is not an attribute, or has no value, do nothing
+	<render attr $model **fail**> == LocalPath:<>
+	<render attr> == <render attr2>
+	<render attr2 $model $attr> == <render attr3 $model $attr <here $model $attr .> >
+	<render attr3 $model $attr **fail**> == LocalPath:<>
+	<render attr3> == <render attr4>
+	<render attr4 $model $attr $val> ==
+		[
+			<here $model attr-type $attr>	% this doesn't look right - is this code actually used? RE
+			$attr $val
+			LocalPath:<>
+		]
+		
+	% <render extend $model [ ... ] >
+	% return the semantics provided but with its span extended (leftwards) to include the current node
+	<render extend $model [ entity $type $start> ==
+		[ entity $type <here $model start-char> LocalPath:<>
+	<render extend $model [ rel $f $rel > ==
+		[ rel $f $rel <render extend $model>
+	<render extend $model [ relrev $rel $f > ==
+		[ relrev $f $rel <render extend $model>
+	<render extend $model [ attr $attr $val > ==
+		[ <render attr-type $attr> $attr $val <render extend $model>
+	<render extend $model> == LocalPath:<>
+	
+
+	<process-attributes $$model> == <process-attributes2 $$model <here $$model attributes> .>
+
+	<process-attributes2 $$model> ==
+	<process-attributes2 $$model $$attr> ==
+		<process-attribute $$model $$attr>
+		<process-attributes2 $$model>
+		
+	<process-attribute $$model $$feature> == 
+		<process-attribute2 <here $$model $$feature .> $$feature <here $$model attr-type $$feature.> >
+	<process-attribute2 $$val $$feature> == IF:< $$val THEN $$feature '==' $$val .>
+	<process-attribute2 $$val $$feature property> == IF:< $$val THEN $$feature '=' $$val .>
+	
+.

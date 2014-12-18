@@ -1,0 +1,66 @@
+
+%	default model for the nimrodel 0.2 release
+%
+%	the following output attributes are currently used by the linker
+%
+% 	title : string, "sir/lord/king/etc" 
+%		everything that can be found before a forename or a surname
+% 	forename, string
+% 	article : string, such as Jon "the/de/la/le/etc" Black
+% 	surname : string
+% 	role : string, "Bishop of London/Archdeacon of Oxford/etc", 
+%		everything that can be found after a forename or a surname
+% 	provenance : string, such as of "London/Oxford/etc". 
+%		We do not store "of", though.
+% 	adjectiveforename : string, such "Paul's servant", where servant is a title and Paul's is the adjective forename. 
+%		In this case, we also assume that Paul from Paul's is an occurrence itself with only the forename field filled, 
+%		so we end up storing two occurrences
+% 	adjectivesurname : string, such as "Jones's servant", same as above
+% 	adjectivetitle: string, such as "Queen's guard", same as above
+% 	childOf : string, id of the occurrence that is the father/mother of the current occurrence. 
+%		It can either be male of female.
+% 	grandchildOf : string, same as above. 
+%		It can either be male of female.
+%
+%	The following attributes are not currently used by the linker:
+%	
+%	gender:
+%   appearanceDate:
+%   id:
+%	sentenceId:
+%	sectionId:
+
+nimrodel.model.NIMRODEL02:
+	<> == nimrodel.MODEL
+	
+	% This model is purely lexical at present
+	<nimrodel02> == <here lex>
+	
+	% set specific attributes for PERSON objects to linker requirements
+	<nimrodel02 attributes 'PERSON'> ==
+		title
+		forename
+		article
+		surname
+		role
+		provenance
+		adjectiveforename
+		adjectivesurname
+		adjectivetitle
+		childOf
+		grandchildOf
+		gender
+		%	appearanceDate		% handled by output routines
+		id
+		%	sentenceId			% not supported yet
+		%	sectionId			% not supported yet
+	
+	% suppress all lex types except 'Person'
+	<nimrodel02 type> == <person-check <here lex type .> >
+		<person-check 'Person'> == 'Person'
+		<person-check> == unknown	
+	
+	% suppress output of endpoints
+	<nimrodel02 output> == <here lex output>
+	<nimrodel02 output **endpoint**> ==
+.

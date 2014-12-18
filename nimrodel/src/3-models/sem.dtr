@@ -11,6 +11,7 @@ nimrodel.model.SEM:
 	<port semend> == <here port phraseend>
 	
 	<sem output> == <render entity sem>
+	<sem output unbound> ==
 	<sem status> == complete
 	<sem binding> == unknown
 .

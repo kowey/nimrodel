@@ -29,7 +29,7 @@ nimrodel.model.TOKEN:
 	<token id> == <here token stem>
 	<token context> == token stem
 	
-	<token attributes 'PERSON'> ==
+	<token attributes 'Person'> ==
 		forename
 		surname
 		gender

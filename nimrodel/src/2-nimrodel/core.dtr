@@ -17,7 +17,7 @@ nimrodel.TOP:
 #hide nimrodel.DEFAULT-PARAMS.
 nimrodel.DEFAULT-PARAMS:
 	<> == elf.PARAMS
-	<default model> == sem
+	<default model> == nimrodel02
 	<default language> == middle
 	<default format> == json
 	<default title-mode> == check
