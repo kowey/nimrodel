@@ -11,4 +11,4 @@
 
 # location of java
 #export JAVA_HOME=${JAVA_HOME-/usr/lib/jvm/java-7-openjdk-amd64/jre}
-#export JVM_DIR=${JVM_DIR-$JAVA_HOME/lib/amd64/server}
+#export JVM_DIR=${JVM_DIR-$JAVA_HOME/lib/amd64}

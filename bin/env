@@ -26,7 +26,7 @@ fi
 
 export SWI_HOME_DIR=${SWI_HOME_DIR-/usr/lib/swi-prolog}
 export SWIPL=${SWIPL-swipl}
-export JVM_DIR=${JVM_DIR-$JAVA_HOME/jre/lib/server}
+export JVM_DIR=${JVM_DIR-$JAVA_HOME/jre/lib}
 
 if [ -z "${TCROOT-}" ]; then
     pushd "$SCRIPT_DIR"/.. > /dev/null
@@ -40,5 +40,5 @@ export ELFROOT=$TCROOT/3rd-party/elf
 export ELF=$ELFROOT/elf
 
 export PATH=$TC/bin:$SWI_HOME_DIR/bin:$PATH
-export LD_LIBRARY_PATH=${JVM_DIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH=${JVM_DIR}:${JVM_DIR}/server:${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 export CLASSPATH=$SCRIPT_DIR:${ELFAPP}:$ELFROOT/opennlp/lib/jpl.jar:$ELFROOT/opennlp/lib/opennlp-tools-1.5.3.jar:$ELFROOT/opennlp/lib/opennlp-maxent-3.0.3.jar
