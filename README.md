@@ -12,36 +12,57 @@ Output is in JSON format, as a flat list of dictionaries.
 
 ## Dependencies
 
-* SWI-prolog version 6.6.1
+* SWI-prolog version 6.6.1 (make sure your SWI-prolog comes with the JPL!)
 * Java - a recent version (we use 1.7.0)
 
 Either 32 or 64 bit versions will work, but you should use the same for
 both.
 
-## Installation
+## Installation from zip file
 
 1.    Unpack the nimrodel zip file in a convenient place. For simplest
       installation in Linux or MacOS X, unpack it in ~/nimrodel
 
-2.    Go to directory nimrodel-0.1/nimrodel/bin and look at the script
-      local-example (linux) or local-example.bat (windows). The files
+2.    Skip to "Installation common"
+
+
+## Installation from Git
+
+1.    Clone this repository
+
+2.    Fetch the elf submodule
+
+          cd nimrodel
+          git submodule update --init
+
+3.    Skip to "Installation common"
+
+
+## Installation common
+
+1.    Go to directory to the `bin` directory in nimrodel
+      and look at the script local-example (linux) or local-example.bat
+      (windows). The files
       show you the key variables nimrodel needs, along with their
       default settings. If the default settings are right, nimrodel
       should just run. If they are not right, copy the file to local (or
       local.bat) uncomment lines that need changing and edit them to the
       right values.
 
+2.    If `JAVA_HOME` is not in your environment, copy
+      `bin/local-example` to `bin/local` and set it there.
+
 3.    Simple test by running
 
-          nimrodel/bin/nimrodel -help
+          bin/nimrodel -help
 
 4.    And the tool at work on an example input
 
-          nimrodel/bin/nimrodel string "Robert son of Thomas"
+          bin/nimrodel string "Robert son of Thomas"
 
 5.    Try batch mode out (substitute `/tmp` with `C:/Temp` on Windows)
 
-          nimrodel/bin/nimrodel dir nimrodel/example /tmp/nimrodel-example
+          bin/nimrodel dir nimrodel/example /tmp/nimrodel-example
 
 ## Usage
 
@@ -87,5 +108,11 @@ Interactive use is good for development, because there is a big delay the first 
 (as it loads the openNLP resources), but subsequent runs are much quicker.
 
 The main application source files are in $NIMRODEL/src
+
+## Developer notes
+
+See `bin/devel` for various developer tools (eg. `bin/devel/tar` will
+create a tarball of nimrodel)
+
 
 [elf]: https://github.com/datr-project/elf

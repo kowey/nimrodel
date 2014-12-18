@@ -3,4 +3,4 @@
 #% application-specific configuration (loaded from env)
 
 export TCAPP=nimrodel
-export TCVERSION=0.1
+export TCVERSION=0.2

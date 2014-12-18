@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# developer mode scripts
+
+. "${0%/*}/env"
+
+if [ $# -lt 1 ]; then
+    echo >&2 "Usage: $0 subcmd"
+    echo >&2 "See this script for details"
+    exit 1
+fi
+
+CMD=$1
+shift
+
+case "$CMD" in
+    tar)
+        TODAY=$(date +%Y-%m-%d)
+        TAR_BNAME=${TCAPP}-${TCVERSION}
+        cd ..
+        tar czvf "$TCAPP/${TAR_BNAME}-${TODAY}.tar.bz"\
+            --exclude="$TCAPP/*.tar.bz*"\
+            --exclude="$TCAPP/.git/*"\
+            --exclude="$TCAPP/tmp"\
+            "$TCAPP"
+        ;;
+    time-repeat-file)
+        export JAVA_TOOL_OPTIONS="-XX:+HeapDumpOnOutOfMemoryError"
+        "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g time_repeat_on_file -t halt -- "$@"
+        ;;
+    time-dir)
+        export JAVA_TOOL_OPTIONS="-XX:+HeapDumpOnOutOfMemoryError"
+        "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g time_dir -t halt -- "$1" /tmp
+        ;;
+    *)
+        echo >&2 "Unknown command: $CMD"
+        exit 1
+esac
