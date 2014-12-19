@@ -8,9 +8,8 @@ nimrodel.VERSION:
 	<package> == 'nimrodel - TTT NLP module'
 	<appname> == nimrodel
 	<major> == 0
-	<minor> == 1
-	<revision> == '$Rev:$'
-	<date> == '$Date:$'
+	<minor> == 2
+	<date> == '19 December 2014'
 .
 
 #hide nimrodel.display.VERSION.
@@ -19,6 +18,5 @@ nimrodel.display.VERSION:
 	<display> == "<package>" <space>
 		version <space>
 		"<major>" \. "<minor>" <space>
-		( "<revision>" ) <space>
 		( "<date>" )
 .
