@@ -28,6 +28,8 @@ nimrodel.model.TOKEN:
 	<token output> == <render entity token>
 	<token id> == <here token stem>
 	<token context> == token stem
+	% nimrodel extensison
+	<token number> == <token mor num>	% semantic number
 	
 	<token attributes> ==
 	<token attributes 'Person'> ==
@@ -37,6 +39,7 @@ nimrodel.model.TOKEN:
 		title
 		occupation
 		age
+		number
 		
 	<token attr-type> == property % or attr
 	

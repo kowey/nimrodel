@@ -55,6 +55,7 @@ nimrodel.phraseutils.PHRASEROOT:
 	<$$n> == Local
 	
 	<$$n case match> == <$$n>
+	<$$n case try $$m> == <$$m>
 	<$$n case nomatch> == nimrodel.LEXROOT:<>
 	<$$n case skip $$m> == nimrodel.phraseutils.SKIP:< $$m $$n>
 	<$$n case default> == <$$n case match >

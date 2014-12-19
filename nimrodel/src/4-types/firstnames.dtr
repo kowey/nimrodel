@@ -5,19 +5,16 @@
 
 nimrodel.firstname.FIRSTNAME-LOOKUP:
 	<> == elf.TOP
-	<$$name> == <try firstname-male $$name>
+	<lookup $$name> == <try male nimrodel.firstname.IS-FIRSTNAME-MALE:<$$name> $$name>
 	
-	<try firstname-male> == <IF:< nimrodel.firstname.IS-FIRSTNAME-MALE:<> 
-							 THEN case firstname-male 
-							 ELSE try firstname-female .> >
-	<try firstname-female> == <IF:< nimrodel.firstname.IS-FIRSTNAME-FEMALE:<> 
-							 THEN case firstname-female 
-							 ELSE case default .> >
+	<try male $$node $$name> == < IF:< $$node THEN case found $$node 
+								  ELSE try female nimrodel.firstname.IS-FIRSTNAME-FEMALE:<$$name> .> $$name >
+	<try female $$node> == < IF:< $$node THEN case found $$node ELSE case default .> >
 	
-	<case firstname-male> == 'nimrodel.firstname.MALEFIRSTNAMEROOT'
-	<case firstname-female> == 'nimrodel.firstname.FEMALEFIRSTNAMEROOT'
+	<case found $$node> == $$node
 	<case default> == **fail**
 .
+
 
 nimrodel.firstname.FIRSTNAMEROOT:	
 	<> == nimrodel.LEXROOT:<>
@@ -28,25 +25,27 @@ nimrodel.firstname.FIRSTNAMEROOT:
 	<lex cat> == propn
 	% nimrodel additions
 	<lex forename> == <here token word>
+	<lex number> == sing
 .
 
+% try various patterns that follow a firstname to build a lexical person phrase
 nimrodel.firstname.TRYFIRSTNAME:	
 	<> == elf.TOP
-	<$$n> == Local
+	<node $$n> == Local:<$$n>
 	
-	<$$n lex> == <$$n try phrase lex>
+	<node $$n lex> == <node $$n try phrase lex>
 	
-	<$$n try phrase> == <$$n <map nimrodel.context.NEXT:<2 token context .> .> >
+	<node $$n try phrase> == <node $$n <map nimrodel.context.NEXT:<2 token context .> .> >
 	
-	<map son of> == try type 2 firstname
+	%<map son of> == try type 2 firstname
 	<map de> == try type 1 placename 
 	<map of> == try type 1 placename 
-	<map his brother> == case brother
+	%<map his brother> == case brother
 	<map the> == try type 1 occupation
 	<map le> == try type 1 occupation
 	<map> == try type 0 surname
 	
-	<$$n try type $$skip $$target> == <$$n <map2 $$target <$$n here nimrodel.context.SKIP:<$$skip token.> token next token type .> .> >
+	<node $$n try type $$skip $$target> == <node $$n <map2 $$target <node $$n here nimrodel.context.SKIP:<$$skip token.> token next token type .> .> >
 	
 	<map2 firstname firstname> == case skip 3 lex
 	<map2 firstname propnoun> == case skip 3 lex
@@ -62,26 +61,43 @@ nimrodel.firstname.TRYFIRSTNAME:
 	<map2 occupation> == case skip 2 lex
 	<map2> == case default 
 	
-	<$$n try surname> == <$$n <map3 <$$n here token next token next token stem .> .> >
+	<node $$n try surname> == <node $$n <map3 <node $$n here token next token next token stem .> .> >
 	
 	<map3 de> == try type 2 placename2
 	<map3 of> == try type 2 placename2
 	<map3> == case skip 1 lex
 	
-	<$$n case skip $$m> == nimrodel.phraseutils.SKIP:< $$m 'nimrodel.firstname.FIRSTNAMEROOT'>
-	<$$n case skip $$m lex lex surname> == Implode:<Hyphenate:<' ' nimrodel.phraseutils.NEXT:< $$m 'nimrodel.firstname.FIRSTNAMEROOT' token token word .> .> .>
-	<$$n case brother> == nimrodel.phraseutils.SKIP:< 2 'nimrodel.firstname.FIRSTNAMEROOT' lex>
-	<$$n case default> == Local:<$$n>
+	<node $$n case skip $$m> == nimrodel.phraseutils.SKIP:< $$m 'nimrodel.firstname.FIRSTNAMEROOT'>
+	<node $$n case skip $$m lex lex surname> == Implode:<Hyphenate:<' ' nimrodel.phraseutils.NEXT:< $$m 'nimrodel.firstname.FIRSTNAMEROOT' token token word .> .> .>
+	<node $$n case brother> == nimrodel.phraseutils.SKIP:< 2 'nimrodel.firstname.FIRSTNAMEROOT' lex>
+	<node $$n case default> == Local:<$$n>
+.
+
+% look for evidence that a word is a firstname before treating it as one
+nimrodel.firstname.MAYBEFIRSTNAME:
+	<> == nimrodel.firstname.TRYFIRSTNAME
 .
 
 nimrodel.firstname.FEMALEFIRSTNAMEROOT:
-	<> == nimrodel.firstname.TRYFIRSTNAME:<'nimrodel.firstname.FIRSTNAMEROOT'>
+	<> == nimrodel.firstname.TRYFIRSTNAME:<node 'nimrodel.firstname.FIRSTNAMEROOT'>
 	<token gender> == female
 .
 
+
 nimrodel.firstname.MALEFIRSTNAMEROOT:
-	<> == nimrodel.firstname.TRYFIRSTNAME:<'nimrodel.firstname.FIRSTNAMEROOT'>
+	<> == nimrodel.firstname.TRYFIRSTNAME:<node 'nimrodel.firstname.FIRSTNAMEROOT'>
 	<token gender> == male
 .
 
+% Abbreviations don't do smart name handling for now
+% nimrodel.firstname.ABBRFIRSTNAMEROOT:
+	% <> == elf.TOP
+	% <$$n> == nimrodel.firstname.FIRSTNAMEROOT:<>
+	% <$$n lex nextrole> == <$$n here token nextn Add:<$$n 1 .> lex nextrole .>
+	% <$$n lex end-char> == <$$n here token nextn Add:<$$n 1 .> lex end-char .>
+% .
+
+% nimrodel.firstname.ABBRFIRSTNAME:
+	% <> == nimrodel.firstname.ABBRFIRSTNAMEROOT:<0>
+% .
 

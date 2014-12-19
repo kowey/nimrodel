@@ -9,6 +9,8 @@ nimrodel.stem.Ndaughter:<> == nimrodel.family.Ndaughter.
 nimrodel.stem.Ndeed:<> == nimrodel.transaction.Ndeed.
 nimrodel.stem.Nexchange:<> == nimrodel.transaction.Nexchange.
 nimrodel.stem.Nfather:<> == nimrodel.family.Nfather.
+nimrodel.stem.Ngrandchild:<> == nimrodel.family.Ngrandchild.
+nimrodel.stem.Ngrandchildren:<> == nimrodel.family.Ngrandchildren.
 nimrodel.stem.Ngranddaughter:<> == nimrodel.family.Ngranddaughter.
 nimrodel.stem.Ngrandfather:<> == nimrodel.family.Ngrandfather.
 nimrodel.stem.Ngrandmother:<> == nimrodel.family.Ngrandmother.

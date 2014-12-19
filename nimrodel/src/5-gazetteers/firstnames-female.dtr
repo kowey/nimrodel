@@ -2,7 +2,7 @@
 
 nimrodel.firstname.IS-FIRSTNAME-FEMALE:
 	<> == **fail**
-	<$nimrodel-firstnameword-female> == $nimrodel-firstnameword-female
+	<$nimrodel-firstnameword-female> == 'nimrodel.firstname.FEMALEFIRSTNAMEROOT'
 .
 	
 

@@ -6,7 +6,11 @@
 	prince
 	queen
 	princess
-	mr
+	%mister
+	%mistress
+	%doctor
+	miss
+	ms
 	lord
 	lady
 	sir
@@ -16,3 +20,37 @@
 	%magister
 	%saint
 .
+
+% these entries have abbreviated forms (in abbreviations.dtr) and so need actual nodes
+nimrodel.title.Ndoctor:
+	<> == nimrodel.title.TITLEROOT
+	<$n lex title> == doctor
+.
+
+nimrodel.title.Nmagister:
+	<> == nimrodel.title.TITLEROOT
+	<$n lex title> == magister
+.
+
+
+nimrodel.title.Nmister:
+	<> == nimrodel.title.TITLEROOT
+	<$n lex title> == mister
+.
+
+
+nimrodel.title.Nmistress:
+	<> == nimrodel.title.TITLEROOT
+	<$n lex title> == mistress
+.
+
+
+nimrodel.title.Nsaint:
+	<> == nimrodel.title.TITLEROOT
+	<$n lex title> == saint
+	<$n lex type> == 'FormalPerson'
+.
+
+
+
+

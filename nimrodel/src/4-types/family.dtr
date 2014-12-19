@@ -1,25 +1,19 @@
 % family and other interpersonal relationships
 
-
-nimrodel.family.MALE:
-	<> == nimrodel.phrase.PREDNOM
-	<token type> == 'Person'
-	<token gender> == male
-.
-
-
-nimrodel.family.FEMALE:
-	<> == nimrodel.phrase.PREDNOM
-	<token type> == 'Person'
-	<token gender> == female
-.
-
-
 nimrodel.family.NOGENDER:
 	<> == nimrodel.phrase.PREDNOM
 	<token type> == 'Person'
 .
 
+nimrodel.family.MALE:
+	<> == nimrodel.family.NOGENDER
+	<token gender> == male
+.
+
+nimrodel.family.FEMALE:
+	<> == nimrodel.family.NOGENDER
+	<token gender> == female
+.
 
 nimrodel.family.Nfather:
 	<> == nimrodel.family.MALE

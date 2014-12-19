@@ -31,8 +31,10 @@ nimrodel.word.Ncoventry:<> == nimrodel.wp-placename.Ncoventry.
 nimrodel.word.Ncrossbow:<> == nimrodel.occupation.Ncrossbow.
 nimrodel.word.Ndate:<> == nimrodel.apparatus.TRY-APPARATUS:<'nimrodel.LEXROOT'>.
 nimrodel.word.Nderby:<> == nimrodel.wp-placename.Nderby.
+nimrodel.word.Ndoctor:<> == nimrodel.title.Ndoctor:<0>.
 nimrodel.word.Ndoor:<> == nimrodel.occupation.Ndoor.
 nimrodel.word.Ndove:<> == nimrodel.occupation.Ndove.
+nimrodel.word.Ndr:<> == nimrodel.abbr.Ndr.
 nimrodel.word.Ndurham:<> == nimrodel.wp-placename.Ndurham.
 nimrodel.word.Nely:<> == nimrodel.wp-placename.Nely.
 nimrodel.word.Newer:<> == nimrodel.occupation.Newer.
@@ -57,12 +59,16 @@ nimrodel.word.Nlichfield:<> == nimrodel.wp-placename.Nlichfield.
 nimrodel.word.Nlincoln:<> == nimrodel.wp-placename.Nlincoln.
 nimrodel.word.Nliverpool:<> == nimrodel.wp-placename.Nliverpool.
 nimrodel.word.Nlondon:<> == nimrodel.wp-placename.Nlondon.
-nimrodel.word.Nmag:<> == nimrodel.punc.ABBREVIATION:<'nimrodel.title.Nmagister'>.
+nimrodel.word.Nmag:<> == nimrodel.abbr.Nmagister.
 nimrodel.word.Nmagister:<> == nimrodel.title.Nmagister:<0>.
 nimrodel.word.Nmanchester:<> == nimrodel.wp-placename.Nmanchester.
 nimrodel.word.Nmarble:<> == nimrodel.occupation.Nmarble.
 nimrodel.word.Nmeasures:<> == nimrodel.occupation.Nmeasures.
+nimrodel.word.Nmister:<> == nimrodel.title.Nmister:<0>.
+nimrodel.word.Nmistress:<> == nimrodel.title.Nmistress:<0>.
 nimrodel.word.Nmount:<> == nimrodel.placename.Nmount.
+nimrodel.word.Nmr:<> == nimrodel.abbr.Nmr.
+nimrodel.word.Nmrs:<> == nimrodel.abbr.Nmrs.
 nimrodel.word.Nmustard:<> == nimrodel.occupation.Nmustard.
 nimrodel.word.Nneedle:<> == nimrodel.occupation.Nneedle.
 nimrodel.word.Nnewcastle:<> == nimrodel.wp-placename.Nnewcastle.
@@ -90,8 +96,7 @@ nimrodel.word.Nsheffield:<> == nimrodel.wp-placename.Nsheffield.
 nimrodel.word.Nshoe:<> == nimrodel.occupation.Nshoe.
 nimrodel.word.Nsource:<> == nimrodel.apparatus.TRY-APPARATUS:<'nimrodel.LEXROOT'>.
 nimrodel.word.Nsouthampton:<> == nimrodel.wp-placename.Nsouthampton.
-nimrodel.word.Nst:<> == nimrodel.punc.ABBREVIATION:<'nimrodel.title.Nsaint'>.
-%nimrodel.word.Nst:<> == nimrodel.wp-placename.Nst.
+nimrodel.word.Nst:<> == nimrodel.wp-placename.Nst:<> <matchword> == try 'nimrodel.abbr.Nst'.
 nimrodel.word.Nstoke:<> == nimrodel.wp-placename.Nstoke.
 nimrodel.word.Nsunderland:<> == nimrodel.wp-placename.Nsunderland.
 nimrodel.word.Ntheir:<> == nimrodel.LEXROOT <token pos> == det. % their and theirs - openNLP POS tagger seems to have these backwards?

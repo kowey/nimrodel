@@ -26,7 +26,7 @@ nimrodel.LEX-LOOKUP:
 	<try words $form $role> == <try wordnode nimrodel.STRING-QUERY:<$role param word .> $role>
 	<try wordnode> == <trynode System:<exists <lexnode word> .> placename>
 	<try placename> == < trynode nimrodel.placename.PLACENAMEWORD-LOOKUP:<lookup> firstname>
-	<try firstname> == < trynode nimrodel.firstname.FIRSTNAME-LOOKUP:<> surname >
+	<try firstname> == < trynode nimrodel.firstname.FIRSTNAME-LOOKUP:<lookup> surname >
 	<try surname> == < trynode nimrodel.surname.SURNAME-LOOKUP:<> title >
 	<try title> == < trynode nimrodel.title.TITLE-LOOKUP:<> stems >
 	

@@ -1,10 +1,10 @@
 
 % placename lookup - invoked by lex-lookup at the WORD level
 nimrodel.placename.PLACENAMEWORD-LOOKUP:
-	<> == **fail**
+	<> == elf.TOP
 	<lookup $$name> == <try placename nimrodel.placename.IS-PLACENAMEWORD:<$$name.> $$name>
 	
-	<try placename $$node> == < IF:< $$node THEN case found $$node ELSE  case default .> >
+	<try placename $$node> == < IF:< $$node THEN case found $$node ELSE case default .> >
 	
 	<case found $$node> == $$node
 	<case default> == **fail**

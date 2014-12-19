@@ -2,3 +2,30 @@ nimrodel.form.N\(:<> == nimrodel.apparatus.N\(.
 nimrodel.form.N\):<> == nimrodel.apparatus.N\).
 nimrodel.form.N\,:<> == nimrodel.punc.N\,.
 nimrodel.form.N\.:<> == nimrodel.punc.N\..
+
+% nimrodel.form.NA: <> == nimrodel.abbr.NA.
+% nimrodel.form.NB: <> == nimrodel.abbr.NB.
+% nimrodel.form.NC: <> == nimrodel.abbr.NC.
+% nimrodel.form.ND: <> == nimrodel.abbr.ND.
+% nimrodel.form.NE: <> == nimrodel.abbr.NE.
+% nimrodel.form.NF: <> == nimrodel.abbr.NF.
+% nimrodel.form.NG: <> == nimrodel.abbr.NG.
+% nimrodel.form.NH: <> == nimrodel.abbr.NH.
+% nimrodel.form.NI: <> == nimrodel.abbr.NI.
+% nimrodel.form.NJ: <> == nimrodel.abbr.NJ.
+% nimrodel.form.NK: <> == nimrodel.abbr.NK.
+% nimrodel.form.NL: <> == nimrodel.abbr.NL.
+% nimrodel.form.NM: <> == nimrodel.abbr.NM.
+% nimrodel.form.NN: <> == nimrodel.abbr.NN.
+% nimrodel.form.NO: <> == nimrodel.abbr.NO.
+% nimrodel.form.NP: <> == nimrodel.abbr.NP.
+% nimrodel.form.NQ: <> == nimrodel.abbr.NQ.
+% nimrodel.form.NR: <> == nimrodel.abbr.NR.
+% nimrodel.form.NS: <> == nimrodel.abbr.NS.
+% nimrodel.form.NT: <> == nimrodel.abbr.NT.
+% nimrodel.form.NU: <> == nimrodel.abbr.NU.
+% nimrodel.form.NV: <> == nimrodel.abbr.NV.
+% nimrodel.form.NW: <> == nimrodel.abbr.NW.
+% nimrodel.form.NX: <> == nimrodel.abbr.NX.
+% nimrodel.form.NY: <> == nimrodel.abbr.NY.
+% nimrodel.form.NZ: <> == nimrodel.abbr.NZ.

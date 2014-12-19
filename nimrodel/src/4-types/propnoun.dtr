@@ -16,7 +16,8 @@ nimrodel.propnoun.PROPNOUNROOT:
 
 nimrodel.propnoun.PROPNOUNTEST:	
 	<> == nimrodel.propnoun.PROPNOUNROOT
-	<lex> == nimrodel.firstname.TRYFIRSTNAME:<'nimrodel.propnoun.UNKNOWN' lex>	
+	% this is massively overgenerating, so commented out until fixed - but now dependent on list of firstnames
+	%<lex> == nimrodel.firstname.MAYBEFIRSTNAME:<node 'nimrodel.propnoun.UNKNOWN' lex>	
 .
 
 nimrodel.propnoun.UNKNOWN:

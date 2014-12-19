@@ -34,10 +34,10 @@ nimrodel.model.NIMRODEL02:
 	<> == nimrodel.MODEL
 	
 	% This model is purely lexical at present
-	<nimrodel02> == <here lex>
+	<nimrodel02> == <here phrase>
 	
 	% set specific attributes for PERSON objects to linker requirements
-	<nimrodel02 attributes 'PERSON'> ==
+	<nimrodel02 attributes 'Person'> ==
 		title
 		forename
 		article
@@ -55,12 +55,12 @@ nimrodel.model.NIMRODEL02:
 		%	sentenceId			% not supported yet
 		%	sectionId			% not supported yet
 	
-	% suppress all lex types except 'Person'
-	<nimrodel02 type> == <person-check <here lex type .> >
-		<person-check 'Person'> == 'Person'
-		<person-check> == unknown	
+	% suppress all types except singular 'Person' 
+	<nimrodel02 type> == <filter <here phrase type .> >
+		<filter 'Person'> == IFEQ:< <here phrase number.> sing THEN 'Person' ELSE unknown .>
+		<filter> == unknown	
 	
 	% suppress output of endpoints
-	<nimrodel02 output> == <here lex output>
+	<nimrodel02 output> == <here phrase output>
 	<nimrodel02 output **endpoint**> ==
 .

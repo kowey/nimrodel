@@ -1,0 +1,144 @@
+nimrodel.word.Nantrim:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nards:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Narmagh:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Navon:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nayrshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nballymena:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nballymoney:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nbanbridge:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nbedfordshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nbelfast:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nberks:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nberkshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nborders:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nbuckinghamshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nbucks:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ncambridgeshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ncarrickfergus:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ncastlereagh:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ncheshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ncleveland:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nclwyd:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ncoleraine:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ncookstown:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ncornwall:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty antrim:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty ards:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty armagh:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty ballymena:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty ballymoney:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty banbridge:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty belfast:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty carrickfergus:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty castlereagh:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty coleraine:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty cookstown:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty craigavon:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty down:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty dungannon:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty fermanagh:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty larne:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty limavady:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty lisburn:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty londonderry:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty magherafelt:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty moyle:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty newry and mourne:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty newtownabbey:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty north down:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty omagh:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ncounty strabane:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ncraigavon:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ncumbria:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ndartmoor:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nderbyshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ndevon:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ndorset:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ndumfries and galloway:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ndungannon:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ndurham:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ndyfed:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Neast anglia:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Neast riding:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Neast sussex:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nessex:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nexmoor:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nfermanagh:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nfife:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ngloucestershire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ngrampian:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ngreater london:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ngreater manchester:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ngwent:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ngwynedd:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nhampshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nhants:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nhereford:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nhereford and worcester:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nhertfordshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nherts:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nhighland:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nhumberside:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nisle of wight:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nisle of wight:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nkent:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nlancashire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nlancs:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nlarne:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nleicestershire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nlimavady:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nlincolnshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nlisburn:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nlondonderry:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nlothian:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nmagherafelt:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nmerseyside:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nmid glamorgan:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nmiddlesex:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nmidlands:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nmoyle:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nnewry and mourne:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nnewtownabbey:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nnorfolk:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nnorthamptonshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nnorthants:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nnorth down:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nnorthumberland:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nnorthumbria:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nnorth yorks:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nnorth yorkshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nnottinghamshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nomagh:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Norkney:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Noxfordshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Noxon:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nperthshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Npowys:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nroyal berks:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nroyal berkshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nrutland:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nshetland:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nshropshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nsomerset:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nsouth glamorgan:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nsouth yorks:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nsouth yorkshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nstaffordshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nstrabane:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nstrathclyde:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nsuffolk:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nsurrey:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nsussex:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Ntayside:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Ntyne and wear:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nvale of glamorgan:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nwarwickshire:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nwestern isles:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nwest glamorgan:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nwest midlands:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nwest sussex:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nwest yorks:<> == nimrodel.placename.PLACENAMEROOT.
+% nimrodel.word.Nwest yorkshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nwiltshire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nworcestershire:<> == nimrodel.placename.PLACENAMEROOT.
+nimrodel.word.Nyorkshire:<> == nimrodel.placename.PLACENAMEROOT.
