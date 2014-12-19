@@ -26,13 +26,16 @@ nimrodel.LEX-TOP:
 	
 	<nimrodel02> == nimrodel.model.NIMRODEL02
 		
-	<process $model> == <here all $model process1 $model>
-	<process1 $model> == <process2 $model <here $model type .> .>
-	<process2 $model $type> == IFEQ:<$type unknown THEN ELSE <here $model output $type> .>
+	<process $$model> == <here all $$model process1 $$model>
+	<process1 $$model> == <process2 $$model <here $$model type .> .>
+	<process2 $$model $$type> == <case IFEQ:<$$type unknown THEN unknown ELSE output .> $$model $$type .>
+	<case unknown> ==
+	<case output $$model $$type> == <here $$model output $$type>
 	
-	<all $model> == <allprev $model> <here> <allnext $model>
-	<allprev $model> == <here $model prev allprev $model> <here $model prev>
-	<allnext $model> == <here $model next> <here $model next allnext $model>
+	%<all $$model> == <allprev $$model> <here> <allnext $$model>
+	<all $$model> == <here> <allnext $$model>
+	<allprev $$model> == <here $$model prev allprev $$model> <here $$model prev>
+	<allnext $$model> == <here $$model next> <here $$model next allnext $$model>
 	
 	<render> == nimrodel.RENDER
 .

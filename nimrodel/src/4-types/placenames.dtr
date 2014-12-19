@@ -1,27 +1,41 @@
 
-
-#hide nimrodel.placename.PLACENAME-LOOKUP.
-nimrodel.placename.PLACENAME-LOOKUP:
+% placename lookup - invoked by lex-lookup at the WORD level
+nimrodel.placename.PLACENAMEWORD-LOOKUP:
 	<> == **fail**
-	<$nimrodel-placenameword> == 'nimrodel.placename.PLACENAMEROOT'
+	<lookup $$name> == <try placename nimrodel.placename.IS-PLACENAMEWORD:<$$name.> $$name>
+	
+	<try placename $$node> == < IF:< $$node THEN case found $$node ELSE  case default .> >
+	
+	<case found $$node> == $$node
+	<case default> == **fail**
 .
 
-#hide nimrodel.placename.PLACENAMEROOT.
+% root node for placename words
 nimrodel.placename.PLACENAMEROOT:	
 	<> == nimrodel.LEXROOT:<>
 	
 	<token type> == 'placename'
-	<token norm> == <here token form>
+	% <token norm> == <here token form>
 	<lex type> == 'Place'
 .
 
-
+% root node for placename lexical phrases
 nimrodel.placename.PHRASEROOT:
-	<> == nimrodel.phraseutils.PHRASEROOT:< 'nimrodel.LEXROOT' >
-	<lex> == < here < here map nimrodel.context.NEXT:<1 token context .> .> lex>
+	<> == elf.TOP
+	<$$i> == nimrodel.phraseutils.PHRASEROOT:< 'nimrodel.placename.PLACENAMEROOT' >
+	<$$i lex> == < $$i here < $$i here map nimrodel.context.NEXT:<$$i token context .> .> lex>
+	<$$i token context> == token word
+	<$$i map> == case <$$i here matchword .>
+	<$$i matchword> == nomatch
 .
 
-nimrodel.placename.Nwest: <> == nimrodel.placename.PHRASEROOT <map bergholt> == case skip 1 lex.
-nimrodel.placename.Ngreat:<> == nimrodel.placename.PHRASEROOT <map fordham> == case skip 1 lex.
-nimrodel.placename.Nmount:<> == nimrodel.placename.PHRASEROOT <map bures> == case skip 1 lex.
-nimrodel.placename.Nwakes:<> == nimrodel.placename.PHRASEROOT <map colne> == case skip 1 lex.
+nimrodel.placename.PHRASEMATCH:
+	<> == elf.TOP
+	<1 $$w1> == nimrodel.placename.PHRASEROOT:<1>
+	<1 $$w1 map $$w1> == case skip 1 lex
+	<2 $$w1 $$w2> == nimrodel.placename.PHRASEROOT:<2>
+	<2 $$w1 $$w2 map $$w1 $$w2> == case skip 2 lex
+.
+
+
+

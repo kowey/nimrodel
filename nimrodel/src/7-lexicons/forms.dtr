@@ -1,0 +1,4 @@
+nimrodel.form.N\(:<> == nimrodel.apparatus.N\(.
+nimrodel.form.N\):<> == nimrodel.apparatus.N\).
+nimrodel.form.N\,:<> == nimrodel.punc.N\,.
+nimrodel.form.N\.:<> == nimrodel.punc.N\..

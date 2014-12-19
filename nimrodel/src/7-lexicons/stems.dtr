@@ -1,0 +1,34 @@
+nimrodel.stem.Narticle:<> == nimrodel.transaction.Narticle.
+nimrodel.stem.Nassignment:<> == nimrodel.transaction.Nassignment.
+nimrodel.stem.Naunt:<> == nimrodel.family.Naunt.
+nimrodel.stem.Nbargain:<> == nimrodel.transaction.Nbargain.
+nimrodel.stem.Nbrother:<> == nimrodel.family.Nbrother.
+nimrodel.stem.Ncitizen:<> == nimrodel.phrase.PREDNOM <token type> == 'Person' <phrase-nom rel> == is_of.
+nimrodel.stem.Ncousin:<> == nimrodel.family.Ncousin.
+nimrodel.stem.Ndaughter:<> == nimrodel.family.Ndaughter.
+nimrodel.stem.Ndeed:<> == nimrodel.transaction.Ndeed.
+nimrodel.stem.Nexchange:<> == nimrodel.transaction.Nexchange.
+nimrodel.stem.Nfather:<> == nimrodel.family.Nfather.
+nimrodel.stem.Ngranddaughter:<> == nimrodel.family.Ngranddaughter.
+nimrodel.stem.Ngrandfather:<> == nimrodel.family.Ngrandfather.
+nimrodel.stem.Ngrandmother:<> == nimrodel.family.Ngrandmother.
+nimrodel.stem.Ngrandparent:<> == nimrodel.family.Ngrandparent.
+nimrodel.stem.Ngrandson:<> == nimrodel.family.Ngrandson.
+nimrodel.stem.Ngrant:<> == nimrodel.transaction.Ngrant.
+nimrodel.stem.Nhusband:<> == nimrodel.family.Nhusband.
+nimrodel.stem.Nmother:<> == nimrodel.family.Nmother.
+nimrodel.stem.Nnephew:<> == nimrodel.family.Nnephew.
+nimrodel.stem.Nniece:<> == nimrodel.family.Nniece.
+nimrodel.stem.Nparent:<> == nimrodel.family.Nparent.
+nimrodel.stem.Npartition:<> == nimrodel.transaction.Npartition.
+nimrodel.stem.Nquitclaim:<> == nimrodel.transaction.Nquitclaim.
+nimrodel.stem.Nrelease:<> == nimrodel.transaction.Nrelease.
+nimrodel.stem.Nsibling:<> == nimrodel.family.Nsibling.
+nimrodel.stem.Nsister:<> == nimrodel.family.Nsister.
+nimrodel.stem.Nson:<> == nimrodel.family.Nson.
+nimrodel.stem.Nspouse:<> == nimrodel.family.Nspouse.
+nimrodel.stem.Nuncle:<> == nimrodel.family.Nuncle.
+nimrodel.stem.Nwidow:<> == nimrodel.family.Nwidow.
+nimrodel.stem.Nwidower:<> == nimrodel.family.Nwidower.
+nimrodel.stem.Nwitnesse:<> == nimrodel.apparatus.TRY-APPARATUS:<'nimrodel.LEXROOT'>. % weird stem
+nimrodel.stem.Nyoung:<> == nimrodel.LEXROOT	<token type> == age <token age> == young.

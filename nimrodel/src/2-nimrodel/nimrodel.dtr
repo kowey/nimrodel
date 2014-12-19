@@ -44,13 +44,13 @@ nimrodel.NIMRODEL:
 		<process-sentenceSpans $model $$language $output-format $documentString $offsetSpan>
 	<process-sentenceSpans> ==
 	
-	<query-word brat $documentString $$query> ==
-		app.BRAT:<brat sentence $documentString $$query>
-	<query-word dump $documentString $$query> ==
-		app.DUMP:<dump sentence $documentString $$query>
-	<query-word json $documentString $$query> ==
-		app.JSON:<json sentence $documentString $$query>
-	<query-word raw $documentString $$query> ==
+	<query-word brat> ==
+		app.BRAT:<brat sentence>
+	<query-word dump> ==
+		app.DUMP:<dump sentence>
+	<query-word json> ==
+		app.JSON:<json sentence>
+	<query-word raw $$documentString $$query> ==
 		LocalPath:<>
 		
 	<process-offset-sentence $$language $documentString $sentenceSpan> ==

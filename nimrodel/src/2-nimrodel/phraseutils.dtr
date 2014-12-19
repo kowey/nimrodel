@@ -54,8 +54,10 @@ nimrodel.phraseutils.PHRASEROOT:
 	<> == elf.TOP
 	<$$n> == Local
 	
-	<$$n case default> == <$$n>
+	<$$n case match> == <$$n>
+	<$$n case nomatch> == nimrodel.LEXROOT:<>
 	<$$n case skip $$m> == nimrodel.phraseutils.SKIP:< $$m $$n>
+	<$$n case default> == <$$n case match >
 	
 	<$$n map> == case default
 .

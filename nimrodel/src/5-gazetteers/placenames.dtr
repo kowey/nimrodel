@@ -1,5 +1,12 @@
 
 % regular placename words - these can just use the PLACENAMEROOT node directly 
+
+nimrodel.placename.IS-PLACENAMEWORD:
+	<> == **fail**
+	<$nimrodel-placenameword> == 'nimrodel.placename.PLACENAMEROOT'
+. 
+
+% this list is from chartex data
 #vars $nimrodel-placenameword:  
 	% VC
 	york
@@ -42,3 +49,8 @@
 	wormingford
 	yoyesbredge
 .
+
+nimrodel.placename.Nwest: <> == nimrodel.placename.PHRASEMATCH:<1 bergholt>.
+nimrodel.placename.Ngreat:<> == nimrodel.placename.PHRASEMATCH:<1 fordham>.
+nimrodel.placename.Nmount:<> == nimrodel.placename.PHRASEMATCH:<1 bures>.
+nimrodel.placename.Nwakes:<> == nimrodel.placename.PHRASEMATCH:<1 colne>.
