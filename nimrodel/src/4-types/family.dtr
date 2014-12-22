@@ -17,73 +17,79 @@ nimrodel.family.FEMALE:
 
 nimrodel.family.Nfather:
 	<> == nimrodel.family.MALE
-	<phrase-nom rel> == is_father_of
+	<phrase-nom rel> == is_child_of
+	<phrase-nom reltype> == relrev
 .
 
 
 nimrodel.family.Nmother:
 	<> == nimrodel.family.FEMALE
-	<phrase-nom rel> == is_mother_of
+	<phrase-nom rel> == is_child_of
+	<phrase-nom reltype> == relrev
 .
 
 
 nimrodel.family.Nparent:
 	<> == nimrodel.family.NOGENDER
-	<phrase-nom rel> == is_parent_of
+	<phrase-nom rel> == is_child_of
+	<phrase-nom reltype> == relrev
 .
 
 
 nimrodel.family.Ngrandfather:
 	<> == nimrodel.family.MALE
-	<phrase-nom rel> == is_grandfather_of
+	<phrase-nom rel> == is_grandchild_of
+	<phrase-nom reltype> == relrev
 .
 
 
 nimrodel.family.Ngrandmother:
 	<> == nimrodel.family.FEMALE
-	<phrase-nom rel> == is_grandmother_of
+	<phrase-nom rel> == is_grandchild_of
+	<phrase-nom reltype> == relrev
 .
 
 
 nimrodel.family.Ngrandparent:
 	<> == nimrodel.family.NOGENDER
-	<phrase-nom rel> == is_parent_of
+	<phrase-nom rel> == is_grandchild_of
+	<phrase-nom reltype> == relrev
 .
 
 
 nimrodel.family.Nson:
 	<> == nimrodel.family.MALE
-	<phrase-nom rel> == is_son_of
+	<phrase-nom rel> == is_child_of
 .
 
 
 nimrodel.family.Ndaughter:
 	<> == nimrodel.family.FEMALE
-	<phrase-nom rel> == is_daughter_of
+	<phrase-nom rel> == is_child_of
 .
 
 
 nimrodel.family.Nchild:
 	<> == nimrodel.family.NOGENDER
-	<phrase-nom rel> == is_a_child_of
+	<phrase-nom rel> == is_child_of
 .
 
 
 nimrodel.family.Nchildren:
 	<> == nimrodel.family.NOGENDER
-	<phrase-nom rel> == is_a_child_of
+	<phrase-nom rel> == is_child_of
 .
 
 
 nimrodel.family.Ngrandson:
 	<> == nimrodel.family.MALE
-	<phrase-nom rel> == is_grandson_of
+	<phrase-nom rel> == is_grandchild_of
 .
 
 
 nimrodel.family.Ngranddaughter:
 	<> == nimrodel.family.FEMALE
-	<phrase-nom rel> == is_granddaughter_of
+	<phrase-nom rel> == is_grandchild_of
 .
 
 

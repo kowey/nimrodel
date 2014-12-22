@@ -7,7 +7,7 @@
 
 #uses Gensym Length Implode Explode LocalPath Rest.
 #vars $eq: '=' '=='.
-#vars $childrel: is_son_of is_daughter_of is_a_child_of.
+#vars $childrel: is_son_of is_daughter_of is_child_of.
 #vars $grandchildrel: is_grandson_of is_granddaughter_of is_grandchild_of.
 
 

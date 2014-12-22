@@ -16,7 +16,6 @@ nimrodel.RENDER:
 			$type	
 			<here $model start-char>
 			<here $model end-char>	
-			<process-attribute $model norm>		% always have a norm attribute
 			<process-attributes $model $type>
 			<here $model annotation>			% add a comment
 		]

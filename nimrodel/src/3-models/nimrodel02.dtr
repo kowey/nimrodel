@@ -37,6 +37,7 @@ nimrodel.model.NIMRODEL02:
 	<nimrodel02> == <here phrase>
 	
 	% set specific attributes for PERSON objects to linker requirements
+	% THESE SETTINGS AREN'T SEEN - have to set this in the phrase model (NEED TO FIX THIS, SOMEHOW)
 	<nimrodel02 attributes 'Person'> ==
 		title
 		forename
@@ -51,14 +52,14 @@ nimrodel.model.NIMRODEL02:
 		grandchildOf
 		gender
 		%	appearanceDate		% handled by output routines
-		id
+		%   id					% handled by output routines
 		%	sentenceId			% not supported yet
 		%	sectionId			% not supported yet
 	
 	% suppress all types except singular 'Person' 
-	<nimrodel02 type> == <filter <here phrase type .> >
-		<filter 'Person'> == IFEQ:< <here phrase number.> sing THEN 'Person' ELSE unknown .>
-		<filter> == unknown	
+	%<nimrodel02 type> == <filter <here phrase type .> >
+	%	<filter 'Person'> == IFEQ:< <here phrase number.> sing THEN 'Person' ELSE unknown .>
+	%	<filter> == unknown	
 	
 	% suppress output of endpoints
 	<nimrodel02 output> == <here phrase output>

@@ -252,7 +252,7 @@ nimrodel.phrase.PREDNOMP:
 	<> == nimrodel.phrase.N
 	<$phrase nextrole> == <here lex next lex next phrase-np nextrole>
 	<$phrase end-char> == <here lex next lex next phrase-np end-char>
-	<$phrase output> == <render rel $phrase <here lex next lex next phrase-np output.> .>
+	<$phrase output> == <render <here $phrase reltype> $phrase <here lex next lex next phrase-np output.> .>
 	
 	<phrase> == <phrase-n>
 .
