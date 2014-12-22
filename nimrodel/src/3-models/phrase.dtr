@@ -11,7 +11,27 @@ nimrodel.model.PHRASE:
 	<port phraseend> == <here port lexend>
 	
 	<$typedphrase cat> == **fail**
+	<$phrase reltype> == rel	%set to 'relrev' to select inverse of specified rel
 	<$phrase rel> == unknown
 	<$phrase conjrel> == unknown
 	<$phrase output> == <render entity $phrase>
+	
+	% need to put this here, not in nimrodel02, because the latter delegates its output to here :-(
+	<$phrase attributes 'Person'> ==
+		title
+		forename
+		article
+		surname
+		role
+		provenance
+		adjectiveforename
+		adjectivesurname
+		adjectivetitle
+		childOf
+		grandchildOf
+		gender
+		%	appearanceDate		% handled by output routines
+		%   id					% handled by output routines
+		%	sentenceId			% not supported yet
+		%	sectionId			% not supported yet
 .	
