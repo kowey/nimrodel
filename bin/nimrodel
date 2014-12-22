@@ -21,7 +21,12 @@ fi
 CMD=$1
 shift
 
-if [ ! -e "$NIMRODEL_IMAGE" ]; then
+if [ "$CMD" == "direct" ]; then
+    NIMRODEL_IMAGE=$SCRIPT_DIR/nimrodel-direct
+    chmod u+x "$NIMRODEL_IMAGE"
+    CMD=$1
+    shift
+elif [ ! -e "$NIMRODEL_IMAGE" ]; then
     echo >&2 'Saving nimrodel image for the first time...'
     save_state "$NIMRODEL_IMAGE"
     if [ -e "$TCROOT/.git" ]; then
