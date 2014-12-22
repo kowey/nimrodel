@@ -7,6 +7,17 @@ exit_usage() {
     exit 1
 }
 
+save_state() {
+    "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g save_state -t halt -- "$1"
+}
+
+call_nimrodel () {
+    "$TCROOT/.nimrodel-image" "$@"
+}
+
+NIMRODEL_IMAGE=$TCROOT/.nimrodel-image
+NIMRODEL_SAVED=$TCROOT/.nimrodel-saved
+
 if [ $# -lt 1 ]; then
     exit_usage
 fi
@@ -14,16 +25,34 @@ fi
 CMD=$1
 shift
 
+if [ ! -e "$NIMRODEL_IMAGE" ]; then
+    echo >&2 'Saving nimrodel image for the first time...'
+    save_state "$NIMRODEL_IMAGE"
+    if [ -e "$TCROOT/.git" ]; then
+        LAST_COMMIT=$(git rev-parse HEAD)
+        echo "$LAST_COMMIT" > "$NIMRODEL_SAVED"
+    fi
+elif [ -e "$TCROOT/.git" ]; then
+    LAST_COMMIT=$(git rev-parse HEAD)
+    SAVED_COMMIT=$(cat "$NIMRODEL_SAVED")
+    if [ "$SAVED_COMMIT" != "$LAST_COMMIT" ]; then
+        echo >&2 'Nimrodel image seems to be out of date; regenerating...'
+        save_state "$TCROOT/.nimrodel-image"
+        echo "$LAST_COMMIT" > "$NIMRODEL_SAVED"
+    fi
+fi
+
+
 case "$CMD" in
     string)
-        "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g main -t halt -- "$@"
+        call_nimrodel main "$@"
         ;;
     file)
         # undocumented because we still need to generalise this to accept flags
-        "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g on_files -t halt -- "$@"
+        call_nimrodel on_files "$@"
         ;;
     dir)
-        "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g traverse_dir -t halt -- "$@"
+        call_nimrodel traverse_dir "$@"
         ;;
     parallel-dir)
         if [ $# -lt 3 ]; then

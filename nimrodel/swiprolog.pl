@@ -18,20 +18,50 @@
 use(library(pio)).
 use(library(filesex)).
 
-% set prolog prompt to be empty 
-:- prompt(_P, '').
+% check/set envirionment variable
+nimrodel_env(EnvName, _Value) :-
+	% already set
+	getenv(EnvName, _V), !.
+nimrodel_env(EnvName, Value) :-
+	% set to given value, but expand embedded env vars firs
+	expand_file_name(Value, [Value2|_]),
+	setenv(EnvName, Value2).
 
-% get $ELFAPP, or set to current directory
-:- getenv('ELFAPP', _V); working_directory(D,D), setenv('ELFAPP', D).
+% add directory to path if not already present
+% borrowed from lib jpl - added expand_file_name call
+nimrodel_add_search_path(Path, Dir) :-
+	expand_file_name(Dir, [Dir2|_]),
+	(	getenv(Path, Old)
+	->	(	current_prolog_flag(windows, true)
+		->	Sep = (;)
+		;	Sep = (:)
+		),
+		(	atomic_list_concat(Current, Sep, Old),
+			memberchk(Dir2, Current)
+			->      true                    % already present
+			;
+			atomic_list_concat([Old, Sep, Dir2], New),
+			setenv(Path, New)
+		)
+	;
+		setenv(Path, Dir2)
+	).
 
-% get $ELFROOT or set relative to $ELFAPP
-:- getenv('ELFROOT', _V) ; expand_file_name('$ELFAPP/../..', [F]), setenv('ELFROOT', F).
+% set environment variables that we will be interpreting
+setup_nimrodel_env :-
+	prompt(_P, ''),
+	working_directory(D, D),
+	nimrodel_env('ELFAPP', D),
+	nimrodel_env('ELFROOT', '$ELFAPP/3rd-party/elf'),
+	nimrodel_env('ELF', '$ELFROOT/elf'),
+	nimrodel_env('DATR', '$ELF/datr').
 
-% get $ELF or set relative to $ELFROOT
-:- getenv('ELF', _V) ; expand_file_name('$ELFROOT/elf', [F]), setenv('ELF', F).
+% only needed when loading from precompiled state
+nimrodel_do_runtime_setup :-
+	setup_nimrodel_env,
+	nimrodel_add_search_path('CLASSPATH', '$ELFROOT/opennlp/lib/opennlp-tools-1.5.3.jar').
 
-% get $DATR or set relative to $ELF
-:- getenv('DATR', _V); expand_file_name('$ELF/datr', [F]), setenv('DATR', F).
+:- setup_nimrodel_env.
 
 % load datr (and patches) if required - assert quiet flag first to prevent printing of messages
 :- clause(datr_compile(_X),_Y); 
@@ -86,18 +116,19 @@ on_file(File) :-
 % 4. recursive traversal, no output (just timing)
 % ----------------------------------------------------------------------
 
-% traverse_dir/0, traverse_dir/2
+% traverse_dir/0, traverse_dir/1, traverse_dir/2
 % walk a directory, and invoke DATR app.MAIN on each file
 % within that dir (recursive search)
 %
 % save the result with a mirror filename in the output dir
-traverse_dir :- swi_get_arglist([A1, A2|As]),
-	!,
+traverse_dir :- swi_get_arglist(L), traverse_dir(L).
+traverse_dir([A1, A2|As]) :-
 	% last two args are dir in and out; any before are flags
 	reverse([A1, A2| As], [DirOut, DirIn | RevFlags]),
 	reverse(RevFlags, Flags),
 	traverse_dir(Flags, DirIn, DirOut), halt.
-traverse_dir :- write('Usage: <prognam> [nimrodel-arg...] input-dir output-dir'), nl, halt.
+traverse_dir(_) :-
+	write('Usage: <prognam> [nimrodel-arg...] input-dir output-dir'), nl, halt.
 traverse_dir(Flags, DirIn, DirOut) :- on_dir(DirIn, DirOut, query_and_jsonify(Flags)).
 
 % time_dir/0
@@ -162,6 +193,25 @@ time_repeat_on_str(File, N, Str) :-
 	time_query_str(File, Str),
 	Nm1 is N-1,
 	time_repeat_on_str(File, Nm1, Str).
+
+% ----------------------------------------------------------------------
+% mode 6: save state
+%
+% to speed up load time dump the save state to a local cache
+% ----------------------------------------------------------------------
+
+save_state :- swi_get_arglist(L), save_state(L).
+save_state([File]) :-
+	qsave_program(File, [stand_alone(false), goal(dispatch)]).
+
+% treat first arg as command
+dispatch :- swi_get_arglist(L), dispatch(L).
+dispatch([Cmd|L]) :-
+	setup_nimrodel_env,
+	nimrodel_do_runtime_setup,
+	call(Cmd, L), halt.
+dispatch(_) :-
+	write('Usage: <prognam> cmd [arg]..'), nl, halt.
 
 % ----------------------------------------------------------------------
 % core tasks

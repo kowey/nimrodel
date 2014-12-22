@@ -19,10 +19,14 @@ case "$CMD" in
         TAR_BNAME=${TCAPP}-${TCVERSION}
         cd ..
         tar czvf "$TCAPP/${TAR_BNAME}-${TODAY}.tar.bz"\
+            --exclude="$TCAPP/.nimrodel-image"\
             --exclude="$TCAPP/*.tar.bz*"\
             --exclude="$TCAPP/.git/*"\
             --exclude="$TCAPP/tmp"\
             "$TCAPP"
+        ;;
+    save)
+        "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g save_state -- "$@"
         ;;
     time-repeat-file)
         export JAVA_TOOL_OPTIONS="-XX:+HeapDumpOnOutOfMemoryError"
