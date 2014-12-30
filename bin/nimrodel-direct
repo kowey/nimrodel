@@ -1,0 +1,7 @@
+# run nimrodel directly, not via image
+
+. "${0%/*}/env"
+
+CMD=$1
+shift
+"$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g "$CMD" -t halt -- "$@"

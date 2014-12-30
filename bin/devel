@@ -19,11 +19,20 @@ case "$CMD" in
         TAR_BNAME=${TCAPP}-${TCVERSION}
         cd ..
         tar czvf "$TCAPP/${TAR_BNAME}-${TODAY}.tar.bz"\
+            --exclude="$TCAPP/.nimrodel-image"\
             --exclude="$TCAPP/*.tar.bz*"\
             --exclude="$TCAPP/.git/*"\
             --exclude="$TCAPP/tmp"\
             "$TCAPP"
         ;;
+    save)
+        "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g save_state -t halt -- "$@"
+        ;;
+    run)
+        # run without loading nimrodel image
+        CMD=$1
+        shift
+        "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g $CMD -t halt -- "$@"
     time-repeat-file)
         export JAVA_TOOL_OPTIONS="-XX:+HeapDumpOnOutOfMemoryError"
         "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g time_repeat_on_file -t halt -- "$@"

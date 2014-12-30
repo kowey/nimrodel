@@ -7,6 +7,13 @@ exit_usage() {
     exit 1
 }
 
+save_state() {
+    "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g save_state -t halt -- "$1"
+}
+
+NIMRODEL_IMAGE=$TCROOT/.nimrodel-image
+NIMRODEL_SAVED=$TCROOT/.nimrodel-saved
+
 if [ $# -lt 1 ]; then
     exit_usage
 fi
@@ -14,16 +21,39 @@ fi
 CMD=$1
 shift
 
+if [ "$CMD" == "direct" ]; then
+    NIMRODEL_IMAGE=$SCRIPT_DIR/nimrodel-direct
+    chmod u+x "$NIMRODEL_IMAGE"
+    CMD=$1
+    shift
+elif [ ! -e "$NIMRODEL_IMAGE" ]; then
+    echo >&2 'Saving nimrodel image for the first time...'
+    save_state "$NIMRODEL_IMAGE"
+    if [ -e "$TCROOT/.git" ]; then
+        LAST_COMMIT=$(git rev-parse HEAD)
+        echo "$LAST_COMMIT" > "$NIMRODEL_SAVED"
+    fi
+elif [ -e "$TCROOT/.git" ]; then
+    LAST_COMMIT=$(git rev-parse HEAD --git-dir="$TCROOT")
+    SAVED_COMMIT=$(cat "$NIMRODEL_SAVED")
+    if [ "$SAVED_COMMIT" != "$LAST_COMMIT" ]; then
+        echo >&2 'Nimrodel image seems to be out of date; regenerating...'
+        save_state "$TCROOT/.nimrodel-image"
+        echo "$LAST_COMMIT" > "$NIMRODEL_SAVED"
+    fi
+fi
+
+
 case "$CMD" in
     string)
-        "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g main -t halt -- "$@"
+        "$NIMRODEL_IMAGE" main "$@"
         ;;
     file)
         # undocumented because we still need to generalise this to accept flags
-        "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g on_files -t halt -- "$@"
+        "$NIMRODEL_IMAGE" on_files "$@"
         ;;
     dir)
-        "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g traverse_dir -t halt -- "$@"
+        "$NIMRODEL_IMAGE" traverse_dir "$@"
         ;;
     parallel-dir)
         if [ $# -lt 3 ]; then
@@ -36,7 +66,7 @@ case "$CMD" in
         POPPED="${@:1:$((${#}-3))}"
         { cd "$INPUT_DIR" && find . -mindepth 1 -maxdepth 1 -type d ; } |\
             parallel -j "$JOBS"\
-            "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g traverse_dir -t halt --\
+            "$NIMRODEL_IMAGE" traverse_dir\
                  "$POPPED" "$INPUT_DIR/{}" "$OUTPUT_DIR/{}"
         ;;
     selftest)
@@ -44,7 +74,7 @@ case "$CMD" in
         ;;
     *)
         if [ "$CMD" == "-version" -o "$CMD" == "-help" ]; then
-            "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g main -t halt -- "$CMD"
+            "$NIMRODEL_IMAGE" main "$CMD"
         else
             echo >&2 "Unknown command: $CMD"
             echo >&2

@@ -165,10 +165,16 @@ app.JSON:
 		<json rel-equals $id $$date $$wrappedString $focus equals $arg1>
 	%<json rel-inner $id $$date $$wrappedString $focus is_widow_of $arg1> ==
 	%	<json rel-inject 'widowOf' $id $$date $$wrappedString $focus is_widow_of $arg1>
-	<json rel-inner $id $$date $$wrappedString $focus $childrel $arg1> ==
-		<json rel-inject 'childOf' $id $$date $$wrappedString $focus $childrel $arg1>
-	<json rel-inner $id $$date $$wrappedString $focus $grandchildrel $arg1> ==
-		<json rel-inject 'grandchildOf' $id $$date $$wrappedString $focus $grandchildrel $arg1>
+	% NB: it's deliberate that we are explicitly injecting 'childOf' instead of $childrel
+	% we are purposely blurring the distinction between different kinds of child
+	<json rel-inner $id $$date $$wrappedString 1 $childrel $arg1> ==
+		<json rel-inject 'childOf' $id $$date $$wrappedString 1 $childrel $arg1>
+	<json rel-inner $id $$date $$wrappedString 2 $childrel $arg1> ==
+		<json rel-inject 'parentOf' $arg1 $$date $$wrappedString 2 $childrel $arg1>
+	<json rel-inner $id $$date $$wrappedString 1 $grandchildrel $arg1> ==
+		<json rel-inject 'grandchildOf' $id $$date $$wrappedString 1 $grandchildrel $arg1>
+	<json rel-inner $id $$date $$wrappedString 2 $grandchildrel $arg1> ==
+		<json rel-inject 'grandparentOf' $arg1 $$date $$wrappedString 2 $grandchildrel $arg1>
 	<json rel-inner> == <json rel-generic>
 
 	% json rel-generic: relation literal (ish) -> tagged bundle
