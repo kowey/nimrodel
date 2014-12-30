@@ -3,6 +3,40 @@ nimrodel.form.N\):<> == nimrodel.apparatus.N\).
 nimrodel.form.N\,:<> == nimrodel.punc.N\,.
 nimrodel.form.N\.:<> == nimrodel.punc.N\..
 
+nimrodel.form.NBaron: <> == nimrodel.title.Nbaron.
+nimrodel.form.NBaroness: <> == nimrodel.title.Nbaroness.
+nimrodel.form.NBaronet: <> == nimrodel.title.Nbaronet.
+nimrodel.form.NBaronetess: <> == nimrodel.title.Nbaronetess.
+nimrodel.form.NCount: <> == nimrodel.title.Ncount.
+nimrodel.form.NCountess: <> == nimrodel.title.Ncountess.
+nimrodel.form.NDame: <> == nimrodel.title.Ndame.
+nimrodel.form.NDoctor:<> == nimrodel.title.Ndoctor:<0>.
+nimrodel.form.NDuchess: <> == nimrodel.title.Nduchess.
+nimrodel.form.NDuke: <> == nimrodel.title.Nduke.
+nimrodel.form.NEarl: <> == nimrodel.title.Nearl.
+nimrodel.form.NKing: <> == nimrodel.title.Nking.
+nimrodel.form.NLady: <> == nimrodel.title.Nlady.
+nimrodel.form.NLord: <> == nimrodel.title.Nlord.
+nimrodel.form.NMagister:<> == nimrodel.title.Nmagister:<0>.
+nimrodel.form.NMarchioness: <> == nimrodel.title.Nmarchioness.
+nimrodel.form.NMarquess: <> == nimrodel.title.Nmarquess.
+nimrodel.form.NMarquis: <> == nimrodel.title.Nmarquis.
+nimrodel.form.NMiss: <> == nimrodel.title.Nmiss.
+nimrodel.form.NMister:<> == nimrodel.title.Nmister:<0>.
+nimrodel.form.NMistress:<> == nimrodel.title.Nmistress:<0>.
+nimrodel.form.NMrs:<> == nimrodel.abbr.Nmrs.
+nimrodel.form.NMs: <> == nimrodel.title.Nms.
+nimrodel.form.NPrince: <> == nimrodel.title.Nprince.
+nimrodel.form.NPrincess: <> == nimrodel.title.Nprincess.
+nimrodel.form.NQueen: <> == nimrodel.title.Nqueen.
+nimrodel.form.NSaint:<> == nimrodel.title.Nsaint:<0>.
+nimrodel.form.NSir: <> == nimrodel.title.Nsir.
+nimrodel.form.NViscount: <> == nimrodel.title.Nviscount.
+nimrodel.form.NViscountess: <> == nimrodel.title.Nviscountess.
+
+
+
+
 % nimrodel.form.NA: <> == nimrodel.abbr.NA.
 % nimrodel.form.NB: <> == nimrodel.abbr.NB.
 % nimrodel.form.NC: <> == nimrodel.abbr.NC.

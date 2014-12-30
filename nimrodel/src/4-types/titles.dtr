@@ -54,7 +54,7 @@ nimrodel.title.MALETITLE:
 	<> == nimrodel.title.MALETITLEROOT:<0>
 .
 
-nimrodel.title.FEMALETITLEROOT:
+nimrodel.title.FEMALETITLE:
 	<> == nimrodel.title.FEMALETITLEROOT:<0>
 .
 	
