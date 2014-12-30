@@ -1,56 +1,37 @@
 
-% regular title words - these can just use the TITLEROOT node directly 
-% (titles that can be abbreviated need special handling in types/titles.dtr)
-#vars $nimrodel-titleword: 
-	king
-	prince
-	queen
-	princess
-	%mister
-	%mistress
-	%doctor
-	miss
-	ms
-	lord
-	lady
-	sir
-	dame
-	baron
-	baronet
-	%magister
-	%saint
-.
-
-% these entries have abbreviated forms (in abbreviations.dtr) and so need actual nodes
-nimrodel.title.Ndoctor:
-	<> == nimrodel.title.TITLEROOT
-	<$n lex title> == doctor
-.
-
-nimrodel.title.Nmagister:
-	<> == nimrodel.title.TITLEROOT
-	<$n lex title> == magister
-.
-
-
-nimrodel.title.Nmister:
-	<> == nimrodel.title.TITLEROOT
-	<$n lex title> == mister
-.
-
-
-nimrodel.title.Nmistress:
-	<> == nimrodel.title.TITLEROOT
-	<$n lex title> == mistress
-.
-
-
-nimrodel.title.Nsaint:
-	<> == nimrodel.title.TITLEROOT
-	<$n lex title> == saint
-	<$n lex type> == 'FormalPerson'
-.
 
 
 
 
+
+% title words
+
+nimrodel.title.Nbaron: <> == nimrodel.occupation.OCCTITLE.
+nimrodel.title.Nbaroness: <> == nimrodel.occupation.OCCTITLE <token gender> == female.
+nimrodel.title.Nbaronet: <> == nimrodel.occupation.OCCTITLE.
+nimrodel.title.Nbaronetess: <> == nimrodel.occupation.OCCTITLE <token gender> == female.
+nimrodel.title.Ncount: <> == nimrodel.occupation.OCCTITLE.
+nimrodel.title.Ncountess: <> == nimrodel.occupation.OCCTITLE <token gender> == female.	
+nimrodel.title.Ndame: <> == nimrodel.title.FEMALETITLE.
+nimrodel.title.Ndoctor: <> == nimrodel.title.MALETITLEROOT.
+nimrodel.title.Nduchess: <> == nimrodel.occupation.OCCTITLE <token gender> == female.
+nimrodel.title.Nduke: <> == nimrodel.occupation.OCCTITLE.
+nimrodel.title.Nearl: <> == nimrodel.occupation.OCCTITLE.
+nimrodel.title.Nking: <> == nimrodel.occupation.OCCTITLE.
+nimrodel.title.Nlady: <> == nimrodel.title.FEMALETITLE.
+nimrodel.title.Nlord: <> == nimrodel.title.MALETITLE.
+nimrodel.title.Nmagister: <> == nimrodel.title.MALETITLEROOT.
+nimrodel.title.Nmarchioness: <> == nimrodel.occupation.OCCTITLE <token gender> == female.
+nimrodel.title.Nmarquess: <> == nimrodel.occupation.OCCTITLE.
+nimrodel.title.Nmarquis: <> == nimrodel.title.Nmarquess.
+nimrodel.title.Nmiss: <> == nimrodel.title.FEMALETITLE.
+nimrodel.title.Nmister:	<> == nimrodel.title.MALETITLEROOT.
+nimrodel.title.Nmistress: <> == nimrodel.title.FEMALETITLEROOT.
+nimrodel.title.Nms: <> == nimrodel.title.FEMALETITLE.
+nimrodel.title.Nprince: <> == nimrodel.occupation.OCCTITLE.
+nimrodel.title.Nprincess: <> == nimrodel.occupation.OCCTITLE <token gender> == female.
+nimrodel.title.Nqueen: <> == nimrodel.occupation.OCCTITLE <token gender> == female.
+nimrodel.title.Nsaint: <> == nimrodel.title.TITLEROOT <$n lex type> == 'FormalPerson'.
+nimrodel.title.Nsir: <> == nimrodel.title.MALETITLE <lex title> == knight.
+nimrodel.title.Nviscount: <> == nimrodel.occupation.OCCTITLE.
+nimrodel.title.Nviscountess: <> == nimrodel.occupation.OCCTITLE <token gender> == female.

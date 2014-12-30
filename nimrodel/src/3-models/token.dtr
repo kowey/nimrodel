@@ -27,6 +27,7 @@ nimrodel.model.TOKEN:
 	<token index> == elf.SELF
 	<token output> == <render entity token>
 	<token id> == <here token stem>
+	<token norm> == <here token word>
 	<token context> == token stem
 	% nimrodel extensison
 	<token number> == <token mor num>	% semantic number

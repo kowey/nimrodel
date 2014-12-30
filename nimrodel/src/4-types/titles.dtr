@@ -3,7 +3,7 @@
 
 nimrodel.title.TITLE-LOOKUP:
 	<> == **fail**
-	<$nimrodel-titleword> == 'nimrodel.title.TITLE'
+	%<$nimrodel-titleword> == 'nimrodel.title.TITLE'
 .
 
 
@@ -12,8 +12,9 @@ nimrodel.title.TITLEROOT:
 	
 	<$n token type> == title
 	<$n token pos> == title
+	<$n token gender> == unknown
 	
-	<$n lex title> == <here token word .>
+	<$n lex title> == <here token norm .>
 	<$n lex number> == sing
 	
 	<$n lex> == <$n try firstname lex>
@@ -35,9 +36,25 @@ nimrodel.title.TITLEROOT:
 	<case default> == nimrodel.LEXROOT:<>
 .
 
+nimrodel.title.MALETITLEROOT:
+	<> == nimrodel.title.TITLEROOT
+	<$n token gender> == male
+.
+
+nimrodel.title.FEMALETITLEROOT:
+	<> == nimrodel.title.TITLEROOT
+	<$n token gender> == female
+.
 
 nimrodel.title.TITLE:
 	<> == nimrodel.title.TITLEROOT:<0>
 .
-	
 
+nimrodel.title.MALETITLE:
+	<> == nimrodel.title.MALETITLEROOT:<0>
+.
+
+nimrodel.title.FEMALETITLEROOT:
+	<> == nimrodel.title.FEMALETITLEROOT:<0>
+.
+	

@@ -1,5 +1,10 @@
+
 nimrodel.word.Nall:<> == nimrodel.LEXROOT <$phrase> == nimrodel.phrase.QUANT <phrase-np rel> == all.	
 nimrodel.word.Nbag:<> == nimrodel.occupation.Nbag.
+nimrodel.word.Nbaron: <> == nimrodel.title.Nbaron.
+nimrodel.word.Nbaroness: <> == nimrodel.title.Nbaroness.
+nimrodel.word.Nbaronet: <> == nimrodel.title.Nbaronet.
+nimrodel.word.Nbaronetess: <> == nimrodel.title.Nbaronetess.
 nimrodel.word.Nbarrel:<> == nimrodel.occupation.Nbarrel.
 nimrodel.word.Nbasket:<> == nimrodel.occupation.Nbasket.
 nimrodel.word.Nbath:<> == nimrodel.wp-placename.Nbath.
@@ -27,15 +32,21 @@ nimrodel.word.Nchildren:<> == nimrodel.family.Nchildren.
 nimrodel.word.Ncomb:<> == nimrodel.occupation.Ncomb.
 nimrodel.word.Ncommon:<> == nimrodel.land.Ncommon.
 nimrodel.word.Ncopper:<> == nimrodel.occupation.Ncopper.
+nimrodel.word.Ncount: <> == nimrodel.title.Ncount.
+nimrodel.word.Ncountess: <> == nimrodel.title.Ncountess.
 nimrodel.word.Ncoventry:<> == nimrodel.wp-placename.Ncoventry.
 nimrodel.word.Ncrossbow:<> == nimrodel.occupation.Ncrossbow.
+nimrodel.word.Ndame: <> == nimrodel.title.Ndame.
 nimrodel.word.Ndate:<> == nimrodel.apparatus.TRY-APPARATUS:<'nimrodel.LEXROOT'>.
 nimrodel.word.Nderby:<> == nimrodel.wp-placename.Nderby.
 nimrodel.word.Ndoctor:<> == nimrodel.title.Ndoctor:<0>.
 nimrodel.word.Ndoor:<> == nimrodel.occupation.Ndoor.
 nimrodel.word.Ndove:<> == nimrodel.occupation.Ndove.
 nimrodel.word.Ndr:<> == nimrodel.abbr.Ndr.
+nimrodel.word.Nduchess: <> == nimrodel.title.Nduchess.
+nimrodel.word.Nduke: <> == nimrodel.title.Nduke.
 nimrodel.word.Ndurham:<> == nimrodel.wp-placename.Ndurham.
+nimrodel.word.Nearl: <> == nimrodel.title.Nearl.
 nimrodel.word.Nely:<> == nimrodel.wp-placename.Nely.
 nimrodel.word.Newer:<> == nimrodel.occupation.Newer.
 nimrodel.word.Nexeter:<> == nimrodel.wp-placename.Nexeter.
@@ -50,7 +61,9 @@ nimrodel.word.Nhis:<> == nimrodel.pro.Nhis.
 nimrodel.word.Nif:<> == nimrodel.LEXROOT <token pos> == comp.
 nimrodel.word.Nin:<> == nimrodel.prep.Nin.
 nimrodel.word.Nincense:<> == nimrodel.occupation.Nincense.
+nimrodel.word.Nking: <> == nimrodel.title.Nking.
 nimrodel.word.Nkingston:<> == nimrodel.wp-placename.Nkingston.
+nimrodel.word.Nlady: <> == nimrodel.title.Nlady.
 nimrodel.word.Nlancaster:<> == nimrodel.wp-placename.Nlancaster.
 nimrodel.word.Nland:<> == nimrodel.land.Nland.
 nimrodel.word.Nleeds:<> == nimrodel.wp-placename.Nleeds.
@@ -59,16 +72,22 @@ nimrodel.word.Nlichfield:<> == nimrodel.wp-placename.Nlichfield.
 nimrodel.word.Nlincoln:<> == nimrodel.wp-placename.Nlincoln.
 nimrodel.word.Nliverpool:<> == nimrodel.wp-placename.Nliverpool.
 nimrodel.word.Nlondon:<> == nimrodel.wp-placename.Nlondon.
+nimrodel.word.Nlord: <> == nimrodel.title.Nlord.
 nimrodel.word.Nmag:<> == nimrodel.abbr.Nmagister.
 nimrodel.word.Nmagister:<> == nimrodel.title.Nmagister:<0>.
 nimrodel.word.Nmanchester:<> == nimrodel.wp-placename.Nmanchester.
 nimrodel.word.Nmarble:<> == nimrodel.occupation.Nmarble.
+nimrodel.word.Nmarchioness: <> == nimrodel.title.Nmarchioness.
+nimrodel.word.Nmarquess: <> == nimrodel.title.Nmarquess.
+nimrodel.word.Nmarquis: <> == nimrodel.title.Nmarquis.
 nimrodel.word.Nmeasures:<> == nimrodel.occupation.Nmeasures.
+nimrodel.word.Nmiss: <> == nimrodel.title.Nmiss.
 nimrodel.word.Nmister:<> == nimrodel.title.Nmister:<0>.
 nimrodel.word.Nmistress:<> == nimrodel.title.Nmistress:<0>.
 nimrodel.word.Nmount:<> == nimrodel.placename.Nmount.
 nimrodel.word.Nmr:<> == nimrodel.abbr.Nmr.
 nimrodel.word.Nmrs:<> == nimrodel.abbr.Nmrs.
+nimrodel.word.Nms: <> == nimrodel.title.Nms.
 nimrodel.word.Nmustard:<> == nimrodel.occupation.Nmustard.
 nimrodel.word.Nneedle:<> == nimrodel.occupation.Nneedle.
 nimrodel.word.Nnewcastle:<> == nimrodel.wp-placename.Nnewcastle.
@@ -84,7 +103,10 @@ nimrodel.word.Nplymouth:<> == nimrodel.wp-placename.Nplymouth.
 nimrodel.word.Nportsmouth:<> == nimrodel.wp-placename.Nportsmouth.
 nimrodel.word.Npouch:<> == nimrodel.occupation.Npouch.
 nimrodel.word.Npreston:<> == nimrodel.wp-placename.Npreston.
+nimrodel.word.Nprince: <> == nimrodel.title.Nprince.
+nimrodel.word.Nprincess: <> == nimrodel.title.Nprincess.
 nimrodel.word.Nprinted:<> == nimrodel.apparatus.APPARATUS:<'nimrodel.LEXROOT'>.
+nimrodel.word.Nqueen: <> == nimrodel.title.Nqueen.
 nimrodel.word.Nripon:<> == nimrodel.wp-placename.Nripon.
 nimrodel.word.Nsaffron:<> == nimrodel.occupation.Nsaffron.
 nimrodel.word.Nsaint:<> == nimrodel.title.Nsaint:<0>.
@@ -94,6 +116,7 @@ nimrodel.word.Nseal:<> == nimrodel.apparatus.TRY-APPARATUS:<'nimrodel.LEXROOT'>.
 nimrodel.word.Nsheath:<> == nimrodel.occupation.Nsheath.
 nimrodel.word.Nsheffield:<> == nimrodel.wp-placename.Nsheffield.
 nimrodel.word.Nshoe:<> == nimrodel.occupation.Nshoe.
+nimrodel.word.Nsir: <> == nimrodel.title.Nsir.
 nimrodel.word.Nsource:<> == nimrodel.apparatus.TRY-APPARATUS:<'nimrodel.LEXROOT'>.
 nimrodel.word.Nsouthampton:<> == nimrodel.wp-placename.Nsouthampton.
 nimrodel.word.Nst:<> == nimrodel.wp-placename.Nst:<> <matchword> == try 'nimrodel.abbr.Nst'.
@@ -105,6 +128,8 @@ nimrodel.word.Nto:<> == nimrodel.prep.Nto.
 nimrodel.word.Ntruro:<> == nimrodel.wp-placename.Ntruro.
 nimrodel.word.Nvelvet:<> == nimrodel.occupation.Nvelvet.
 nimrodel.word.Nviol:<> == nimrodel.occupation.Nviol.
+nimrodel.word.Nviscount: <> == nimrodel.title.Nviscount.
+nimrodel.word.Nviscountess: <> == nimrodel.title.Nviscountess.
 nimrodel.word.Nwakefield:<> == nimrodel.wp-placename.Nwakefield.
 nimrodel.word.Nwakes:<> == nimrodel.placename.Nwakes.
 nimrodel.word.Nwarranty:<> == nimrodel.apparatus.TRY-APPARATUS:<'nimrodel.transaction.TRANSACTIONROOT'>.

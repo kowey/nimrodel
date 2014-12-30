@@ -1,0 +1,26 @@
+% occupations which can occur in 'X of PLACE' constructions (Eg vicar of Dibley)
+#vars $nimrodel-occofplace:
+	abbess
+	abbot
+	archbishop
+	archdeacon
+	bishop
+	canon
+	chancellor
+	clerk
+	curate
+	deacon
+	%dean
+	parson
+	precentor
+	preceptor
+	prior
+	prioress
+	rector
+	subdeacon
+	subdean
+	subprior
+	succentor
+	vicar
+	warden
+.

@@ -114,6 +114,10 @@ nimrodel.occupation.OCCOFPLACE:
 	<lex> == nimrodel.phraseutils.LEXOFPLACE:< 0 'nimrodel.occupation.OCCUPATIONROOT' lex >
 .
 
+nimrodel.occupation.OCCTITLE:
+	<> == nimrodel.occupation.OCCOFPLACE
+	<lex title> == <here lex norm>
+.
 
 
 #hide nimrodel.stem.Ndean. 
