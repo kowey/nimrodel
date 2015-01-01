@@ -19,7 +19,7 @@ nimrodel.firstname.FIRSTNAME-LOOKUP:
 nimrodel.firstname.FIRSTNAMEROOT:	
 	<> == nimrodel.LEXROOT:<>
 	
-	<token type> == 'firstname'
+	<token type> == firstname
 	<token gender> == unknown
 	<lex type> == 'Person'
 	<lex cat> == propn

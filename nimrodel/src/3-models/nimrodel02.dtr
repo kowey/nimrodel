@@ -57,9 +57,9 @@ nimrodel.model.NIMRODEL02:
 		%	sectionId			% not supported yet
 	
 	% suppress all types except singular 'Person' 
-	%<nimrodel02 type> == <filter <here phrase type .> >
-	%	<filter 'Person'> == IFEQ:< <here phrase number.> sing THEN 'Person' ELSE unknown .>
-	%	<filter> == unknown	
+	<nimrodel02 type> == <filter <here phrase type .> >
+		<filter 'Person'> == IFEQ:< <here phrase number.> sing THEN 'Person' ELSE unknown .>
+		<filter> == unknown	
 	
 	% suppress output of endpoints
 	<nimrodel02 output> == <here phrase output>

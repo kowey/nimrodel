@@ -1,4 +1,5 @@
 
+
 nimrodel.word.Nall:<> == nimrodel.LEXROOT <$phrase> == nimrodel.phrase.QUANT <phrase-np rel> == all.	
 nimrodel.word.Nbag:<> == nimrodel.occupation.Nbag.
 nimrodel.word.Nbarrel:<> == nimrodel.occupation.Nbarrel.
@@ -45,11 +46,17 @@ nimrodel.word.Ngrandchild:<> == nimrodel.family.Ngrandchild.
 nimrodel.word.Ngrandchildren:<> == nimrodel.family.Ngrandchildren.
 nimrodel.word.Ngreat:<> == nimrodel.placename.Ngreat.
 nimrodel.word.Nhalf:<> == nimrodel.LEXROOT <$phrase> == nimrodel.phrase.QUANT.
+nimrodel.word.Nhe:<> == nimrodel.pro.Nhe.
+nimrodel.word.Nher:<> == nimrodel.pro.Nher.
+nimrodel.word.Nhers:<> == nimrodel.pro.Nhers.
 nimrodel.word.Nhereford:<> == nimrodel.wp-placename.Nhereford.
+nimrodel.word.Nhim:<> == nimrodel.pro.Nhim.
 nimrodel.word.Nhis:<> == nimrodel.pro.Nhis.
 nimrodel.word.Nif:<> == nimrodel.LEXROOT <token pos> == comp.
 nimrodel.word.Nin:<> == nimrodel.prep.Nin.
 nimrodel.word.Nincense:<> == nimrodel.occupation.Nincense.
+nimrodel.word.Nit:<> == nimrodel.pro.Nit.
+nimrodel.word.Nits:<> == nimrodel.pro.Nits.
 nimrodel.word.Nkingston:<> == nimrodel.wp-placename.Nkingston.
 nimrodel.word.Nlancaster:<> == nimrodel.wp-placename.Nlancaster.
 nimrodel.word.Nland:<> == nimrodel.land.Nland.
@@ -86,6 +93,7 @@ nimrodel.word.Nsaffron:<> == nimrodel.occupation.Nsaffron.
 nimrodel.word.Nsalford:<> == nimrodel.wp-placename.Nsalford.
 nimrodel.word.Nsalisbury:<> == nimrodel.wp-placename.Nsalisbury.
 nimrodel.word.Nseal:<> == nimrodel.apparatus.TRY-APPARATUS:<'nimrodel.LEXROOT'>.
+nimrodel.word.Nshe:<> == nimrodel.pro.Nshe.
 nimrodel.word.Nsheath:<> == nimrodel.occupation.Nsheath.
 nimrodel.word.Nsheffield:<> == nimrodel.wp-placename.Nsheffield.
 nimrodel.word.Nshoe:<> == nimrodel.occupation.Nshoe.
@@ -94,8 +102,10 @@ nimrodel.word.Nsouthampton:<> == nimrodel.wp-placename.Nsouthampton.
 nimrodel.word.Nst:<> == nimrodel.wp-placename.Nst:<> <phr-default placename> == try 'nimrodel.abbr.Nst'.
 nimrodel.word.Nstoke:<> == nimrodel.wp-placename.Nstoke.
 nimrodel.word.Nsunderland:<> == nimrodel.wp-placename.Nsunderland.
-nimrodel.word.Ntheir:<> == nimrodel.LEXROOT <token pos> == det. % their and theirs - openNLP POS tagger seems to have these backwards?
-nimrodel.word.Ntheirs:<> == nimrodel.LEXROOT <token pos> == pro.
+nimrodel.word.Ntheir:<> == nimrodel.pro.Ntheir.
+nimrodel.word.Ntheirs:<> == nimrodel.pro.Ntheirs.
+nimrodel.word.Nthem:<> == nimrodel.pro.Nthem.
+nimrodel.word.Nthey:<> == nimrodel.pro.Nthey.
 nimrodel.word.Nto:<> == nimrodel.prep.Nto.
 nimrodel.word.Ntruro:<> == nimrodel.wp-placename.Ntruro.
 nimrodel.word.Nvelvet:<> == nimrodel.occupation.Nvelvet.

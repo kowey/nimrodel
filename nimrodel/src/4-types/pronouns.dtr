@@ -1,6 +1,103 @@
 
-
-nimrodel.pro.Nhis:<> == nimrodel.LEXROOT
-	% his - pronoun or determiner?
-	<lex cat> == IF:< ONEOF:< <here token next lex cat .> n adj .> THEN det ELSE pro .>
+nimrodel.pro.PRONOUNROOT:
+	<> == nimrodel.LEXROOT
+	<token type> == pronoun
+	<token gender> == unknown
 .
+
+nimrodel.pro.PERSON:
+	<> == nimrodel.pro.PRONOUNROOT
+	<token number> == sing
+	<lex type> == 'Person'
+.
+
+nimrodel.pro.MALEPERSON:
+	<> == nimrodel.pro.PERSON
+	<token gender> == male
+.
+
+nimrodel.pro.FEMALEPERSON:
+	<> == nimrodel.pro.PERSON
+	<token gender> == female
+.
+
+nimrodel.pro.NONPERSON:
+	<> == nimrodel.pro.PRONOUNROOT
+	<token number> == sing
+	<token gender> == neutral
+.
+
+nimrodel.pro.PLURAL:
+	<> == nimrodel.pro.PRONOUNROOT
+	<token number> == plur
+.
+
+nimrodel.pro.POSS:
+	<> == nimrodel.pro.PRONOUNROOT
+	<lex cat> == pro
+.
+
+nimrodel.pro.POSSDET:
+	<> == nimrodel.pro.PRONOUNROOT
+	<lex cat> == det
+.
+	
+	
+nimrodel.pro.Nhe:
+	<> == nimrodel.pro.MALEPERSON
+.
+
+nimrodel.pro.Nhim:
+	<> == nimrodel.pro.MALEPERSON
+.
+
+% possessive determiner or possessive pronoun?
+nimrodel.pro.Nhis:
+	<> == nimrodel.pro.MALEPERSON
+	<lex> == IF:< ONEOF:< <here token next lex cat .> n adj .> THEN nimrodel.pro.POSSDET ELSE nimrodel.pro.POSS .>
+.
+
+nimrodel.pro.Nshe:
+	<> == nimrodel.pro.FEMALEPERSON
+.
+
+% possessive determiner or accusative? 
+nimrodel.pro.Nher:
+	<> == nimrodel.pro.FEMALEPERSON
+	<lex> == IF:< ONEOF:< <here token next lex cat .> n adj .> THEN nimrodel.pro.POSSDET ELSE nimrodel.pro.FEMALEPERSON .>
+.
+
+nimrodel.pro.Nhers:
+	<> == nimrodel.pro.FEMALEPERSON
+	<lex> == nimrodel.pro.POSS
+.
+
+% nominative or accusative?
+nimrodel.pro.Nit:
+	<> == nimrodel.pro.NONPERSON
+.
+
+% possessive determiner or possessive pronoun?
+nimrodel.pro.Nits:
+	<> == nimrodel.pro.NONPERSON
+	<lex> == IF:< ONEOF:< <here token next lex cat .> n adj .> THEN nimrodel.pro.POSSDET ELSE nimrodel.pro.NONPERSON .>
+.
+
+nimrodel.pro.Nthey:
+	<> == nimrodel.pro.PLURAL
+.
+
+nimrodel.pro.Nthem:
+	<> == nimrodel.pro.PLURAL
+.
+
+nimrodel.pro.Ntheir:
+	<> == nimrodel.pro.PLURAL
+	<lex> == nimrodel.pro.POSSDET
+.
+
+nimrodel.pro.Ntheirs:
+	<> == nimrodel.pro.PLURAL
+	<lex> == nimrodel.pro.POSS
+.
+
