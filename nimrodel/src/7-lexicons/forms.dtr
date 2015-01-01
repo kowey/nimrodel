@@ -40,7 +40,7 @@ nimrodel.form.NViscountess: <> == nimrodel.title.Nviscountess.
 
 
 % Abbreviated first names
-nimrodel.form.NA: <> == nimrodel.abbr.NA.
+%nimrodel.form.NA: <> == nimrodel.abbr.NA.	% Don't match bare 'A', only 'A.'
 nimrodel.form.NB: <> == nimrodel.abbr.NB.
 nimrodel.form.NC: <> == nimrodel.abbr.NC.
 nimrodel.form.ND: <> == nimrodel.abbr.ND.
@@ -48,7 +48,7 @@ nimrodel.form.NE: <> == nimrodel.abbr.NE.
 nimrodel.form.NF: <> == nimrodel.abbr.NF.
 nimrodel.form.NG: <> == nimrodel.abbr.NG.
 nimrodel.form.NH: <> == nimrodel.abbr.NH.
-nimrodel.form.NI: <> == nimrodel.abbr.NI.
+%nimrodel.form.NI: <> == nimrodel.abbr.NI.  % Don't match bare 'I', only 'I.'
 nimrodel.form.NJ: <> == nimrodel.abbr.NJ.
 nimrodel.form.NK: <> == nimrodel.abbr.NK.
 nimrodel.form.NL: <> == nimrodel.abbr.NL.

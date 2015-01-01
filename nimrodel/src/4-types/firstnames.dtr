@@ -28,64 +28,57 @@ nimrodel.firstname.FIRSTNAMEROOT:
 	<lex number> == sing
 .
 
+% token types that can appear as surnames
+#vars $surname-type: surname propnoun firstname 'Occupation'.
+
+
 % try various patterns that follow a firstname to build a lexical person phrase
 nimrodel.firstname.TRYFIRSTNAME:	
-	<> == elf.TOP
-	<node $$n> == Local:<$$n>
+	<> == nimrodel.LEX-TOP
+	<[ $$n ]> == nimrodel.phraseutils.PHRASEROOT:<[ $$n ]>
 	
-	<node $$n lex> == <node $$n try phrase lex>
+	<[ $$n ] lex> == <[ $$n ] switch 3 lex>
+	<[ $$n ] token context> == token word+type
 	
-	<node $$n try phrase> == <node $$n <map nimrodel.context.NEXT:<2 token context .> .> >
+	% map is a list of 3 word/type pairs for next three words
+	<[ $$n ] map de $$t1 $$s2> == phr-case article de 2 $$s2 
+	<[ $$n ] map of $$t1 $$s2 placename> == phr-case article of 2 $$s2 
+	<[ $$n ] map of $$t1 $$s2 propnoun> == phr-case article of 2 $$s2 
+	<[ $$n ] map the $$t1 $$s2 'Occupation'> == phr-case article the 2 $$s2
+	<[ $$n ] map le $$t1 $$s2> == phr-case article le 2 $$s2
+	<[ $$n ] map la $$t1 $$s2> == phr-case article la 2 $$s2
+	<[ $$n ] map $$s1 $surname-type de $$t2 $$s3> == phr-case article de 3 $$s3 $$s1
+	<[ $$n ] map $$s1 $surname-type of $$t2 $$s3 placename> == phr-case article of 3 $$s3 $$s1
+	<[ $$n ] map $$s1 $surname-type of $$t2 $$s3 propnoun> == phr-case article of 3 $$s3 $$s1
+	<[ $$n ] map $$s1 $surname-type> == phr-case surname $$s1
 	
-	%<map son of> == try type 2 firstname
-	<map de> == try type 1 placename 
-	<map of> == try type 1 placename 
-	%<map his brother> == case brother
-	<map the> == try type 1 occupation
-	<map le> == try type 1 occupation
-	<map> == try type 0 surname
+		
+	<[ $$n ] phr-case article $$a 2 $$s lex article> == $$a
+	<[ $$n ] phr-case article de 2 $$s lex provenance> == $$s
+	<[ $$n ] phr-case article of 2 $$s lex provenance> == $$s
+	<[ $$n ] phr-case article $$a 2 $$s> == <[ $$n ] phr-case skip 2 lex> 
+	<[ $$n ] phr-case article $$a 3 $$s $$s2 lex article> == $$a
+	<[ $$n ] phr-case article de 3 $$s $$s2 lex provenance> == $$s
+	<[ $$n ] phr-case article of 3 $$s $$s2 lex provenance> == $$s
+	<[ $$n ] phr-case article de 3 $$s $$s2 lex surname> == $$s2
+	<[ $$n ] phr-case article of 3 $$s $$s2 lex surname> == $$s2
+	<[ $$n ] phr-case article $$a 3 $$s $$s2> == <[ $$n ] phr-case skip 3 lex> 
 	
-	<node $$n try type $$skip $$target> == <node $$n <map2 $$target <node $$n here nimrodel.context.SKIP:<$$skip token.> token next token type .> .> >
-	
-	<map2 firstname firstname> == case skip 3 lex
-	<map2 firstname propnoun> == case skip 3 lex
-	<map2 placename placename> == case skip 2 lex
-	<map2 placename propnoun> == case skip 2 lex
-	<map2 placename2 placename> == case skip 3 lex
-	<map2 placename2 propnoun> == case skip 3 lex
-	<map2 placename2> == case skip 1 lex
-	<map2 surname surname> == try surname
-	<map2 surname propnoun> == try surname
-	<map2 surname 'Occupation'> == case skip 1 lex
-	<map2 occupation 'Occupation'> == case skip 2 lex
-	<map2 occupation> == case skip 2 lex
-	<map2> == case default 
-	
-	<node $$n try surname> == <node $$n <map3 <node $$n here token next token next token stem .> .> >
-	
-	<map3 de> == try type 2 placename2
-	<map3 of> == try type 2 placename2
-	<map3> == case skip 1 lex
-	
-	<node $$n case skip $$m> == nimrodel.phraseutils.SKIP:< $$m 'nimrodel.firstname.FIRSTNAMEROOT'>
-	<node $$n case skip $$m lex lex surname> == Implode:<Hyphenate:<' ' nimrodel.phraseutils.NEXT:< $$m 'nimrodel.firstname.FIRSTNAMEROOT' token token word .> .> .>
-	<node $$n case brother> == nimrodel.phraseutils.SKIP:< 2 'nimrodel.firstname.FIRSTNAMEROOT' lex>
-	<node $$n case default> == Local:<$$n>
+	<[ $$n ] phr-case surname $$s lex surname> == $$s 
+	<[ $$n ] phr-case surname $$s> == <[ $$n ] phr-case skip 1 lex> 
+
+	<[ $$n ] phr-default> == match
 .
 
-% look for evidence that a word is a firstname before treating it as one
-nimrodel.firstname.MAYBEFIRSTNAME:
-	<> == nimrodel.firstname.TRYFIRSTNAME
-.
 
 nimrodel.firstname.FEMALEFIRSTNAMEROOT:
-	<> == nimrodel.firstname.TRYFIRSTNAME:<node 'nimrodel.firstname.FIRSTNAMEROOT'>
+	<> == nimrodel.firstname.TRYFIRSTNAME:<[ 'nimrodel.firstname.FIRSTNAMEROOT' ]>
 	<token gender> == female
 .
 
 
 nimrodel.firstname.MALEFIRSTNAMEROOT:
-	<> == nimrodel.firstname.TRYFIRSTNAME:<node 'nimrodel.firstname.FIRSTNAMEROOT'>
+	<> == nimrodel.firstname.TRYFIRSTNAME:<[ 'nimrodel.firstname.FIRSTNAMEROOT' ]>
 	<token gender> == male
 .
 

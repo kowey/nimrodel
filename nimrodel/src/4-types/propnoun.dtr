@@ -5,24 +5,11 @@ nimrodel.propnoun.PROPNOUN-LOOKUP:
 	<> == **fail**
 	<$stem $role> == IF:< AND:< EQUAL:< nimrodel.STRING-QUERY:<$role param pos .> n .>  
 					  		    EQUAL:< nimrodel.STRING-QUERY:<$role param casetype .> capitalised .> .>
-						  THEN 'nimrodel.propnoun.PROPNOUNTEST' ELSE **fail** .>
+						  THEN 'nimrodel.propnoun.PROPNOUNROOT' ELSE **fail** .>
 .
 
 nimrodel.propnoun.PROPNOUNROOT:	
 	<> == nimrodel.LEXROOT:<>
 	
 	<token type> == propnoun	
-.
-
-nimrodel.propnoun.PROPNOUNTEST:	
-	<> == nimrodel.propnoun.PROPNOUNROOT
-	% this is massively overgenerating, so commented out until fixed - but now dependent on list of firstnames
-	%<lex> == nimrodel.firstname.MAYBEFIRSTNAME:<node 'nimrodel.propnoun.UNKNOWN' lex>	
-.
-
-nimrodel.propnoun.UNKNOWN:
-	<> == nimrodel.propnoun.PROPNOUNROOT
-	% un-assign lexical type so these words don't play a role unless
-	% selected by something else
-	<lex type> == unknown
 .

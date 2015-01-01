@@ -52,7 +52,7 @@ nimrodel.firstname.IS-FIRSTNAME-MALE:
 	%william
 .
 
-% names with abbreviations need explicit nodes
+% names with abbreviations need explicit nodes (and explicit forenames - can't rely on word itself)
 nimrodel.firstname.Nanthony: <> == nimrodel.firstname.MALEFIRSTNAMEROOT <lex forename> == anthony.
 nimrodel.firstname.Nedward: <> == nimrodel.firstname.MALEFIRSTNAMEROOT <lex forename> == edward.
 nimrodel.firstname.Ngeorge: <> == nimrodel.firstname.MALEFIRSTNAMEROOT <lex forename> == george.

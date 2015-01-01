@@ -29,6 +29,9 @@ nimrodel.model.TOKEN:
 	<token id> == <here token stem>
 	<token norm> == <here token word>
 	<token context> == token stem
+	% compound features - useful for phrase matching
+	<token stem+type> == <here token stem> <here token type>
+	<token word+type> == <here token word> <here token type>
 	% nimrodel extensison
 	<token number> == <token mor num>	% semantic number
 	
