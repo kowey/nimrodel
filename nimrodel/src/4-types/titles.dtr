@@ -7,54 +7,48 @@ nimrodel.title.TITLE-LOOKUP:
 .
 
 
-nimrodel.title.TITLEROOT:	
-	<$n> == nimrodel.LEXROOT:<>
+nimrodel.title.TITLEROOT:
+	<> == nimrodel.LEXROOT
 	
-	<$n token type> == title
-	<$n token pos> == title
-	<$n token gender> == unknown
+	<[ $$n ]> == nimrodel.LEXROOT:<>
 	
-	<$n lex title> == <here token norm .>
-	<$n lex number> == sing
+	<[ $$n ] token type> == title
+	<[ $$n ] token pos> == title
+	<[ $$n ] token gender> == unknown
 	
-	<$n lex> == <$n try firstname lex>
+	<[ $$n ] lex title> == <here token norm .>
+	<[ $$n ] lex number> == sing
 	
-	<$n try firstname> == < IFEQ:< <$n here token nextn Add:<$n 1 .> lex type .> 'Person' 
-					     THEN $n case firstname
-					     ELSE $n try propnoun .> >
-	<$n try propnoun> == < IFEQ:< <$n here token nextn Add:<$n 1 .> token type .> propnoun
-					     THEN $n case firstname
+	<[ $$n ] lex> == <[ $$n ] try firstname lex>
+	
+	<[ $$n ] try firstname> == < [ $$n ] IFEQ:< <here token nextn Add:<$$n 1 .> lex type .> 'Person' 
+					     THEN case firstname
+					     ELSE try propnoun .> >
+	<[ $$n ] try propnoun> == < [ $$n ] IFEQ:< <here token nextn Add:<$$n 1 .> token type .> propnoun
+					     THEN case firstname
 					     ELSE case default .> >
 	
-	<$n case firstname lex nextrole> == <$n here token nextn Add:<$n 1 .> lex nextrole .>
-	<$n case firstname lex end-char> == <$n here token nextn Add:<$n 1 .> lex end-char .>
-	<$n case firstname lex type> == 'Person'
-	<$n case firstname lex gender> == <$n here token nextn Add:<$n 1 .> lex gender>
-	<$n case firstname lex output> == <$n render attr4 lex title <$n here lex title.> <$n render extend lex <$n here token nextn Add:<$n 1 .> lex output> .> .>
-	
-	<$n case firstname> == <case default>
-	<case default> == nimrodel.LEXROOT:<>
-.
-
-nimrodel.title.MALETITLEROOT:
-	<> == nimrodel.title.TITLEROOT
-	<$n token gender> == male
-.
-
-nimrodel.title.FEMALETITLEROOT:
-	<> == nimrodel.title.TITLEROOT
-	<$n token gender> == female
+	<[ $$n ] case firstname lex nextrole> == <here token nextn Add:<$$n 1 .> lex nextrole .>
+	<[ $$n ] case firstname lex end-char> == <here token nextn Add:<$$n 1 .> lex end-char .>
+	<[ $$n ] case firstname lex type> == 'Person'
+	<[ $$n ] case firstname lex gender> == <here token nextn Add:<$$n 1 .> lex gender>
+	<[ $$n ] case firstname lex output> == <render attr4 lex title <here lex title.> <render extend lex <here token nextn Add:<$$n 1 .> lex output> .> .>	
+	<[ $$n ] case firstname> == nimrodel.LEXROOT:<>
+	<[ $$n ] case default> == nimrodel.LEXROOT:<>
 .
 
 nimrodel.title.TITLE:
-	<> == nimrodel.title.TITLEROOT:<0>
+	<[ > == nimrodel.title.TITLEROOT:<[>
+	<> == <[ 0 ]>
 .
 
 nimrodel.title.MALETITLE:
-	<> == nimrodel.title.MALETITLEROOT:<0>
+	<> == nimrodel.title.TITLE
+	<token gender> == male
 .
 
 nimrodel.title.FEMALETITLE:
-	<> == nimrodel.title.FEMALETITLEROOT:<0>
+	<> == nimrodel.title.TITLE
+	<token gender> == female
 .
 	

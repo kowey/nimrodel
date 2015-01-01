@@ -13,25 +13,25 @@ nimrodel.title.Nbaronetess: <> == nimrodel.occupation.OCCTITLE <token gender> ==
 nimrodel.title.Ncount: <> == nimrodel.occupation.OCCTITLE.
 nimrodel.title.Ncountess: <> == nimrodel.occupation.OCCTITLE <token gender> == female.	
 nimrodel.title.Ndame: <> == nimrodel.title.FEMALETITLE.
-nimrodel.title.Ndoctor: <> == nimrodel.title.MALETITLEROOT.
+nimrodel.title.Ndoctor: <> == nimrodel.title.MALETITLE.
 nimrodel.title.Nduchess: <> == nimrodel.occupation.OCCTITLE <token gender> == female.
 nimrodel.title.Nduke: <> == nimrodel.occupation.OCCTITLE.
 nimrodel.title.Nearl: <> == nimrodel.occupation.OCCTITLE.
 nimrodel.title.Nking: <> == nimrodel.occupation.OCCTITLE.
 nimrodel.title.Nlady: <> == nimrodel.title.FEMALETITLE.
 nimrodel.title.Nlord: <> == nimrodel.title.MALETITLE.
-nimrodel.title.Nmagister: <> == nimrodel.title.MALETITLEROOT.
+nimrodel.title.Nmagister: <> == nimrodel.title.MALETITLE.
 nimrodel.title.Nmarchioness: <> == nimrodel.occupation.OCCTITLE <token gender> == female.
 nimrodel.title.Nmarquess: <> == nimrodel.occupation.OCCTITLE.
 nimrodel.title.Nmarquis: <> == nimrodel.title.Nmarquess.
 nimrodel.title.Nmiss: <> == nimrodel.title.FEMALETITLE.
-nimrodel.title.Nmister:	<> == nimrodel.title.MALETITLEROOT.
-nimrodel.title.Nmistress: <> == nimrodel.title.FEMALETITLEROOT.
+nimrodel.title.Nmister:	<> == nimrodel.title.MALETITLE.
+nimrodel.title.Nmistress: <> == nimrodel.title.FEMALETITLE.
 nimrodel.title.Nms: <> == nimrodel.title.FEMALETITLE.
 nimrodel.title.Nprince: <> == nimrodel.occupation.OCCTITLE.
 nimrodel.title.Nprincess: <> == nimrodel.occupation.OCCTITLE <token gender> == female.
 nimrodel.title.Nqueen: <> == nimrodel.occupation.OCCTITLE <token gender> == female.
-nimrodel.title.Nsaint: <> == nimrodel.title.TITLEROOT <$n lex type> == 'FormalPerson'.
+nimrodel.title.Nsaint: <> == nimrodel.title.TITLE <lex type> == 'FormalPerson'.
 nimrodel.title.Nsir: <> == nimrodel.title.MALETITLE <lex title> == knight.
 nimrodel.title.Nviscount: <> == nimrodel.occupation.OCCTITLE.
 nimrodel.title.Nviscountess: <> == nimrodel.occupation.OCCTITLE <token gender> == female.

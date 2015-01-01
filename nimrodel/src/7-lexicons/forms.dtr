@@ -10,56 +10,96 @@ nimrodel.form.NBaronetess: <> == nimrodel.title.Nbaronetess.
 nimrodel.form.NCount: <> == nimrodel.title.Ncount.
 nimrodel.form.NCountess: <> == nimrodel.title.Ncountess.
 nimrodel.form.NDame: <> == nimrodel.title.Ndame.
-nimrodel.form.NDoctor:<> == nimrodel.title.Ndoctor:<0>.
+nimrodel.form.NDoctor:<> == nimrodel.title.Ndoctor.
+nimrodel.form.NDr\.:<> == nimrodel.title.Ndoctor.	% tokeniser doesn't split this
 nimrodel.form.NDuchess: <> == nimrodel.title.Nduchess.
 nimrodel.form.NDuke: <> == nimrodel.title.Nduke.
 nimrodel.form.NEarl: <> == nimrodel.title.Nearl.
 nimrodel.form.NKing: <> == nimrodel.title.Nking.
 nimrodel.form.NLady: <> == nimrodel.title.Nlady.
 nimrodel.form.NLord: <> == nimrodel.title.Nlord.
-nimrodel.form.NMagister:<> == nimrodel.title.Nmagister:<0>.
+nimrodel.form.NMagister:<> == nimrodel.title.Nmagister.
 nimrodel.form.NMarchioness: <> == nimrodel.title.Nmarchioness.
 nimrodel.form.NMarquess: <> == nimrodel.title.Nmarquess.
 nimrodel.form.NMarquis: <> == nimrodel.title.Nmarquis.
 nimrodel.form.NMiss: <> == nimrodel.title.Nmiss.
-nimrodel.form.NMister:<> == nimrodel.title.Nmister:<0>.
-nimrodel.form.NMistress:<> == nimrodel.title.Nmistress:<0>.
+nimrodel.form.NMister:<> == nimrodel.title.Nmister.
+nimrodel.form.NMr\.:<> == nimrodel.title.Nmister.	% tokeniser doesn't split this
+nimrodel.form.NMistress:<> == nimrodel.title.Nmistress.
 nimrodel.form.NMrs:<> == nimrodel.abbr.Nmrs.
+nimrodel.form.NMrs\.:<> == nimrodel.abbr.Nmrs.	% tokeniser doesn't split this
 nimrodel.form.NMs: <> == nimrodel.title.Nms.
+nimrodel.form.NMs\.: <> == nimrodel.title.Nms.	% tokeniser doesn't split this
 nimrodel.form.NPrince: <> == nimrodel.title.Nprince.
 nimrodel.form.NPrincess: <> == nimrodel.title.Nprincess.
 nimrodel.form.NQueen: <> == nimrodel.title.Nqueen.
-nimrodel.form.NSaint:<> == nimrodel.title.Nsaint:<0>.
+nimrodel.form.NSaint:<> == nimrodel.title.Nsaint.
 nimrodel.form.NSir: <> == nimrodel.title.Nsir.
 nimrodel.form.NViscount: <> == nimrodel.title.Nviscount.
 nimrodel.form.NViscountess: <> == nimrodel.title.Nviscountess.
 
 
+% Abbreviated first names
+nimrodel.form.NA: <> == nimrodel.abbr.NA.
+nimrodel.form.NB: <> == nimrodel.abbr.NB.
+nimrodel.form.NC: <> == nimrodel.abbr.NC.
+nimrodel.form.ND: <> == nimrodel.abbr.ND.
+nimrodel.form.NE: <> == nimrodel.abbr.NE.
+nimrodel.form.NF: <> == nimrodel.abbr.NF.
+nimrodel.form.NG: <> == nimrodel.abbr.NG.
+nimrodel.form.NH: <> == nimrodel.abbr.NH.
+nimrodel.form.NI: <> == nimrodel.abbr.NI.
+nimrodel.form.NJ: <> == nimrodel.abbr.NJ.
+nimrodel.form.NK: <> == nimrodel.abbr.NK.
+nimrodel.form.NL: <> == nimrodel.abbr.NL.
+nimrodel.form.NM: <> == nimrodel.abbr.NM.
+nimrodel.form.NN: <> == nimrodel.abbr.NN.
+nimrodel.form.NO: <> == nimrodel.abbr.NO.
+nimrodel.form.NP: <> == nimrodel.abbr.NP.
+nimrodel.form.NQ: <> == nimrodel.abbr.NQ.
+nimrodel.form.NR: <> == nimrodel.abbr.NR.
+nimrodel.form.NS: <> == nimrodel.abbr.NS.
+nimrodel.form.NT: <> == nimrodel.abbr.NT.
+nimrodel.form.NU: <> == nimrodel.abbr.NU.
+nimrodel.form.NV: <> == nimrodel.abbr.NV.
+nimrodel.form.NW: <> == nimrodel.abbr.NW.
+nimrodel.form.NX: <> == nimrodel.abbr.NX.
+nimrodel.form.NY: <> == nimrodel.abbr.NY.
+nimrodel.form.NZ: <> == nimrodel.abbr.NZ.
 
+% need forms with period too - tokeniser doesn't split these properly
+nimrodel.form.NA\.: <> == nimrodel.abbr.NA <lex forename> == a.
+nimrodel.form.NB\.: <> == nimrodel.abbr.NB <lex forename> == b.
+nimrodel.form.NC\.: <> == nimrodel.abbr.NC <lex forename> == c.
+nimrodel.form.ND\.: <> == nimrodel.abbr.ND <lex forename> == d.
+nimrodel.form.NE\.: <> == nimrodel.abbr.NE <lex forename> == e.
+nimrodel.form.NF\.: <> == nimrodel.abbr.NF <lex forename> == f.
+nimrodel.form.NG\.: <> == nimrodel.abbr.NG <lex forename> == g.
+nimrodel.form.NH\.: <> == nimrodel.abbr.NH <lex forename> == h.
+nimrodel.form.NI\.: <> == nimrodel.abbr.NI <lex forename> == i.
+nimrodel.form.NJ\.: <> == nimrodel.abbr.NJ <lex forename> == j.
+nimrodel.form.NK\.: <> == nimrodel.abbr.NK <lex forename> == k.
+nimrodel.form.NL\.: <> == nimrodel.abbr.NL <lex forename> == l.
+nimrodel.form.NM\.: <> == nimrodel.abbr.NM <lex forename> == m.
+nimrodel.form.NN\.: <> == nimrodel.abbr.NN <lex forename> == n.
+nimrodel.form.NO\.: <> == nimrodel.abbr.NO <lex forename> == o.
+nimrodel.form.NP\.: <> == nimrodel.abbr.NP <lex forename> == p.
+nimrodel.form.NQ\.: <> == nimrodel.abbr.NQ <lex forename> == q.
+nimrodel.form.NR\.: <> == nimrodel.abbr.NR <lex forename> == r.
+nimrodel.form.NS\.: <> == nimrodel.abbr.NS <lex forename> == s.
+nimrodel.form.NT\.: <> == nimrodel.abbr.NT <lex forename> == t.
+nimrodel.form.NU\.: <> == nimrodel.abbr.NU <lex forename> == u.
+nimrodel.form.NV\.: <> == nimrodel.abbr.NV <lex forename> == v.
+nimrodel.form.NW\.: <> == nimrodel.abbr.NW <lex forename> == w.
+nimrodel.form.NX\.: <> == nimrodel.abbr.NX <lex forename> == x.
+nimrodel.form.NY\.: <> == nimrodel.abbr.NY <lex forename> == y.
+nimrodel.form.NZ\.: <> == nimrodel.abbr.NZ <lex forename> == z.
 
-% nimrodel.form.NA: <> == nimrodel.abbr.NA.
-% nimrodel.form.NB: <> == nimrodel.abbr.NB.
-% nimrodel.form.NC: <> == nimrodel.abbr.NC.
-% nimrodel.form.ND: <> == nimrodel.abbr.ND.
-% nimrodel.form.NE: <> == nimrodel.abbr.NE.
-% nimrodel.form.NF: <> == nimrodel.abbr.NF.
-% nimrodel.form.NG: <> == nimrodel.abbr.NG.
-% nimrodel.form.NH: <> == nimrodel.abbr.NH.
-% nimrodel.form.NI: <> == nimrodel.abbr.NI.
-% nimrodel.form.NJ: <> == nimrodel.abbr.NJ.
-% nimrodel.form.NK: <> == nimrodel.abbr.NK.
-% nimrodel.form.NL: <> == nimrodel.abbr.NL.
-% nimrodel.form.NM: <> == nimrodel.abbr.NM.
-% nimrodel.form.NN: <> == nimrodel.abbr.NN.
-% nimrodel.form.NO: <> == nimrodel.abbr.NO.
-% nimrodel.form.NP: <> == nimrodel.abbr.NP.
-% nimrodel.form.NQ: <> == nimrodel.abbr.NQ.
-% nimrodel.form.NR: <> == nimrodel.abbr.NR.
-% nimrodel.form.NS: <> == nimrodel.abbr.NS.
-% nimrodel.form.NT: <> == nimrodel.abbr.NT.
-% nimrodel.form.NU: <> == nimrodel.abbr.NU.
-% nimrodel.form.NV: <> == nimrodel.abbr.NV.
-% nimrodel.form.NW: <> == nimrodel.abbr.NW.
-% nimrodel.form.NX: <> == nimrodel.abbr.NX.
-% nimrodel.form.NY: <> == nimrodel.abbr.NY.
-% nimrodel.form.NZ: <> == nimrodel.abbr.NZ.
+% abrreviated firstnames
+% nimrodel.form.NAnth:<> == nimrodel.abbr.NAnth.
+% nimrodel.form.NEdw:<> == nimrodel.abbr.NEdw.
+% nimrodel.form.NGeo:<> == nimrodel.abbr.NGeo.
+% nimrodel.form.NNich:<> == nimrodel.abbr.NNich.
+% nimrodel.form.NTho:<> == nimrodel.abbr.NTho.
+% nimrodel.form.NThos:<> == nimrodel.abbr.NThos.
+% nimrodel.form.NWm:<> == nimrodel.abbr.NWm.

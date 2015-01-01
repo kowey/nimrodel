@@ -1,33 +1,42 @@
-nimrodel.abbr.Ndr: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.title.Ndoctor'> <lex title> == doctor.
-nimrodel.abbr.Nmag: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.title.Nmagister'> <lex title> == magister.
-nimrodel.abbr.Nmr: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.title.Nmister'> <lex title> == mister.
-nimrodel.abbr.Nmrs: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.title.Nmistress'> <lex title> == mistress.
-nimrodel.abbr.Nst: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.title.Nsaint'> <lex title> == saint.
+nimrodel.abbr.Ndr: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.title.Ndoctor' ]> <lex title> == doctor.
+nimrodel.abbr.Nmag: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.title.Nmagister' ]> <lex title> == magister.
+nimrodel.abbr.Nmr: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.title.Nmister' ]> <lex title> == mister.
+nimrodel.abbr.Nmrs: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.title.Nmistress' ]> <lex title> == mistress.
+nimrodel.abbr.Nst: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.title.Nsaint' ]> <lex title> == saint.
 
 % single initials - treat as firstnames (these are forms - ie capitalisation matters)
-% nimrodel.abbr.NA: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NB: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NC: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.ND: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NE: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NF: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NG: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NH: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NI: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NJ: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NK: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NL: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NM: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NN: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NO: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NP: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NQ: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NR: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NS: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NT: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NU: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NV: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NW: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NX: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NY: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
-% nimrodel.abbr.NZ: <> == nimrodel.punc.ABBREVIATION:<'nimrodel.firstname.ABBRFIRSTNAMEROOT'>.
+nimrodel.abbr.NA: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NB: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NC: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.ND: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NE: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NF: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NG: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NH: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NI: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NJ: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NK: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NL: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NM: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NN: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NO: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NP: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NQ: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NR: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NS: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NT: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NU: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NV: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NW: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NX: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NY: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+nimrodel.abbr.NZ: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
+
+%firstname abbreviations
+nimrodel.abbr.NWm: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.Nwilliam' ]>.
+nimrodel.abbr.NTho: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.Nthomas' ]>.
+nimrodel.abbr.NThos: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.Nthomas' ]>.
+nimrodel.abbr.NAnth: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.Nanthony' ]>.
+nimrodel.abbr.NNich: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.Nnicholas' ]>.
+nimrodel.abbr.NEdw: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.Nedward' ]>.
+nimrodel.abbr.NGeo: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.Ngeorge' ]>.

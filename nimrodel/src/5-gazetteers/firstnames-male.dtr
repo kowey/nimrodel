@@ -14,12 +14,12 @@ nimrodel.firstname.IS-FIRSTNAME-MALE:
 	bartholomeus
 	charles 
 	christopher
-	edward 
+	%edward 
 	edwine 
 	fardinando  
 	francis 
 	galfridus 
-	george 
+	%george 
 	german
 	henrie 
 	henry
@@ -31,7 +31,7 @@ nimrodel.firstname.IS-FIRSTNAME-MALE:
 	leonard 
 	lewis
 	matthew
-	nicholaus
+	%nicholas
 	paule 
 	peter 
 	philip 
@@ -46,9 +46,16 @@ nimrodel.firstname.IS-FIRSTNAME-MALE:
 	roger 
 	rox
 	simon
-	thomas 
+	%thomas 
 	thome 
 	tobias
-	william
+	%william
 .
 
+% names with abbreviations need explicit nodes
+nimrodel.firstname.Nanthony: <> == nimrodel.firstname.MALEFIRSTNAMEROOT <lex forename> == anthony.
+nimrodel.firstname.Nedward: <> == nimrodel.firstname.MALEFIRSTNAMEROOT <lex forename> == edward.
+nimrodel.firstname.Ngeorge: <> == nimrodel.firstname.MALEFIRSTNAMEROOT <lex forename> == george.
+nimrodel.firstname.Nnicholas: <> == nimrodel.firstname.MALEFIRSTNAMEROOT <lex forename> == nicholas.
+nimrodel.firstname.Nthomas: <> == nimrodel.firstname.MALEFIRSTNAMEROOT <lex forename> == thomas.
+nimrodel.firstname.Nwilliam: <> == nimrodel.firstname.MALEFIRSTNAMEROOT <lex forename> == william.

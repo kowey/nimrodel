@@ -23,15 +23,16 @@ nimrodel.punc.N\.:
 	
 % abbreviation handling	
 nimrodel.punc.ABBREVIATION:
-	<$node> == Local:<$node 0>
-	<$node lex> == <try period $node lex>
+	<> == nimrodel.LEXROOT
+	<[ $$node ]> == Local:<$$node [ 0 ]>
+	<[ $$node ] lex> == <try period $$node lex>
 
-	<try period $node> == < IFEQ:< Local:<$node here token next token word .> '.'
+	<try period $$node> == < IFEQ:< <here token next token word .> '.'
 					  THEN case abbrev 
-					  ELSE case default .> $node>
-	<case abbrev $node> == Local:<$node 1>
+					  ELSE case default .> $$node>
+	<case abbrev $$node> == Local:<$$node [ 1 ]>
 	
-	<case default $node> == Local:<$node 0>
+	<case default $$node> == Local:<$$node [ 0 ]>
 .
 
 % commas - may be coordinator or 'ordinary' punctuation

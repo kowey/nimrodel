@@ -90,14 +90,15 @@ nimrodel.firstname.MALEFIRSTNAMEROOT:
 .
 
 % Abbreviations don't do smart name handling for now
-% nimrodel.firstname.ABBRFIRSTNAMEROOT:
-	% <> == elf.TOP
-	% <$$n> == nimrodel.firstname.FIRSTNAMEROOT:<>
-	% <$$n lex nextrole> == <$$n here token nextn Add:<$$n 1 .> lex nextrole .>
-	% <$$n lex end-char> == <$$n here token nextn Add:<$$n 1 .> lex end-char .>
-% .
+nimrodel.firstname.ABBRFIRSTNAMEROOT:
+	<> == nimrodel.LEXROOT
+	<[ $$n ]> == nimrodel.firstname.FIRSTNAMEROOT:<>
+	<[ $$n ] lex nextrole> == <here token nextn Add:<$$n 1 .> lex nextrole .>
+	<[ $$n ] lex end-char> == <here token nextn Add:<$$n 1 .> lex end-char .>
+.
 
-% nimrodel.firstname.ABBRFIRSTNAME:
-	% <> == nimrodel.firstname.ABBRFIRSTNAMEROOT:<0>
-% .
+nimrodel.firstname.ABBRFIRSTNAME:
+	<[ > == nimrodel.firstname.ABBRFIRSTNAMEROOT:<[>
+	<> == <[ 0 ]>
+.
 
