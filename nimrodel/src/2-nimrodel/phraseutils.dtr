@@ -1,5 +1,5 @@
 
-#uses Local Add.
+#uses Local Add LocalPath.
 
 %nimrodel.phraseutils.SKIP:<number-to-skip target-node target-model
 #hide nimrodel.phraseutils.SKIP.
@@ -51,16 +51,40 @@ nimrodel.phraseutils.NEXT:
 	
 % root node for possible phrases
 nimrodel.phraseutils.PHRASEROOT:
+	<> == nimrodel.LEX-TOP
+	<[ $$n ]> == Local:<$$n>
+	
+	% default switch - switch model $$model on next $$i items from $$model's parent model
+	<[ $$n ] switch $$i $$model> == <here <here map nimrodel.context.NEXT:<$$i <$$model parent .> context .> .> $$model>
+	
+	<[ $$n ] phr-case match> == <[ $$n ]>
+	<[ $$n ] phr-case try $$m> == <[ $$m ]>
+	<[ $$n ] phr-case nomatch> == nimrodel.LEXROOT:<>
+	<[ $$n ] phr-case skip $$m> == nimrodel.phraseutils.SKIP:<$$m $$n>
+	
+	<[ $$n ] map> == phr-case <here phr-default .> 
+	<[ $$n ] phr-default> == nomatch
+.
+
+nimrodel.phraseutils.PHRASEMATCH:
 	<> == elf.TOP
-	<$$n> == Local
+	<[ $$n $$i $$m ]> == Local:<$$n [ $$i ] <skip $$i> .>
+	<[ $$n 1 $$m ] $$w1 map $$w1> == phr-case skip 1 $$m
+	<[ $$n 2 $$m ] $$w1 $$w2 map $$w1 $$w2> == phr-case skip 2 $$m
+	<[ $$n 3 $$m ] $$w1 $$w2 $$w3 map $$w1 $$w2 $$w3> == phr-case skip 3 $$m
+	<[ $$n 4 $$m ] $$w1 $$w2 $$w3 $$w4 map $$w1 $$w2 $$w3 $$w4> == phr-case skip 4 $$m
+	<[ $$n 5 $$m ] $$w1 $$w2 $$w3 $$w4 $$w5 map $$w1 $$w2 $$w3 $$w4 $$w5> == phr-case skip 5 $$m
+	<[ $$n 6 $$m ] $$w1 $$w2 $$w3 $$w4 $$w5 $$w6 map $$w1 $$w2 $$w3 $$w4 $$w5 $$w6> == phr-case skip 6 $$m
+	<[ $$n 7 $$m ] $$w1 $$w2 $$w3 $$w4 $$w5 $$w6 $$w7 map $$w1 $$w2 $$w3 $$w4 $$w5 $$w6 $$w7> == phr-case skip 7 $$m
 	
-	<$$n case match> == <$$n>
-	<$$n case try $$m> == <$$m>
-	<$$n case nomatch> == nimrodel.LEXROOT:<>
-	<$$n case skip $$m> == nimrodel.phraseutils.SKIP:< $$m $$n>
-	<$$n case default> == <$$n case match >
+	<skip 1 $$w1> == LocalPath:<>
+	<skip 2 $$w1 $$w2> == LocalPath:<>
+	<skip 3 $$w1 $$w2 $$w3> == LocalPath:<>
+	<skip 4 $$w1 $$w2 $$w3 $$w4> == LocalPath:<>
+	<skip 5 $$w1 $$w2 $$w3 $$w4 $$w5> == LocalPath:<>
+	<skip> == <dynamic>
 	
-	<$$n map> == case default
+	<dynamic $$i $$w> == <skip Add:<$$i -1 .> >
 .
 
 

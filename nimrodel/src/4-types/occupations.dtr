@@ -19,8 +19,8 @@ nimrodel.occupation.OCCUPATIONROOT:
 .
 
 nimrodel.occupation.PHRASEROOT:
-	<> == nimrodel.phraseutils.PHRASEROOT:< 'nimrodel.occupation.OCCUPATIONROOT' >
-	<lex> == < here < here map nimrodel.context.NEXT:<2 token context .> .> lex>
+	<> == nimrodel.phraseutils.PHRASEROOT:<[ 'nimrodel.occupation.OCCUPATIONROOT' ]>
+	<lex> == <switch 2 lex>
 .	
 
 

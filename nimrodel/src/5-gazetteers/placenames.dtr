@@ -50,7 +50,7 @@ nimrodel.placename.IS-PLACENAMEWORD:
 	yoyesbredge
 .
 
-nimrodel.placename.Nwest: <> == nimrodel.placename.PHRASEMATCH:<1 bergholt>.
-nimrodel.placename.Ngreat:<> == nimrodel.placename.PHRASEMATCH:<1 fordham>.
-nimrodel.placename.Nmount:<> == nimrodel.placename.PHRASEMATCH:<1 bures>.
-nimrodel.placename.Nwakes:<> == nimrodel.placename.PHRASEMATCH:<1 colne>.
+nimrodel.placename.Nwest: <> == nimrodel.placename.PHRASEMATCH:<[ 1 ] bergholt>.
+nimrodel.placename.Ngreat:<> == nimrodel.placename.PHRASEMATCH:<[ 1 ] fordham>.
+nimrodel.placename.Nmount:<> == nimrodel.placename.PHRASEMATCH:<[ 1 ] bures>.
+nimrodel.placename.Nwakes:<> == nimrodel.placename.PHRASEMATCH:<[ 1 ] colne>.

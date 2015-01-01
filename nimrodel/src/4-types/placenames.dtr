@@ -21,21 +21,18 @@ nimrodel.placename.PLACENAMEROOT:
 
 % root node for placename lexical phrases
 nimrodel.placename.PHRASEROOT:
-	<> == elf.TOP
-	<$$i> == nimrodel.phraseutils.PHRASEROOT:< 'nimrodel.placename.PLACENAMEROOT' >
-	<$$i lex> == < $$i here < $$i here map nimrodel.context.NEXT:<$$i token context .> .> lex>
-	<$$i token context> == token word
-	<$$i map> == case <$$i here matchword .>
-	<$$i matchword> == nomatch
+	<> == nimrodel.LEX-TOP
+	<[ $$i ]> == nimrodel.phraseutils.PHRASEROOT:<[ 'nimrodel.placename.PLACENAMEROOT' ]>
+	<[ $$i ] lex> == <[ $$i ] switch $$i lex>
+	<[ $$i ] token context> == token word
+	<[ $$i ] map> == case <here phr-default placename .>
 .
 
 nimrodel.placename.PHRASEMATCH:
 	<> == elf.TOP
-	<1 $$w1> == nimrodel.placename.PHRASEROOT:<1>
-	<1 $$w1 map $$w1> == case skip 1 lex
-	<2 $$w1 $$w2> == nimrodel.placename.PHRASEROOT:<2>
-	<2 $$w1 $$w2 map $$w1 $$w2> == case skip 2 lex
+	<[ $$i ]> == nimrodel.phraseutils.PHRASEMATCH:<[ 'nimrodel.placename.PHRASEROOT' $$i lex ]>
 .
+
 
 
 

@@ -13,7 +13,7 @@ nimrodel.site.SITEROOT:
 .
 
 nimrodel.site.PHRASEROOT:
-	<> == nimrodel.phraseutils.PHRASEROOT:< 'nimrodel.site.SITEROOT' >
+	<> == nimrodel.phraseutils.PHRASEROOT:<[ 'nimrodel.site.SITEROOT' ]>
 .
 
 nimrodel.site.NAMEDSITE:

@@ -91,7 +91,7 @@ nimrodel.word.Nsheffield:<> == nimrodel.wp-placename.Nsheffield.
 nimrodel.word.Nshoe:<> == nimrodel.occupation.Nshoe.
 nimrodel.word.Nsource:<> == nimrodel.apparatus.TRY-APPARATUS:<'nimrodel.LEXROOT'>.
 nimrodel.word.Nsouthampton:<> == nimrodel.wp-placename.Nsouthampton.
-nimrodel.word.Nst:<> == nimrodel.wp-placename.Nst:<> <matchword> == try 'nimrodel.abbr.Nst'.
+nimrodel.word.Nst:<> == nimrodel.wp-placename.Nst:<> <phr-default placename> == try 'nimrodel.abbr.Nst'.
 nimrodel.word.Nstoke:<> == nimrodel.wp-placename.Nstoke.
 nimrodel.word.Nsunderland:<> == nimrodel.wp-placename.Nsunderland.
 nimrodel.word.Ntheir:<> == nimrodel.LEXROOT <token pos> == det. % their and theirs - openNLP POS tagger seems to have these backwards?

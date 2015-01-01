@@ -1,7 +1,7 @@
 nimrodel.wp-placename.Nbath:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Nbirmingham:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Nbradford:<> == nimrodel.placename.PLACENAMEROOT.
-nimrodel.wp-placename.Nbrighton:<> == nimrodel.placename.PHRASEMATCH:<2 and hove> <matchword> == match.
+nimrodel.wp-placename.Nbrighton:<> == nimrodel.placename.PHRASEMATCH:<[ 2 ] and hove> <phr-default placename> == match.
 nimrodel.wp-placename.Nbristol:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Ncambridge:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Ncanterbury:<> == nimrodel.placename.PLACENAMEROOT.
@@ -16,7 +16,7 @@ nimrodel.wp-placename.Nely:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Nexeter:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Ngloucester:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Nhereford:<> == nimrodel.placename.PLACENAMEROOT.
-nimrodel.wp-placename.Nkingston:<> == nimrodel.placename.PHRASEMATCH:<2 upon hull> <matchword> == match.
+nimrodel.wp-placename.Nkingston:<> == nimrodel.placename.PHRASEMATCH:<[ 2 ] upon hull> <phr-default placename> == match.
 nimrodel.wp-placename.Nlancaster:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Nleeds:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Nleicester:<> == nimrodel.placename.PLACENAMEROOT.
@@ -25,7 +25,7 @@ nimrodel.wp-placename.Nlincoln:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Nliverpool:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Nlondon:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Nmanchester:<> == nimrodel.placename.PLACENAMEROOT.
-nimrodel.wp-placename.Nnewcastle:<> == nimrodel.placename.PHRASEMATCH:<2 upon tyne> <matchword> == match.
+nimrodel.wp-placename.Nnewcastle:<> == nimrodel.placename.PHRASEMATCH:<[ 2 ] upon tyne> <phr-default placename> == match.
 nimrodel.wp-placename.Nnorwich:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Nnottingham:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Noxford:<> == nimrodel.placename.PLACENAMEROOT.
@@ -39,7 +39,7 @@ nimrodel.wp-placename.Nsalisbury:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Nsheffield:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Nsouthampton:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Nst:<> == nimrodel.placename.PHRASEMATCH:<1 albans>.
-nimrodel.wp-placename.Nstoke:<> == nimrodel.placename.PHRASEMATCH:<2 on trent> <matchword> == match.
+nimrodel.wp-placename.Nstoke:<> == nimrodel.placename.PHRASEMATCH:<[ 2 ] on trent> <phr-default placename> == match.
 nimrodel.wp-placename.Nsunderland:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Ntruro:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Nwakefield:<> == nimrodel.placename.PLACENAMEROOT.
