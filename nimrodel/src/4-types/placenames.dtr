@@ -25,7 +25,7 @@ nimrodel.placename.PHRASEROOT:
 	<[ $$i ]> == nimrodel.phraseutils.PHRASEROOT:<[ 'nimrodel.placename.PLACENAMEROOT' ]>
 	<[ $$i ] lex> == <[ $$i ] switch $$i lex>
 	<[ $$i ] token context> == token word
-	<[ $$i ] map> == case <here phr-default placename .>
+	<[ $$i ] map> == phr-case <here phr-default placename .>
 .
 
 nimrodel.placename.PHRASEMATCH:

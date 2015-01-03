@@ -38,7 +38,7 @@ nimrodel.wp-placename.Nsalford:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Nsalisbury:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Nsheffield:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Nsouthampton:<> == nimrodel.placename.PLACENAMEROOT.
-nimrodel.wp-placename.Nst:<> == nimrodel.placename.PHRASEMATCH:<1 albans>.
+nimrodel.wp-placename.Nst:<> == nimrodel.placename.PHRASEMATCH:<[ 1 ] albans>.
 nimrodel.wp-placename.Nstoke:<> == nimrodel.placename.PHRASEMATCH:<[ 2 ] on trent> <phr-default placename> == match.
 nimrodel.wp-placename.Nsunderland:<> == nimrodel.placename.PLACENAMEROOT.
 nimrodel.wp-placename.Ntruro:<> == nimrodel.placename.PLACENAMEROOT.
