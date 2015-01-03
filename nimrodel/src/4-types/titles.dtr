@@ -9,16 +9,47 @@ nimrodel.title.TITLE-LOOKUP:
 
 nimrodel.title.TITLEROOT:
 	<> == nimrodel.LEXROOT
+	% core properties of title words
+	<token type> == title
+	<token pos> == title
+	<token gender> == unknown
 	
-	<[ $$n ]> == nimrodel.LEXROOT:<>
+	<lex title> == <here token norm .>
+	<lex number> == sing
+.
+
+%! 'nimrodel.title.TITLEPHRASEROOT'
+%
+% Node representing title words with optional lexical name phrase attachment
+%	
+%   * nimrodel.title.TITLEPHRASEROOT:<FEATURE> = VALUE
+%	* nimrodel.title.TITLEPHRASEROOT:<[ SKIP ] FEATURE> = VALUE
+%
+% *nimrodel.title.TITLEPHRASEROOT* represents a title word, and optionally detects a 
+% lexical name phrase starting with the title word, possibly as an abbreviation. 
+%
+% Its first form just returns properties of the title word itself, without any phrase 
+% matching. Its second form has a parameter, _SKIP_, which triggers phrase matching.
+% It looks for a lexical phrase of type _Person_ to its right and if found, it
+% extends the phrase by attaching the title. _SKIP_ specifies how many tokens to skip 
+% before looking for the _Person_ phrase. This is usually 0 (ie look immediately to 
+% the right) or 1 (skip one token, typically for tokenised abbreviations such  as 
+% 'Dr . Smith').  
+%
+% @arg FEATURE the feature (sequence of atoms) to evaluate
+% @arg VALUE (returned value) the value associated with the feature (sequence of atoms)
+% @arg SKIP the number of tokens to skip before looking for 
+nimrodel.title.TITLEPHRASEROOT:
+	<> == nimrodel.title.TITLEROOT
 	
-	<[ $$n ] token type> == title
-	<[ $$n ] token pos> == title
-	<[ $$n ] token gender> == unknown
+	% title phrase properties default to core properties
+	<[ $$n ]> == <>
 	
-	<[ $$n ] lex title> == <here token norm .>
-	<[ $$n ] lex number> == sing
+	% lex features we always want to pick up from core properties
+	<[ $$n ] lex title> == <lex title>
+	<[ $$n ] lex start-char> == <lex start-char>
 	
+	% lexical phrase detection
 	<[ $$n ] lex> == <[ $$n ] try firstname lex>
 	
 	<[ $$n ] try firstname> == < [ $$n ] IFEQ:< <here token nextn Add:<$$n 1 .> lex type .> 'Person' 
@@ -28,17 +59,15 @@ nimrodel.title.TITLEROOT:
 					     THEN case firstname
 					     ELSE case default .> >
 	
-	<[ $$n ] case firstname lex nextrole> == <here token nextn Add:<$$n 1 .> lex nextrole .>
-	<[ $$n ] case firstname lex end-char> == <here token nextn Add:<$$n 1 .> lex end-char .>
-	<[ $$n ] case firstname lex type> == 'Person'
-	<[ $$n ] case firstname lex gender> == <here token nextn Add:<$$n 1 .> lex gender>
+	<[ $$n ] case firstname lex> == <here token nextn Add:<$$n 1 .> lex>
 	<[ $$n ] case firstname lex output> == <render attr4 lex title <here lex title.> <render extend lex <here token nextn Add:<$$n 1 .> lex output> .> .>	
-	<[ $$n ] case firstname> == nimrodel.LEXROOT:<>
-	<[ $$n ] case default> == nimrodel.LEXROOT:<>
+	<[ $$n ] case firstname> == <>
+		
+	<[ $$n ] case default> == <>
 .
 
 nimrodel.title.TITLE:
-	<[ > == nimrodel.title.TITLEROOT:<[>
+	<[ > == nimrodel.title.TITLEPHRASEROOT:<[>
 	<> == <[ 0 ]>
 .
 
@@ -52,3 +81,30 @@ nimrodel.title.FEMALETITLE:
 	<token gender> == female
 .
 	
+nimrodel.title.ROLETITLEROOT:
+	<> == nimrodel.title.TITLEROOT
+	<lex type> == 'Person'
+	<lex cat> == n
+	<$phrase cat> == n
+	<phrase-np subcatrel of> == provenance
+.
+	
+nimrodel.title.ROLETITLE:
+	<> == nimrodel.title.TITLE
+	
+	<lex> == <case IFEQ:< <here token prev token pos> det THEN noun ELSE default .> lex> 
+	<$phrase> == <case IFEQ:< <here token prev token pos> det THEN noun ELSE default .> $phrase>  
+	
+	<case noun> == nimrodel.title.ROLETITLEROOT:<>	
+	<case default> == nimrodel.title.TITLE:<>
+.
+
+nimrodel.title.MALEROLETITLE:
+	<> == nimrodel.title.ROLETITLE
+	<token gender> == male
+.
+
+nimrodel.title.FEMALEROLETITLE:
+	<> == nimrodel.title.ROLETITLE
+	<token gender> == female
+.

@@ -14,6 +14,7 @@ nimrodel.model.PHRASE:
 	<$phrase reltype> == rel	%set to 'relrev' to select inverse of specified rel
 	<$phrase rel> == unknown
 	<$phrase conjrel> == unknown
+	<$phrase subcatrel $$rel> == $$rel
 	<$phrase output> == <render entity $phrase>
 	
 	% need to put this here, not in nimrodel02, because the latter delegates its output to here :-(

@@ -1,7 +1,7 @@
 
 % phrase grammar
 
-
+#uses LocalPath.
 
 #hide nimrodel.phrase.PHRASEROOT.
 nimrodel.phrase.PHRASEROOT:
@@ -24,11 +24,32 @@ nimrodel.phrase.DETNOM:
 	<phrase-np cat> == np
 	<phrase-np nextrole> == <here lex next phrase-nom nextrole>
 	<phrase-np end-char> == <here lex next phrase-nom end-char>
-	<phrase-np output> == <here lex next phrase-nom output.>
+	<phrase-np output> == <render extend phrase-np <here lex next phrase-nom output.> .>
 	<phrase-np type> == <here lex next phrase-nom type>
 
 	
 	<phrase> == <phrase-np>
+.
+
+nimrodel.phrase.DETNOMPP:
+	<> == nimrodel.phrase.DETP
+	<phrase-np cat> == np
+	<phrase-np nextrole> == <here lex next phrase-nom next phrase-pp nextrole>
+	<phrase-np end-char> == <here lex next phrase-nom next phrase-pp end-char>
+	<phrase-np output> == <render extend phrase-np 
+			<rewrite <here lex next phrase-nom next phrase-pp output .> .> 
+		.>
+	<phrase-np type> == <here lex next phrase-nom type>
+	
+	<phrase> == <phrase-np>
+	
+	% render should do this
+	<rewrite [ rel 1 $$rel > == <rewrite2 <here lex next phrase-np subcatrel $$rel .> <span app.BRAT:<skipb> .> .>
+	<rewrite2 $$rel $$e> == [ rel 1 $$rel <extend $$e <here lex next phrase-nom output .> .> LocalPath:<> 	
+	<span [ entity $$t $$s $$e > == $$e [ entity $$t $$s $$e LocalPath:<>
+	<span> == 0 LocalPath:<> % stop it just failing
+	<extend $$e [ entity $$t $$s $$e2 > == [ entity $$t $$s $$e LocalPath:<>
+	<extend 0> == LocalPath:<> % stop it just failing
 .
 
 #hide nimrodel.phrase.DETADJPNOM.
@@ -53,11 +74,13 @@ nimrodel.phrase.DET:
 	<> == nimrodel.phrase.PHRASEROOT
 	<$phrase> == <try nom $phrase>
 	
-	<try nom> == < IF:< <here lex next phrase-nom cat> THEN case np ELSE try adjp .> >
-	<try adjp> == < IF:< <here lex next phrase-adjp cat> THEN try adjpnom ELSE case default .> >
-	<try adjpnom> == < IF:< <here lex next phrase-adjp next phrase-nom cat> THEN case adjpnom ELSE case default .> >
+	<try nom> == < IF:< <here lex next phrase-nom cat .> THEN try nompp ELSE try adjp .> >
+	<try nompp> == < IF:< <here lex next phrase-nom next phrase-pp cat .> THEN case nompp ELSE case nom .> >
+	<try adjp> == < IF:< <here lex next phrase-adjp cat .> THEN try adjpnom ELSE case default .> >
+	<try adjpnom> == < IF:< <here lex next phrase-adjp next phrase-nom cat .> THEN case adjpnom ELSE case default .> >
 	
-	<case np> == nimrodel.phrase.DETNOM:<>
+	<case nom> == nimrodel.phrase.DETNOM:<>
+	<case nompp> == nimrodel.phrase.DETNOMPP:<>
 	<case adjpnom> == nimrodel.phrase.DETADJPNOM:<>
 	<case default> == nimrodel.phrase.DETP:<>
 .

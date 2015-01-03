@@ -24,6 +24,7 @@ nimrodel.form.NMarquess: <> == nimrodel.title.Nmarquess.
 nimrodel.form.NMarquis: <> == nimrodel.title.Nmarquis.
 nimrodel.form.NMiss: <> == nimrodel.title.Nmiss.
 nimrodel.form.NMister:<> == nimrodel.title.Nmister.
+nimrodel.form.NMaster:<> == nimrodel.title.Nmaster.
 nimrodel.form.NMr\.:<> == nimrodel.title.Nmister.	% tokeniser doesn't split this
 nimrodel.form.NMistress:<> == nimrodel.title.Nmistress.
 nimrodel.form.NMrs:<> == nimrodel.abbr.Nmrs.

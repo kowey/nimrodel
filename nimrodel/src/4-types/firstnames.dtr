@@ -51,6 +51,7 @@ nimrodel.firstname.TRYFIRSTNAME:
 	<[ $$n ] map $$s1 $surname-type of $$t2 $$s3 placename> == phr-case article of 3 $$s3 $$s1
 	<[ $$n ] map $$s1 $surname-type of $$t2 $$s3 propnoun> == phr-case article of 3 $$s3 $$s1
 	<[ $$n ] map $$s1 $surname-type> == phr-case surname $$s1
+	<[ $$n ] map> == phr-case <here phr-default firstname .> 
 	
 		
 	<[ $$n ] phr-case article $$a 2 $$s lex article> == $$a
