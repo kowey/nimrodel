@@ -3,12 +3,14 @@
 #hide nimrodel.phrase.TRYCONJUNCT.
 nimrodel.phrase.TRYCONJUNCT:
 	<> == Local:<>
-	<$n $phrase> == <try conj $n $phrase>
+	
+	% conjunction handling disabled for now - nimrodel is only interested in singular NPs
+	% <$n $phrase> == <try conj $n $phrase>
 	
 	<try conj $n $c> == < IF:< Local:<$n here lex next $c conj.> THEN try cat ELSE default .> $n $c>
 	<try cat $n $c> == < IF:< Local:<$n here lex next $c cat .> THEN case conj ELSE default .> $n $c>
 	
-	% if conjrel is defined, use it, otherwise return first conjunct as output
+	%if conjrel is defined, use it, otherwise return first conjunct as output
 	<case conj $n $c output> == <try conjrel Local:<$n here $c conjrel .> $n $c>
 	<case conj $n $c end-char> == Local:<$n here lex next lex next $c end-char>
 	<case conj $n $c nextrole> == Local:<$n here lex next lex next $c nextrole>
@@ -17,7 +19,7 @@ nimrodel.phrase.TRYCONJUNCT:
 	<try conjrel unknown $n $c> == Local:< $n $c output> % ignore second conjuct
 	<try conjrel> == <case conjrel>
 	
-	% conjoin this conjunct with second
+	%conjoin this conjunct with second
 	<case conjrel $r $n $c> == Local:<$n render rel $c Local:<$n here $c type .> $r Local:<$n here lex next $c output .> .>
 	
 	<default> == Local:<>
@@ -26,7 +28,8 @@ nimrodel.phrase.TRYCONJUNCT:
 #hide nimrodel.phrase.TRYCONJUNCT2.
 nimrodel.phrase.TRYCONJUNCT2:
 	<> == <not-phrase>
-	<$phrase $n $c> == <try conj $phrase $n $c>
+	% conjunction handling disabled for now - nimrodel is only interested in singular NPs
+	% <$phrase $n $c> == <try conj $phrase $n $c>
 	
 	<not-phrase> == elf.TOP:<>
 	<not-phrase $m $n $c> == Local:<$n $m>
