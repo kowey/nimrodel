@@ -175,6 +175,8 @@ app.JSON:
 		<json rel-inject 'grandchildOf' $id $$date $$wrappedString 1 $grandchildrel $arg1>
 	<json rel-inner $id $$date $$wrappedString 2 $grandchildrel $arg1> ==
 		<json rel-inject 'grandparentOf' $arg1 $$date $$wrappedString 2 $grandchildrel $arg1>
+	<json rel-inner $id $$date $$wrappedString 1 provenance $arg1> ==
+		<json rel-inject-occ 'provenance' $arg1 $$date $$wrappedString 1 provenance $arg1>
 	<json rel-inner> == <json rel-generic>
 
 	% json rel-generic: relation literal (ish) -> tagged bundle
@@ -202,7 +204,15 @@ app.JSON:
 				<json rel-next $id $$date $$wrappedString $type $arg1 <skip> .>
 			.>
 		.>
-
+	% json rel-inject-occ - like rel-inject, but use OrigOccurrence String instead of ID	
+	<json rel-inject-occ $attr-tgt $id $$date $$wrappedString $focus $type $arg1> ==
+		<named inject 'origOccurrence' $attr-tgt
+			<json endpoints $focus $arg1	% target id for clause
+				<next>	]		% annotation for first operand
+				<json rel-next $id $$date $$wrappedString $type $arg1 <skip> .>
+			.>
+		.>	
+		
 	% json rel-next: produce annotation for second operand
 	<json rel-next $id $$date $$wrappedString $type $arg1 [ > ==
 		<json rel-next2 $id $type $arg1 <json clause2 $$date $$wrappedString> .>
