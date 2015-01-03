@@ -79,7 +79,8 @@ nimrodel.phrase.DET:
 	<$phrase> == <try nom $phrase>
 	
 	<try nom> == < IF:< <here lex next phrase-nom cat .> THEN try nompp ELSE try adjp .> >
-	<try nompp> == < IF:< <here lex next phrase-nom next phrase-pp cat .> THEN case nompp ELSE case nom .> >
+	<try nompp> == < IF:< <here lex next phrase-nom next phrase-pp cat .> THEN try subcatpp ELSE case nom .> >
+	<try subcatpp> == < IF:< <here lex next phrase-np subcatrel <here lex next phrase-nom next phrase-pp rel .> .> THEN case nompp ELSE case nom .> >
 	<try adjp> == < IF:< <here lex next phrase-adjp cat .> THEN try adjpnom ELSE case default .> >
 	<try adjpnom> == < IF:< <here lex next phrase-adjp next phrase-nom cat .> THEN case adjpnom ELSE case default .> >
 	
