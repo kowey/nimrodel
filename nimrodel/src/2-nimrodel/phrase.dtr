@@ -26,6 +26,7 @@ nimrodel.phrase.DETNOM:
 	<phrase-np end-char> == <here lex next phrase-nom end-char>
 	<phrase-np output> == <render extend phrase-np <here lex next phrase-nom output.> .>
 	<phrase-np type> == <here lex next phrase-nom type>
+	<phrase-np number> == <here lex next phrase-nom number>
 
 	
 	<phrase> == <phrase-np>
@@ -40,6 +41,7 @@ nimrodel.phrase.DETNOMPP:
 			<rewrite <here lex next phrase-nom next phrase-pp output .> .> 
 		.>
 	<phrase-np type> == <here lex next phrase-nom type>
+	<phrase-np number> == <here lex next phrase-nom number>
 	
 	<phrase> == <phrase-np>
 	
@@ -59,6 +61,7 @@ nimrodel.phrase.DETADJPNOM:
 	<phrase-np nextrole> == <here lex next phrase-adjp next phrase-nom nextrole>
 	<phrase-np end-char> == <here lex next phrase-adjp next phrase-nom end-char>
 	<phrase-np type> == <here lex next phrase-adjp next phrase-nom type>
+	<phrase-np number> == <here lex next phrase-adjp next phrase-nom number>
 	
 	<phrase-np output> == 
 			<here lex next render attr phrase-np <here lex next phrase-adjp type .> 
