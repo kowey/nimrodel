@@ -1,0 +1,5 @@
+
+nimrodel.det.Nthe:
+	<> == nimrodel.LEXROOT
+	<lex type> == determiner
+.

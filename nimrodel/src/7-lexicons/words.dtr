@@ -105,6 +105,7 @@ nimrodel.word.Nsouthampton:<> == nimrodel.wp-placename.Nsouthampton.
 nimrodel.word.Nst:<> == nimrodel.wp-placename.Nst:<> <phr-default placename> == try 'nimrodel.abbr.Nst'.
 nimrodel.word.Nstoke:<> == nimrodel.wp-placename.Nstoke.
 nimrodel.word.Nsunderland:<> == nimrodel.wp-placename.Nsunderland.
+nimrodel.word.Nthe:<> == nimrodel.det.Nthe.
 nimrodel.word.Ntheir:<> == nimrodel.pro.Ntheir.
 nimrodel.word.Ntheirs:<> == nimrodel.pro.Ntheirs.
 nimrodel.word.Nthem:<> == nimrodel.pro.Nthem.
