@@ -50,8 +50,9 @@ nimrodel.phrase.DETNOMPP:
 	<rewrite2 $$rel $$e> == [ rel 1 $$rel <extend $$e <here lex next phrase-nom output .> .> LocalPath:<> 	
 	<span [ entity $$t $$s $$e > == $$e [ entity $$t $$s $$e LocalPath:<>
 	<span> == 0 LocalPath:<> % stop it just failing
-	<extend $$e [ entity $$t $$s $$e2 > == [ entity $$t $$s $$e LocalPath:<>
-	<extend 0> == LocalPath:<> % stop it just failing
+	<extend 0> == LocalPath:<> % catch failure case
+	<extend> == <extend2>
+	<extend2 $$e [ entity $$t $$s $$e2 > == [ entity $$t $$s $$e LocalPath:<>
 .
 
 #hide nimrodel.phrase.DETADJPNOM.
