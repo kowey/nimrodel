@@ -1,8 +1,8 @@
-nimrodel.abbr.Ndr: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.title.Ndoctor' ]> <lex title> == doctor.
-nimrodel.abbr.Nmag: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.title.Nmagister' ]> <lex title> == magister.
-nimrodel.abbr.Nmr: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.title.Nmister' ]> <lex title> == mister.
-nimrodel.abbr.Nmrs: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.title.Nmistress' ]> <lex title> == mistress.
-nimrodel.abbr.Nst: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.title.Nsaint' ]> <lex title> == saint.
+nimrodel.abbr.Ndr: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.title.Ndoctor' ]>.
+nimrodel.abbr.Nmag: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.title.Nmagister' ]>.
+nimrodel.abbr.Nmr: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.title.Nmister' ]>.
+nimrodel.abbr.Nmrs: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.title.Nmistress' ]>.
+nimrodel.abbr.Nst: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.title.Nsaint' ]>.
 
 % single initials - treat as firstnames (these are forms - ie capitalisation matters)
 nimrodel.abbr.NA: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.

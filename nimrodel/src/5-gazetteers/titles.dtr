@@ -5,6 +5,9 @@
 
 
 % title words
+% only need to specify the title if 
+%    (a) it's not the same as the word or 
+%    (b) the node is used as the base for an abbreviated form
 
 nimrodel.title.Nbaron: <> == nimrodel.title.MALEROLETITLE.
 nimrodel.title.Nbaroness: <> == nimrodel.title.FEMALEROLETITLE.
@@ -13,26 +16,26 @@ nimrodel.title.Nbaronetess: <> == nimrodel.title.FEMALEROLETITLE.
 nimrodel.title.Ncount: <> == nimrodel.title.MALEROLETITLE.
 nimrodel.title.Ncountess: <> == nimrodel.title.FEMALEROLETITLE.	
 nimrodel.title.Ndame: <> == nimrodel.title.FEMALETITLE.
-nimrodel.title.Ndoctor: <> == nimrodel.title.MALETITLE.
+nimrodel.title.Ndoctor: <> == nimrodel.title.MALETITLE <[ $$n ] lex title> == doctor.
 nimrodel.title.Nduchess: <> == nimrodel.title.FEMALEROLETITLE.
 nimrodel.title.Nduke: <> == nimrodel.title.MALEROLETITLE.
 nimrodel.title.Nearl: <> == nimrodel.title.MALEROLETITLE.
 nimrodel.title.Nking: <> == nimrodel.title.MALEROLETITLE.
 nimrodel.title.Nlady: <> == nimrodel.title.FEMALETITLE.
 nimrodel.title.Nlord: <> == nimrodel.title.MALETITLE.
-nimrodel.title.Nmagister: <> == nimrodel.title.MALETITLE.
+nimrodel.title.Nmagister: <> == nimrodel.title.MALETITLE <[ $$n ] lex title> == magister.
 nimrodel.title.Nmarchioness: <> == nimrodel.title.FEMALEROLETITLE.
 nimrodel.title.Nmarquess: <> == nimrodel.title.MALEROLETITLE.
 nimrodel.title.Nmarquis: <> == nimrodel.title.Nmarquess.
 nimrodel.title.Nmiss: <> == nimrodel.title.FEMALETITLE.
 nimrodel.title.Nmaster:	<> == nimrodel.title.MALETITLE.
-nimrodel.title.Nmister:	<> == nimrodel.title.MALETITLE.
-nimrodel.title.Nmistress: <> == nimrodel.title.FEMALETITLE.
-nimrodel.title.Nms: <> == nimrodel.title.FEMALETITLE.
+nimrodel.title.Nmister:	<> == nimrodel.title.MALETITLE <[ $$n ] lex title> == mister.
+nimrodel.title.Nmistress: <> == nimrodel.title.FEMALETITLE <[ $$n ] lex title> == mistress.
+nimrodel.title.Nms: <> == nimrodel.title.FEMALETITLE <[ $$n ] lex title> == ms.
 nimrodel.title.Nprince: <> == nnimrodel.title.MALEROLETITLE.
 nimrodel.title.Nprincess: <> == nimrodel.title.FEMALEROLETITLE.
 nimrodel.title.Nqueen: <> == nimrodel.title.FEMALEROLETITLE.
-nimrodel.title.Nsaint: <> == nimrodel.title.TITLE <[ $$n ] lex type> == 'FormalPerson'.
-nimrodel.title.Nsir: <> == nimrodel.title.MALETITLE <lex title> == knight.
+nimrodel.title.Nsaint: <> == nimrodel.title.TITLE <[ $$n ] lex type> == 'FormalPerson' <[ $$n ] lex title> == saint.
+nimrodel.title.Nsir: <> == nimrodel.title.MALETITLE <[ $$n ] lex title> == knight.
 nimrodel.title.Nviscount: <> == nimrodel.title.MALEROLETITLE.
 nimrodel.title.Nviscountess: <> == nimrodel.title.FEMALEROLETITLE.

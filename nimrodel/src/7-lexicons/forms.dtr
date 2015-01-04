@@ -11,7 +11,7 @@ nimrodel.form.NCount: <> == nimrodel.title.Ncount.
 nimrodel.form.NCountess: <> == nimrodel.title.Ncountess.
 nimrodel.form.NDame: <> == nimrodel.title.Ndame.
 nimrodel.form.NDoctor:<> == nimrodel.title.Ndoctor.
-nimrodel.form.NDr\.:<> == nimrodel.title.Ndoctor.	% tokeniser doesn't split this
+nimrodel.form.NDr\.:<> == nimrodel.title.Ndoctor:<[ 0 ]>.	% tokeniser doesn't split this
 nimrodel.form.NDuchess: <> == nimrodel.title.Nduchess.
 nimrodel.form.NDuke: <> == nimrodel.title.Nduke.
 nimrodel.form.NEarl: <> == nimrodel.title.Nearl.
@@ -25,12 +25,12 @@ nimrodel.form.NMarquis: <> == nimrodel.title.Nmarquis.
 nimrodel.form.NMiss: <> == nimrodel.title.Nmiss.
 nimrodel.form.NMister:<> == nimrodel.title.Nmister.
 nimrodel.form.NMaster:<> == nimrodel.title.Nmaster.
-nimrodel.form.NMr\.:<> == nimrodel.title.Nmister.	% tokeniser doesn't split this
+nimrodel.form.NMr\.:<> == nimrodel.title.Nmister:<[ 0 ]>.	% tokeniser doesn't split this
 nimrodel.form.NMistress:<> == nimrodel.title.Nmistress.
 nimrodel.form.NMrs:<> == nimrodel.abbr.Nmrs.
-nimrodel.form.NMrs\.:<> == nimrodel.abbr.Nmrs.	% tokeniser doesn't split this
+nimrodel.form.NMrs\.:<> == nimrodel.abbr.Nmrs:<[ 0 ]>.	% tokeniser doesn't split this
 nimrodel.form.NMs: <> == nimrodel.title.Nms.
-nimrodel.form.NMs\.: <> == nimrodel.title.Nms.	% tokeniser doesn't split this
+nimrodel.form.NMs\.: <> == nimrodel.title.Nms:<[ 0 ]>.	% tokeniser doesn't split this
 nimrodel.form.NPrince: <> == nimrodel.title.Nprince.
 nimrodel.form.NPrincess: <> == nimrodel.title.Nprincess.
 nimrodel.form.NQueen: <> == nimrodel.title.Nqueen.
