@@ -336,7 +336,7 @@ app.JSON:
 	% filter output of <select entity 'Person'> to remove plural entities
 	<filter-plur> ==
 	<filter-plur [ > == 
-		<filter-plur-one [ <next> .> 
+		<filter-plur-one [ <next> ] .> 
 		<filter-plur <skip> .>
 	<filter-plur-one> == <filter-plur-include <filter-plur-number> >
 	<filter-plur-include plur> ==  % don't include plural entities
