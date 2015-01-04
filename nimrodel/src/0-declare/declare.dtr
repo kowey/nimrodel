@@ -20,4 +20,4 @@
 #vars $output-format: brat dump json raw.
 
 % 	surname token types - used by name parsers
-#vars $surname-type: surname propnoun firstname 'Occupation'.
+#vars $surname-type: surname propnoun firstname  placename 'Occupation'.
