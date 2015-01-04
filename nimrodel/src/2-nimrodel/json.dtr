@@ -63,11 +63,12 @@ app.JSON:
 			openNLP.WrapString:<$documentString .>
 		>
 	<json sentence-wrapped> == <convert
-		<select entity 'Person' <named strip
-			%Debug:<tracemsg '----v--sentence--v----\n'
-			<json sentence-next>
-			%.>
-		.> .> .>
+		<filter-plur 
+			<select entity 'Person' <named strip
+				%Debug:<tracemsg '----v--sentence--v----\n'
+				<json sentence-next>
+				%.>
+			.> .> .> .>
 		<nl>
 	<json sentence-next $$date $$wrappedString [ > ==
 		<json clause $$date $$wrappedString <next> ] .>
@@ -331,6 +332,19 @@ app.JSON:
 	<select-one $supertype $type [ $supertype error> ==
 		[ $supertype error LocalPath:<>
 	<select-one $supertype $type> ==
+	
+	% filter output of <select entity 'Person'> to remove plural entities
+	<filter-plur> ==
+	<filter-plur [ > == 
+		<filter-plur-one [ <next> .> 
+		<filter-plur <skip> .>
+	<filter-plur-one> == <filter-plur-include <filter-plur-number> >
+	<filter-plur-include plur> ==  % don't include plural entities
+	<filter-plur-include> == Rest:<>
+	<filter-plur-number number '=' $$num > == $$num
+	<filter-plur-number $$any> == <filter-plur-number>
+	<filter-plur-number> == **fail**   % no number specified
+	
 
 	% --------------------------------------------------
 	% nimrodel to json conversion

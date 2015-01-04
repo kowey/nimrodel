@@ -35,4 +35,5 @@ nimrodel.model.PHRASE:
 		%   id					% handled by output routines
 		%	sentenceId			% not supported yet
 		%	sectionId			% not supported yet
+		number % json interface needs this
 .	

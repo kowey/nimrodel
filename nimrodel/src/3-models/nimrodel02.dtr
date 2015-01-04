@@ -33,7 +33,7 @@
 nimrodel.model.NIMRODEL02:
 	<> == nimrodel.MODEL
 	
-	% This model is purely lexical at present
+	% This model is based on the phrase model
 	<nimrodel02> == <here phrase>
 	
 	% set specific attributes for PERSON objects to linker requirements
@@ -55,8 +55,8 @@ nimrodel.model.NIMRODEL02:
 		%   id					% handled by output routines
 		%	sentenceId			% not supported yet
 		%	sectionId			% not supported yet
-	
-	
+		number % json interface needs this
+		
 	% suppress output of endpoints
 	<nimrodel02 output> == <here phrase output>
 	<nimrodel02 output **endpoint**> ==
