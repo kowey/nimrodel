@@ -37,12 +37,14 @@ nimrodel.model.TOKEN:
 	
 	<token attributes> ==
 	<token attributes 'Person'> ==
+		title
 		forename
+		article
 		surname
+		occupation
+		provenance
 		gender
 		title
-		occupation
-		age
 		number
 		
 	<token attr-type> == property % or attr

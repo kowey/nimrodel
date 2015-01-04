@@ -28,9 +28,6 @@ nimrodel.firstname.FIRSTNAMEROOT:
 	<lex number> == sing
 .
 
-% token types that can appear as surnames
-#vars $surname-type: surname propnoun firstname 'Occupation'.
-
 
 % try various patterns that follow a firstname to build a lexical person phrase
 nimrodel.firstname.TRYFIRSTNAME:	

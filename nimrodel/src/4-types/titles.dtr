@@ -50,20 +50,28 @@ nimrodel.title.TITLEPHRASEROOT:
 	<[ $$n ] lex start-char> == <lex start-char>
 	
 	% lexical phrase detection
-	<[ $$n ] lex> == <[ $$n ] try firstname lex>
+	<[ $$n ] lex> == <[ $$n ] try person lex>
 	
-	<[ $$n ] try firstname> == < [ $$n ] IFEQ:< <here token nextn Add:<$$n 1 .> lex type .> 'Person' 
-					     THEN case firstname
+	<[ $$n ] try person> == < [ $$n ] IFEQ:< <here token nextn Add:<$$n 1 .> lex type .> 'Person' 
+					     THEN case person
 					     ELSE try propnoun .> >
-	<[ $$n ] try propnoun> == < [ $$n ] IFEQ:< <here token nextn Add:<$$n 1 .> token type .> propnoun
-					     THEN case firstname
-					     ELSE case default .> >
+	<[ $$n ] try propnoun> == < [ $$n  ] <[ $$n ] test surname-type <here token nextn Add:<$$n 1 .> token type .> .> >
 	
-	<[ $$n ] case firstname lex> == <here token nextn Add:<$$n 1 .> lex>
-	<[ $$n ] case firstname lex output> == <render attr4 lex title <here lex title.> <render extend lex <here token nextn Add:<$$n 1 .> lex output> .> .>	
-	<[ $$n ] case firstname> == <>
-		
-	<[ $$n ] case default> == <>
+	<[ $$n ] test surname-type $surname-type> == case propnoun
+	<[ $$n ] test surname-type> == case default
+	
+	% person-phrase following title - extend lexical phrase to include title
+	<[ $$n ] case person lex> == <here token nextn Add:<$$n 1 .> lex>
+	<[ $$n ] case person lex output> == <render extend lex <here token nextn Add:<$$n 1 .> lex output> .>
+	
+	% proper noun following title - assume it's a surname and create a lexical phrase
+	<[ $$n ] case propnoun lex end-char> == <here token nextn Add:<$$n 1 .> lex end-char>
+	<[ $$n ] case propnoun lex nextrole> == <here token nextn Add:<$$n 1 .> lex nextrole>
+	<[ $$n ] case propnoun lex type> == 'Person' 
+	% set surname property from proper noun
+	<[ $$n ] case propnoun lex surname> == <here token nextn Add:<$$n 1 .> token word .>
+			
+	<[ $$n ] case $$any> == <>
 .
 
 nimrodel.title.TITLE:
