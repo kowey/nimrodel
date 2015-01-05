@@ -1,3 +1,5 @@
+nimrodel 0.2	5/1/15
+	Initial internal project release version. Now managed under git - https://github.com/rogerevansbrighton/nimrodel
 nimrodel 0.1	4/8/14
 	Base version of nimrodel - this is in fact just celeborn 0.8 with a global substitute 
 	celeborn -> nimrodel
