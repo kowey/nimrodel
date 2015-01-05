@@ -80,12 +80,13 @@ nimrodel.firstname.MALEFIRSTNAMEROOT:
 	<token gender> == male
 .
 
-% Abbreviations don't do smart name handling for now
+% Abbreviations don't do smart name handling for now - just grab a surname
 nimrodel.firstname.ABBRFIRSTNAMEROOT:
 	<> == nimrodel.LEXROOT
 	<[ $$n ]> == nimrodel.firstname.FIRSTNAMEROOT:<>
 	<[ $$n ] lex nextrole> == <here token nextn Add:<$$n 1 .> lex nextrole .>
 	<[ $$n ] lex end-char> == <here token nextn Add:<$$n 1 .> lex end-char .>
+	<[ $$n ] lex surname> == <here token nextn Add:<$$n 1 .> lex word .>
 .
 
 nimrodel.firstname.ABBRFIRSTNAME:

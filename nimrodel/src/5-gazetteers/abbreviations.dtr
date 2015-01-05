@@ -33,10 +33,10 @@ nimrodel.abbr.NY: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFI
 nimrodel.abbr.NZ: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]>.
 
 %firstname abbreviations
-nimrodel.abbr.NWm: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.Nwilliam' ]>.
-nimrodel.abbr.NTho: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.Nthomas' ]>.
-nimrodel.abbr.NThos: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.Nthomas' ]>.
-nimrodel.abbr.NAnth: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.Nanthony' ]>.
-nimrodel.abbr.NNich: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.Nnicholas' ]>.
-nimrodel.abbr.NEdw: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.Nedward' ]>.
-nimrodel.abbr.NGeo: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.Ngeorge' ]>.
+nimrodel.abbr.NWm: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]> <lex forename> == william.
+nimrodel.abbr.NTho: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]> <lex forename> == thomas.
+nimrodel.abbr.NThos: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]> <lex forename> == thomas.
+nimrodel.abbr.NAnth: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]> <lex forename> == anthony.
+nimrodel.abbr.NNich: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]> <lex forename> == nicholas.
+nimrodel.abbr.NEdw: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]> <lex forename> == edward.
+nimrodel.abbr.NGeo: <> == nimrodel.punc.ABBREVIATION:<[ 'nimrodel.firstname.ABBRFIRSTNAME' ]> <lex forename> == george.

@@ -97,10 +97,10 @@ nimrodel.form.NY\.: <> == nimrodel.abbr.NY <lex forename> == y.
 nimrodel.form.NZ\.: <> == nimrodel.abbr.NZ <lex forename> == z.
 
 % abrreviated firstnames
-% nimrodel.form.NAnth:<> == nimrodel.abbr.NAnth.
-% nimrodel.form.NEdw:<> == nimrodel.abbr.NEdw.
-% nimrodel.form.NGeo:<> == nimrodel.abbr.NGeo.
-% nimrodel.form.NNich:<> == nimrodel.abbr.NNich.
-% nimrodel.form.NTho:<> == nimrodel.abbr.NTho.
-% nimrodel.form.NThos:<> == nimrodel.abbr.NThos.
-% nimrodel.form.NWm:<> == nimrodel.abbr.NWm.
+nimrodel.form.NAnth:<> == nimrodel.abbr.NAnth.
+nimrodel.form.NEdw:<> == nimrodel.abbr.NEdw.
+nimrodel.form.NGeo:<> == nimrodel.abbr.NGeo.
+nimrodel.form.NNich:<> == nimrodel.abbr.NNich.
+nimrodel.form.NTho:<> == nimrodel.abbr.NTho.
+nimrodel.form.NThos:<> == nimrodel.abbr.NThos.
+nimrodel.form.NWm:<> == nimrodel.abbr.NWm.
