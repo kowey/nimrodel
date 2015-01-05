@@ -3,8 +3,8 @@
 #hide nimrodel.phrase.TRYCONJUNCT.
 nimrodel.phrase.TRYCONJUNCT:
 	<> == Local:<>
-	
-	<$n $phrase> == <try conj $n $phrase>
+	% comment out search for normal conjuncts - not used in nimrodel
+	%<$n $phrase> == <try conj $n $phrase>
 	
 	<try conj $n $c> == < IF:< Local:<$n here lex next $c conj.> THEN try cat ELSE default .> $n $c>
 	<try cat $n $c> == < IF:< Local:<$n here lex next $c cat .> THEN case conj ELSE default .> $n $c>
@@ -27,6 +27,7 @@ nimrodel.phrase.TRYCONJUNCT:
 #hide nimrodel.phrase.TRYCONJUNCT2.
 nimrodel.phrase.TRYCONJUNCT2:
 	<> == <not-phrase>
+	% keep these conjuncts for son-of relationships etc.
 	<$phrase $n $c> == <try conj $phrase $n $c>
 	
 	<not-phrase> == elf.TOP:<>
