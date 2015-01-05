@@ -27,8 +27,8 @@ nimrodel.phrase.TRYCONJUNCT:
 #hide nimrodel.phrase.TRYCONJUNCT2.
 nimrodel.phrase.TRYCONJUNCT2:
 	<> == <not-phrase>
-	% keep these conjuncts for son-of relationships etc.
-	<$phrase $n $c> == <try conj $phrase $n $c>
+	% comment out - not working well enough yet and big performance hit
+	%<$phrase $n $c> == <try conj $phrase $n $c>
 	
 	<not-phrase> == elf.TOP:<>
 	<not-phrase $m $n $c> == Local:<$n $m>
