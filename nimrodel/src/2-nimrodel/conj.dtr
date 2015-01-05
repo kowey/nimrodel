@@ -4,8 +4,7 @@
 nimrodel.phrase.TRYCONJUNCT:
 	<> == Local:<>
 	
-	% conjunction handling disabled for now - nimrodel is only interested in singular NPs
-	% <$n $phrase> == <try conj $n $phrase>
+	<$n $phrase> == <try conj $n $phrase>
 	
 	<try conj $n $c> == < IF:< Local:<$n here lex next $c conj.> THEN try cat ELSE default .> $n $c>
 	<try cat $n $c> == < IF:< Local:<$n here lex next $c cat .> THEN case conj ELSE default .> $n $c>
@@ -28,8 +27,7 @@ nimrodel.phrase.TRYCONJUNCT:
 #hide nimrodel.phrase.TRYCONJUNCT2.
 nimrodel.phrase.TRYCONJUNCT2:
 	<> == <not-phrase>
-	% conjunction handling disabled for now - nimrodel is only interested in singular NPs
-	% <$phrase $n $c> == <try conj $phrase $n $c>
+	<$phrase $n $c> == <try conj $phrase $n $c>
 	
 	<not-phrase> == elf.TOP:<>
 	<not-phrase $m $n $c> == Local:<$n $m>
