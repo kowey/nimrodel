@@ -34,7 +34,7 @@ elif [ ! -e "$NIMRODEL_IMAGE" ]; then
         echo "$LAST_COMMIT" > "$NIMRODEL_SAVED"
     fi
 elif [ -e "$TCROOT/.git" ]; then
-    LAST_COMMIT=$(git rev-parse HEAD --git-dir="$TCROOT")
+    LAST_COMMIT=$(cd $TCROOT; git rev-parse HEAD)
     SAVED_COMMIT=$(cat "$NIMRODEL_SAVED")
     if [ "$SAVED_COMMIT" != "$LAST_COMMIT" ]; then
         echo >&2 'Nimrodel image seems to be out of date; regenerating...'
