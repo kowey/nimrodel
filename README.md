@@ -71,8 +71,8 @@ both packages.
 
 4.    Test the tool at work on an example input
 
-          (Linux)       bin/nimrodel string "Robert son of Thomas"
-          (Windows)     bin\nimrodel "Robert son of Thomas"
+          (Linux)       bin/nimrodel string "Robert"
+          (Windows)     bin\nimrodel "Robert"
 	
 	  which will return:
 	  
@@ -82,14 +82,6 @@ both packages.
 			 "forename":"robert",
 			 "gender":"male",
 			 "number":"sing",
-			 "childOf":"T3"
-			}
-			, {
-			 "id":"T3",
-			 "origOccurrence":"Thomas",
-			 "forename":"thomas",
-			 "gender":"male",
-			 "number":"sing"
 			} ]
 
 ## Usage
