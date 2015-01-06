@@ -17,11 +17,14 @@ case "$CMD" in
     tar)
         TODAY=$(date +%Y-%m-%d)
         TAR_BNAME=${TCAPP}-${TCVERSION}
-        cd ..
+        cd $TCROOT/..
         tar czvf "${TAR_BNAME}-${TODAY}.tar.bz"\
             --exclude="$TCAPP/.nimrodel-image"\
+			--exclude="$TCAPP/.nimrodel-saved"\
+			--exclude="$TCAPP/bin/local"\
+			--exclude="$TCAPP/bin/local.bat"\
             --exclude="$TCAPP/*.tar.bz*"\
-            --exclude="$TCAPP/.git/*"\
+            --exclude="$TCAPP/.git*"\
             --exclude="$TCAPP/tmp"\
             "$TCAPP"
         ;;
@@ -33,7 +36,7 @@ case "$CMD" in
         CMD=$1
         shift
         "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g $CMD -t halt -- "$@"
-		;;
+	;;
     time-repeat-file)
         export JAVA_TOOL_OPTIONS="-XX:+HeapDumpOnOutOfMemoryError"
         "$SWIPL" -q -f "$ELFAPP"/swiprolog.pl -g time_repeat_on_file -t halt -- "$@"
