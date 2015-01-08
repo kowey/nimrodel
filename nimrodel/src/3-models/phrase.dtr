@@ -19,6 +19,7 @@ nimrodel.model.PHRASE:
 	
 	% need to put this here, not in nimrodel02, because the latter delegates its output to here :-(
 	<$phrase attributes 'Person'> ==
+		source
 		title
 		forename
 		article

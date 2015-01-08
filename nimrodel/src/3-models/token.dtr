@@ -34,9 +34,11 @@ nimrodel.model.TOKEN:
 	<token word+type> == <here token word> <here token type>
 	% nimrodel extensison
 	<token number> == <token mor num>	% semantic number
+	<token source> == none
 	
 	<token attributes> ==
 	<token attributes 'Person'> ==
+		source
 		title
 		forename
 		article

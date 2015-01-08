@@ -5,7 +5,7 @@
 % note: type signatures should be treated informal only
 % keeping datr's stream processing model in mine
 
-#uses Gensym Length Implode Explode LocalPath Rest.
+#uses Length Implode Explode LocalPath Rest Uuid.
 #vars $eq: '=' '=='.
 #vars $childrel: is_son_of is_daughter_of is_child_of.
 #vars $grandchildrel: is_grandson_of is_granddaughter_of is_grandchild_of.
@@ -52,7 +52,6 @@ app.JSON:
 	<tab> == '\t'
 	<nl> == '\n'
 	<json reset> == 
-		Gensym:<reset 'T' 'R' 'E' 'A' 'N' '#'>	
 	
 	% ignore document title
 	<json title> ==
@@ -82,10 +81,10 @@ app.JSON:
 		<tail <json clause2 $$date $$wrappedString > .>
 		%.>
 	
-	<json clause2 $$date $$wrappedString entity> == <json entity Gensym:<gensym 'T'.> $$date $$wrappedString>
-	<json clause2 $$date $$wrappedString rel> == <json rel Gensym:<gensym 'R' .> $$date $$wrappedString>
+	<json clause2 $$date $$wrappedString entity> == <json entity Uuid:<uuid 4.> $$date $$wrappedString>
+	<json clause2 $$date $$wrappedString rel> == <json rel Uuid:<uuid 4.> $$date $$wrappedString>
 	<json clause2 $$date $$wrappedString rel $f equals> == <json rel equals $$date $$wrappedString $f equals>
-	<json clause2 $$date $$wrappedString attr> == <json attr Gensym:<gensym 'A' .> $$date $$wrappedString>
+	<json clause2 $$date $$wrappedString attr> == <json attr Uuid:<uuid 4.> $$date $$wrappedString>
 	<json clause2 $$date $$wrappedString property> == <json property $$date $$wrappedString>
 	<json clause2> == <json error clause-error>
 	

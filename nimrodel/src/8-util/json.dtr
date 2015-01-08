@@ -131,7 +131,7 @@ json.STRUCT:
 	% some arbitrary json)
 	<list> == Implode:< [ <intersperse ,> ] .>
 	% functionally the same as list but meant for use in longer outputs
-	<long-list> == Implode:< [ <sp.> <intersperse <nl-comma .> > <sp> ] .>
+	<long-list> == Implode:< [ <nl.> <intersperse <nl-comma .> > <nl .> ] .>
 
 	<check-even> == json.ERROR:<check-even>
 
