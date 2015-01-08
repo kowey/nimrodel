@@ -54,6 +54,8 @@ nimrodel.firstname.TRYFIRSTNAME:
 	<[ $$n ] phr-case article $$a 2 $$s lex article> == $$a
 	<[ $$n ] phr-case article de 2 $$s lex provenance> == $$s
 	<[ $$n ] phr-case article of 2 $$s lex provenance> == $$s
+	<[ $$n ] phr-case article le 2 $$s lex surname> == $$s
+	<[ $$n ] phr-case article la 2 $$s lex surname> == $$s
 	<[ $$n ] phr-case article $$a 2 $$s> == <[ $$n ] phr-case skip 2 lex> 
 	<[ $$n ] phr-case article $$a 3 $$s $$s2 lex article> == $$a
 	<[ $$n ] phr-case article de 3 $$s $$s2 lex provenance> == $$s
@@ -84,9 +86,15 @@ nimrodel.firstname.MALEFIRSTNAMEROOT:
 nimrodel.firstname.ABBRFIRSTNAMEROOT:
 	<> == nimrodel.LEXROOT
 	<[ $$n ]> == nimrodel.firstname.FIRSTNAMEROOT:<>
-	<[ $$n ] lex nextrole> == <here token nextn Add:<$$n 1 .> lex nextrole .>
-	<[ $$n ] lex end-char> == <here token nextn Add:<$$n 1 .> lex end-char .>
-	<[ $$n ] lex surname> == <here token nextn Add:<$$n 1 .> lex word .>
+	<[ $$n ] lex> == <[ $$n ] <try surname <here token nextn Add:<$$n 1 .> token type .> .> lex>
+	
+	<try surname $surname-type> == case surname
+	<try surname> == case default
+	
+	<[ $$n ] case $$any> == nimrodel.firstname.FIRSTNAMEROOT:<>
+	<[ $$n ] case surname lex nextrole> == <here token nextn Add:<$$n 1 .> lex nextrole .>
+	<[ $$n ] case surname lex end-char> == <here token nextn Add:<$$n 1 .> lex end-char .>
+	<[ $$n ] case surname lex surname> == <here token nextn Add:<$$n 1 .> lex word .>
 .
 
 nimrodel.firstname.ABBRFIRSTNAME:
