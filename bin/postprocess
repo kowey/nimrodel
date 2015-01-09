@@ -28,4 +28,5 @@ find $1 -type f -exec ${0%/*}/addsource '{}' \; \
 [' \
 | sed -r -e '$ s:, *$:\
 ]\
-:'
+:'\
+| sed -r -e 's:\\n: :g' -e 's:  *: :g'
