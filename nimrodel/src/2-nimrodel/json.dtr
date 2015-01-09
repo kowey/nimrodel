@@ -359,7 +359,7 @@ app.JSON:
 		<convert-helper <skip> .>
 	<convert-helper> ==	
 	<convert-one entity $any $start-char $end-char> ==
-		<mk-json record json.UNIQUE:<unique <clean-feat> .> .>
+		<mk-json record <promote appearanceDate json.UNIQUE:<unique <clean-feat> .> .> .>
 
 	% from [ f1 = v2 f2 =v3 ] to just [ f1 v2 f2 v3 ]
 	<clean-feat $$f $eq $$v> == $$f $$v <clean-feat>
@@ -369,6 +369,13 @@ app.JSON:
 		'error'
 		<implode-unwords 'was expecting only sequence of f = v, but got' $any>
 	<clean-feat2> ==
+	
+	<promote $$key $$key> == $$key LocalPath:<>
+	<promote $$key> == <extract-val $$key> json.UNIQUE:<delete-key $$key>
+	<extract-val $$key $$key $$val> == $$key $$val
+	<extract-val> == <extract-val2>
+	<extract-val2 $$key  $$key2 $$val2> == <extract-val $$key>
+	<extract-val2 $$key> == % not found
 
 	<mk-json> == json.STRUCT:<>
 
