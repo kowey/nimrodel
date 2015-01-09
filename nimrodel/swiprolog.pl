@@ -108,7 +108,7 @@ on_file(File) :-
 	% to slurp a file
 	once(phrase_from_file(all(Chars), File)),
 	string_codes(Str, Chars),
-	datr_query('app.MAIN', [arglist,Str|[]], _V).
+	datr_query('app.MAIN', [arglist, '-title', File, Str|[]], _V).
 
 % ----------------------------------------------------------------------
 % mode 3 and 4: input/output directory on command line
@@ -152,17 +152,19 @@ time_dir(DirIn, DirOut) :- on_dir(DirIn, DirOut, time_query).
 % along the way
 on_dir(DirIn, DirOut, Job) :-
 	write('walking dir '), write(DirIn), write(' (->'), write(DirOut), write(')'), nl,
-	directory_files(DirIn, Files),
+	directory_file_path(DirIn, '*', DirInPatt),
+	expand_file_name(DirInPatt, Files),
 	make_directory_path(DirOut),
-	forall(member(File, Files), on_dir_item(DirIn, File, DirOut, Job)).
+	forall(member(File, Files), on_dir_item( File, DirOut, Job)).
 
 % on_dir_item
-on_dir_item(_, '.', _, _).
-on_dir_item(_, '..', _, _).
-on_dir_item(DirIn, Item, DirOut, Job) :-
-	directory_file_path(DirIn, Item, ItemIn),
+on_dir_item('.', _, _).
+on_dir_item('..', _, _).
+on_dir_item(File, DirOut, Job) :-
+	directory_file_path(_, Item, File),
+	%directory_file_path(DirIn, Item, ItemIn),
 	directory_file_path(DirOut, Item, ItemOut),
-	on_dir_item_exp(ItemIn, ItemOut, Job).
+	on_dir_item_exp(File, ItemOut, Job).
 
 % on_dir_item with the item expanded to be relative
 on_dir_item_exp(ItemIn, ItemOut, Job) :-
@@ -218,10 +220,10 @@ dispatch(_) :-
 % ----------------------------------------------------------------------
 
 % trivial example of a directory traversal job
-%simple_job(In, Out) :-
-%	write('JOB! '),
-%	write(In), write(' > '), write(Out),
-%	nl.
+simple_job(Args, In, Out) :-
+	write('JOB '), write(Args), write(' '),
+	write(In), write(' > '), write(Out),
+	nl.
 
 % query_and_jsonify/2
 % read from input filename and write query result to output filename
@@ -249,7 +251,7 @@ time_query_str(_, Str) :- is_whitespace_only(Str).
 time_query_str(In, Str) :-
 	Keys = [atoms, functors, clauses, globalused, trailused, heapused],
 	statistics(cputime, TimeBefore),
-	time(datr_query('app.MAIN', [arglist1,'-format','raw',Str|[]], _)),
+	time(datr_query('app.MAIN', [arglist1, '-format','raw',Str|[]], _)),
 	garbage_collect_atoms,
 	garbage_collect,
 	statistics(cputime, TimeAfter),
