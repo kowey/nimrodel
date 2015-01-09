@@ -8,7 +8,7 @@ nimrodel.pro.PRONOUNROOT:
 nimrodel.pro.PERSON:
 	<> == nimrodel.pro.PRONOUNROOT
 	<token number> == sing
-	<lex type> == 'Person'
+	<lex type> == 'PersonRef'	% not Person for now to stop nimrodel outputting pronouns
 .
 
 nimrodel.pro.MALEPERSON:
