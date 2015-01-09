@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# postprocess <dir> [<limit>]
+# find all the plain files in dir (assuemd to contain json output), add their
+# filenames as the "source" property, glue them together and sort the entries
+# into date order. If <limit> is provided, output at most that many entries.
+# Output is a single json array structure, like the inputs, but with one entry per line
+
+if [ $# -lt 2 ]; then
+    export headcom="cat"
+else
+    export headcom="head -n $2"
+fi
+
+# no easy way to add comments to this pipeline, but it's actually quite straightforward ( :-) )
+find $1 -type f -exec ${0%/*}/addsource '{}' \; \
+| sed -r -e s:^\\[:: \
+| sed -r -e s:^\\]:\ ,\ : \
+| tr '\n' ' ' \
+| sed -r -e 's: , :,\
+:g' \
+| sed -r -e 's:^ *::' \
+| sed -r -e '/^, *$/ d' \
+| sed -r -e '/^$/ d' \
+| sort \
+| $headcom \
+| sed -r -e '1 i\
+[' \
+| sed -r -e '$ s:, *$:\
+]\
+:'

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# addsource <file>
+# replace the "none" argument to the source property with the name of the file 
+# and print the whole file contents on standard output
+
+sed s\|\"none\"\|\"$1\"\| $1
