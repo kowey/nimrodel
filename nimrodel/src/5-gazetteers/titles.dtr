@@ -27,7 +27,7 @@ nimrodel.title.Nmaster:	<> == nimrodel.title.MALETITLE.
 nimrodel.title.Nmister:	<> == nimrodel.title.MALETITLE <[ $$n ] lex title> == mister.
 nimrodel.title.Nmistress: <> == nimrodel.title.FEMALETITLE <[ $$n ] lex title> == mistress.
 nimrodel.title.Nms: <> == nimrodel.title.FEMALETITLE <[ $$n ] lex title> == ms.
-nimrodel.title.Nprince: <> == nnimrodel.title.MALEROLETITLE.
+nimrodel.title.Nprince: <> == nimrodel.title.MALEROLETITLE.
 nimrodel.title.Nprincess: <> == nimrodel.title.FEMALEROLETITLE.
 nimrodel.title.Nqueen: <> == nimrodel.title.FEMALEROLETITLE.
 nimrodel.title.Nsaint: <> == nimrodel.title.TITLE <[ $$n ] lex type> == 'FormalPerson' <[ $$n ] lex title> == saint.
