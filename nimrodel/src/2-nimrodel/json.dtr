@@ -359,7 +359,7 @@ app.JSON:
 		<convert-helper <skip> .>
 	<convert-helper> ==	
 	<convert-one entity $any $start-char $end-char> ==
-		<mk-json record <promote appearanceDate json.UNIQUE:<unique <clean-feat> .> .> .>
+		<mk-json record <promote json.UNIQUE:<unique <clean-feat> .> .> .>
 
 	% from [ f1 = v2 f2 =v3 ] to just [ f1 v2 f2 v3 ]
 	<clean-feat $$f $eq $$v> == $$f $$v <clean-feat>
@@ -370,8 +370,15 @@ app.JSON:
 		<implode-unwords 'was expecting only sequence of f = v, but got' $any>
 	<clean-feat2> ==
 	
-	<promote $$key $$key> == $$key LocalPath:<>
-	<promote $$key> == <extract-val $$key> json.UNIQUE:<delete-key $$key>
+	<promote> == <promote-key appearanceDate promote2 > 
+	<promote2> == <promote-key id promoteN >
+	<promoteN> == LocalPath:<>
+	
+	<promote-key $$key $$next $$key $$val> == $$key $$val <$$next> 
+	<promote-key $$key $$next> == <promote-key2 [ <extract-val $$key> ] $$next >
+	<promote-key2 [ $$key $$val ] $$next > == $$key $$val <$$next json.UNIQUE:<delete-key $$key> .>
+	<promote-key2 [ ] $$next> == <$$next>
+	
 	<extract-val $$key $$key $$val> == $$key $$val
 	<extract-val> == <extract-val2>
 	<extract-val2 $$key  $$key2 $$val2> == <extract-val $$key>
