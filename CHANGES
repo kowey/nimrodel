@@ -1,3 +1,8 @@
+nimrodel 0.3 	11/1/15
+	Minor bug fixes to allow system to successfully process fine-rolls and state-papers data.
+	Addition of postprocessing support to deliver output in a single json file of person records,
+	sorted by date. As part of this, person ids are now UUIDs (v4, ie randomly generated).
+	Processed versions of fine-rolls and  state-papers included in the distribution.
 nimrodel 0.2	5/1/15
 	Initial internal project release version. Now managed under git - https://github.com/rogerevansbrighton/nimrodel
 nimrodel 0.1	4/8/14

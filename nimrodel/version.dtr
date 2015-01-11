@@ -9,7 +9,7 @@ nimrodel.VERSION:
 	<appname> == nimrodel
 	<major> == 0
 	<minor> == 3
-	<date> == '08 January 2015'
+	<date> == '11 January 2015'
 .
 
 #hide nimrodel.display.VERSION.

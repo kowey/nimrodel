@@ -1,7 +1,7 @@
 # nimrodel
 
 Roger Evans, University of Brighton<br/>
-version 0.2  05 January 2015
+version 0.3  11 January 2015
 
 Nimrodel is a historical charter analysis engine based around the
 DATR [ELF framework][elf].  It is derived from celeborn, the NLP
@@ -18,7 +18,7 @@ is recommended. The Windows support will be brought in line in a future
 release. (The underlying nimrodel system itself is platform independent.)
 
 Default output is in JSON format, as a flat list of dictionaries, one
-per person entity found.
+per person entity found. 
 
 ## Dependencies
 
@@ -157,6 +157,11 @@ Interactive use is good for development, because there is a big delay the first 
 
 The main application source files are in $NIMRODEL/src
 
+### Postprocessing
+
+The script `nimrodel\bin\postprocess` takes a single directory name argument (usually the `output` 
+directory of a dataset) and collects up all the output files within it (recursively) into a single json
+file (on standard output), sorted in order of the appearanceDate property.
 
 
 [elf]: https://github.com/datr-project/elf
