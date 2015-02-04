@@ -93,7 +93,7 @@ provides several modes for using nimrodel. Typing `nimrodel -help`
 gives the following usage description:
 
 	Usage:
-		nimrodel string [-model <model>] [-language <lang>] [-title <title>] [-format <format>] [<doc>]
+		nimrodel [-dvp] string [-model <model>] [-language <lang>] [-title <title>] [-format <format>] [<doc>]
 			Process document from standard input or string argument <doc>.
 			<model> is processing model, <lang> is the document language,
 			<title> is document title string (if omitted, use document first line)
@@ -101,20 +101,20 @@ gives the following usage description:
 			and dump (internal semantic format) are also possible
 			Default model, language and format can be set in ./nimrodel-params.dtr file.
 
-		nimrodel dir [<flags>] <input-dir> <output-dir>
+		nimrodel [-dvp] dir [<flags>] <input-dir> <output-dir>
 			Process files nested in the input directory (arbitrary depth), and
 			results to equivalent path in the output dir
 			<flags> are as above
 
-		nimrodel parallel-dir [<flags>] <jobs> <input-dir> <output-dir>
+		nimrodel [-dvp] parallel-dir [<flags>] <jobs> <input-dir> <output-dir>
 			Like dir, but assume input-dir is divided into subdirectories, and process
 			them in parallel. (Linux/Mac only, needs GNU parallel)
 
-		nimrodel selftest
+		nimrodel [-dvp] selftest
 			Run a self unit test suite
 
-		nimrodel -version         print system version
-		nimrodel -help            print this message
+		nimrodel [-dvp] -version         print system version
+		nimrodel [-dvp] -help            print this message
 
 The script `nimrodel/bin/env` sets up the environment for running nimrodel.  
 Under Linux  you need to source this script, not execute it (ie with the 
@@ -122,6 +122,10 @@ command `. nimrodel/bin/env`).  Under Windows you can just execute it.
 After you have run it, the other nimrodel commands will become directly
 available (ie `nimrodel` will just work), and you will be able to run
 nimrodel directly from swi-prolog.
+
+The optional `-dvp` tells nimrodel to load the system from source. If not given, nimrodel
+will look for a precompiled saved state to run, and build/rebuild it if not found or if its
+git revision has changed.
 
 ### Windows
 

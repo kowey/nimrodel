@@ -21,7 +21,8 @@ fi
 CMD=$1
 shift
 
-if [ "$CMD" == "direct" ]; then
+if [ "$CMD" == "-dvp" ]; then
+	rm -rf "$NIMRODEL_IMAGE"
     NIMRODEL_IMAGE=$SCRIPT_DIR/nimrodel-direct
     chmod u+x "$NIMRODEL_IMAGE"
     CMD=$1

@@ -29,7 +29,7 @@ nimrodel.MAIN:
 	
 	<help> == <nl>
 			'Usage:' <nl>
-			'    ' <appname> ' string [-model <model>] [-language <lang>] [-title <title>] [-format <format>] [<doc>]' <nl>
+			'    ' <appname> ' [-dvp] string [-model <model>] [-language <lang>] [-title <title>] [-format <format>] [<doc>]' <nl>
 			'        Process document from standard input or string argument <doc>.' <nl>
 			'        <model> is processing model, <lang> is the document language,'  <nl>
 			'        <title> is document title string (if omitted, use document first line)' <nl>
@@ -37,20 +37,20 @@ nimrodel.MAIN:
 			'        and dump (internal semantic format) are also possible' <nl>
 			'        Default model, language and format can be set in ./' <appname> '-params.dtr file.'<nl>
 			<nl>
-			'    ' <appname> ' dir [<flags>] <input-dir> <output-dir> ' <nl>
+			'    ' <appname> ' [-dvp] dir [<flags>] <input-dir> <output-dir> ' <nl>
 			'        Process files nested in the input directory (arbitrary depth), and'<nl>
 			'        results to equivalent path in the output dir'<nl>
 			'        <flags> are as above'<nl>
 			<nl>
-			'    ' <appname> ' parallel-dir [<flags>] <jobs> <input-dir> <output-dir>'<nl>
+			'    ' <appname> '  [-dvp] parallel-dir [<flags>] <jobs> <input-dir> <output-dir>'<nl>
 			'        Like dir, but assume input-dir is divided into subdirectories, and process '<nl>
 			'        them in parallel. (Linux/Mac only, needs GNU parallel)'<nl>
 			<nl>
-			'    ' <appname> ' selftest'<nl>
+			'    ' <appname> ' [-dvp] selftest'<nl>
 			'        Run a self unit test suite'<nl>
 			<nl>
-			'    ' <appname> ' -version         print system version' <nl>
-			'    ' <appname> ' -help            print this message' <nl>
+			'    ' <appname> ' [-dvp] -version         print system version' <nl>
+			'    ' <appname> ' [-dvp] -help            print this message' <nl>
 	<header> == <nl> <version> <nl>
 	
 	<elf display> == <header> <help>
